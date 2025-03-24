@@ -1,6 +1,13 @@
 import { defineRouting } from 'next-intl/routing';
 
+export const locales = ['zh-CN', 'en'] as const;
+export const defaultLocale = 'zh-CN';
+
 export const routing = defineRouting({
-  locales: ['zh-CN', 'en'],
-  defaultLocale: 'zh-CN',
+  locales,
+  defaultLocale,
+  localePrefix: 'as-needed',
+  localeCookie: {
+    maxAge: 60 * 60 * 24 * 365,
+  },
 });
