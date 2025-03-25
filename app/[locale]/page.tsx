@@ -1,7 +1,21 @@
 import { Link } from '@/i18n/navigation';
-import { useTranslations } from 'next-intl';
+import { routing } from '@/i18n/routing';
+import { type Locale, useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+import { use } from 'react';
 
-export default function HomePage() {
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = use(params);
+  setRequestLocale(locale);
+
   const t = useTranslations('HomePage');
   return (
     <div>
