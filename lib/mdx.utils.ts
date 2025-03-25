@@ -8,11 +8,6 @@ interface MDXLoadResult {
   actualLocale: Locale;
 }
 
-interface MDXLoadError extends Error {
-  code?: string;
-  path?: string;
-}
-
 export async function loadLocalizedMDX(
   directory: string,
   locale: Locale,
@@ -30,31 +25,17 @@ export async function loadLocalizedMDX(
       actualLocale: locale,
     };
   } catch (error) {
-    const loadError = error as MDXLoadError;
-    console.log(
-      ` ✗ 无法加载 ${locale} 语言的内容: ${directory}/${locale}/${slug}`,
-      loadError.message,
-    );
-
     if (locale !== defaultLocale) {
       try {
         const defaultContent = (
           await import(`@/content/${directory}/${defaultLocale}/${slug}.mdx`)
         ).default;
-        console.log(
-          ` ✓ 回退到默认语言 (${defaultLocale}) 的内容: ${directory}/${defaultLocale}/${slug}`,
-        );
         return {
           content: defaultContent,
           isFallback: true,
           actualLocale: defaultLocale,
         };
-      } catch (fallbackError) {
-        const fallbackLoadError = fallbackError as MDXLoadError;
-        console.log(
-          ` ✗ 无法加载默认语言内容: ${directory}/${defaultLocale}/${slug}`,
-          fallbackLoadError.message,
-        );
+      } catch {
         return null;
       }
     }
