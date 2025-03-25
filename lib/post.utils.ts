@@ -1,5 +1,8 @@
+import { routing } from '@/i18n/routing';
 import fs from 'fs';
 import path from 'path';
+
+export type SupportedLocale = (typeof routing.locales)[number];
 
 export type PostMetadata = {
   title: string;
@@ -37,21 +40,26 @@ function parseFrontmatter(fileContent: string) {
   };
 }
 
-function getMDFiles(dir: string) {
+function getMDXFiles(dir: string) {
   return fs
     .readdirSync(dir)
     .filter((file) => ['.md', '.mdx'].includes(path.extname(file)));
 }
 
-function readMDFile(filePath: string) {
+function readMDXFile(filePath: string) {
   const rawContent = fs.readFileSync(filePath, 'utf-8');
   return parseFrontmatter(rawContent);
 }
 
-function getMDData(dir: string) {
-  const mdxFiles = getMDFiles(dir);
+function getMDXData(dir: string) {
+  // 检查目录是否存在
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
+
+  const mdxFiles = getMDXFiles(dir);
   return mdxFiles.map((file) => {
-    const { metadata, content } = readMDFile(path.join(dir, file));
+    const { metadata, content } = readMDXFile(path.join(dir, file));
     const slug = path.basename(file, path.extname(file));
 
     return {
@@ -63,10 +71,19 @@ function getMDData(dir: string) {
 }
 
 export function getBlogPosts({ filterPublished = true } = {}) {
-  const data = getMDData(path.join(process.cwd(), 'content', 'posts'));
+  const baseDir = path.join(process.cwd(), 'content', 'posts');
+
+  const allPosts = routing.locales.flatMap((locale) =>
+    getMDXData(path.join(baseDir, locale)),
+  );
+
+  const uniquePosts = Array.from(
+    new Map(allPosts.map((post) => [post.slug, post])).values(),
+  );
+
   const filteredData = filterPublished
-    ? data.filter((item) => item.metadata.state === 'published')
-    : data;
+    ? uniquePosts.filter((item) => item.metadata.state === 'published')
+    : uniquePosts;
 
   return filteredData.sort((a, b) => {
     const dateA = new Date(a.metadata.publishedAt);

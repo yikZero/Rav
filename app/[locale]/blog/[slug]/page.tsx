@@ -2,6 +2,7 @@ import { type Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
+import { loadLocalizedMDX } from '@/lib/mdx.utils';
 import { getBlogPosts } from '@/lib/post.utils';
 
 export default async function Page({
@@ -12,11 +13,13 @@ export default async function Page({
   const { slug, locale } = await params;
   setRequestLocale(locale);
 
-  const Post = (await import(`@/content/posts/${slug}.mdx`)).default;
-  if (!Post) {
+  const result = await loadLocalizedMDX('posts', locale, slug);
+  if (!result) {
     notFound();
   }
-  return <Post />;
+
+  const { content: Content } = result;
+  return <Content />;
 }
 
 export async function generateStaticParams() {
