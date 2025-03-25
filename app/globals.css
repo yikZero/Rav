@@ -17,6 +17,12 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
 }
 
 body {
