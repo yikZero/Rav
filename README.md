@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rav
+
+Rav is my personal blog built with Next.js 15, featuring MDX content management and internationalization support.
+
+## Tech Stack
+
+- **Framework**: Next.js 15
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **Content**: MDX
+- **Internationalization**: next-intl
+- **Package Manager**: pnpm
+- **Code Quality**: ESLint + Prettier
+
+## Key Features
+
+- 🚀 Modern framework based on Next.js 15
+- 📝 MDX content support
+- 🌍 Internationalization support
+- 🎨 Tailwind CSS styling system
+- 📱 Responsive design
+- 🔍 SEO optimization
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- pnpm 10.6.5+
+- Enable corepack:
+  ```bash
+  corepack enable
+  ```
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone the repository
+git clone https://github.com/yikZero/Rav.git
+
+# Install dependencies
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Start development server
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The development server will start at http://localhost:12300.
 
-## Learn More
+### Build
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Build for production
+pnpm build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Start production server
+pnpm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+rav/
+├── app/                # Next.js application directory
+├── content/           # MDX content files
+├── i18n/             # Internationalization config
+├── lib/              # Utility functions and shared code
+├── messages/         # Internationalization messages
+├── public/           # Static assets
+└── ...
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Development Guide
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Code Style
+
+- ESLint for code linting
+- Prettier for code formatting
+- TypeScript strict mode
+
+## License
+
+[MIT](https://github.com/yikZero/Rav/blob/main/LICENSE)
