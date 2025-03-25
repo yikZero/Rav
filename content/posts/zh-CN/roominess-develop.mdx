@@ -1,0 +1,252 @@
+---
+title: '从产品设计师角度，聊聊博客搭建方法'
+titleEn: 'Building a Blog: A Product Designer's Guide'
+publishedAt: 2024-09-21
+description: '网站也已经改版一段时间了，内容模块也相对完善。所以这次，从设计到开发，我也想讲讲自己的经验'
+descriptionEn: 'The website has also been revamped for a while, and the content modules are relatively complete. So this time, from design to development, I would also like to talk about my own experience'
+image: 'https://cdn.yikzero.com/markdown/images/202409191743.jpg'
+category: 'Develop'
+state: 'published'
+---
+
+## 前言
+
+**Roominess 5.0** 版本的设计开发总算告一段落了。说实话，我觉得这个博客项目真是把我学到的设计和开发知识都用上了，算是一次不错的实践。那么我就从产品设计师的角度，跟大家唠唠如何搭建自己的博客。
+
+本文将涵盖以下两部分内容：博客从构思到上线的完整流程、设计/开发工具推荐。
+
+## 博客开发流程
+
+博客开发主要以下几个主要流程：规划设计、前后端开发、部署上线、应用优化。在这章节中，我们介绍前三部分，网站优化作为补充，以后会介绍。
+
+![博客开发整体流程](https://cdn.yikzero.com/markdown/images/2409212246.png)
+
+博客开发是一个简化的项目开发流程，它为我们提供了一个绝佳的机会来提升对整体项目的理解和掌控能力。
+
+哦，对了。还有一句话说在前面，如果你只是想拥有一个自己的网站，并不想去自己折腾，那么「无代码」工具可能更适合你。不用自己写代码，不用自己维护服务器，只需要规划、设计、付费即可。例如 [Framer](https://www.framer.com/)、[Webflow](https://webflow.com/)，也或者可以体验一下 AI 帮你构建网站 [Wegic](https://wegic.ai/)。
+
+就我而言，我还是更喜欢传统的开发部署方式。这会给我们更大的发挥空间，可以实现更高程度的自定义，整体来说更加灵活。
+
+### 规划设计
+
+博客的规划主要是就是规划博客需要哪些内容，这些内容偏向于静态的还是动态。静态与动态的的区别主要会影响后续开发的技术选型、开发难度。
+
+大多数内容，比如个人项目展示、文章列表、作品或照片集、个人简介、读书清单、网站更新记录等，都是相对固定的，可以视作静态内容，不需要频繁更新。
+
+也有一些需要实时更新的内容，比如文章的访问量、点赞数、评论数，或者是博主当前正在听的音乐、今天的饮水量等。这些动态内容就需要实时获取数据，可以视作动态内容。
+
+我也列了一张表，你可以大致看一下区分静态、动态内容，以及对后续开发的影响。
+
+![博客前期规划](https://cdn.yikzero.com/markdown/images/2409221108.png)
+
+阅读这篇文章也许对于你了解静态与动态网站有所帮助：[Choosing Between Static and Dynamic Websites](https://www.shopify.com/in/blog/static-vs-dynamic-website)
+
+在项目的前期规划阶段，尽可能考虑的周全，后期开发也会省力一些。不过，博客本身开发技术难度很低，就算刚开始思考不够全面，影响也很小，心理负担不要太重。
+
+内容架构定好之后，便可入场构建设计规范，一个博客，包含色彩体系、布局、字体这类基本的就足够了，不太需要庞大的设计系统。
+
+![Tailwind CSS Color Generator](https://cdn.yikzero.com/markdown/images/202409222131610.png)
+
+我推荐先去了解了解前端的思维、开发方式，然后再进行设计，这样会事半功倍。怎么样才能更加系统化、模块化。
+
+以博客色彩体系定义为例：
+
+1. 先选取自己喜欢的主题色 `#0284C7` ，应用 [Tailwind CSS Color Generator](https://uicolors.app/create) 生成色板
+2. 再通过 [Huetone](https://huetone.ardov.me/) 工具检查调整生成的色板是否符合 WCAG 3.0 规范
+3. 最后，你也可以跟 Tailwind CSS 的主题色一样，自己再靠色感来微调一下。
+4. [Designing accessible color systems](https://stripe.com/blog/accessible-color-systems) 这篇文章或许能给你更多系统化的色彩系统构建方式。
+
+![Huetone: 创建无障碍色彩系统的工具](https://cdn.yikzero.com/markdown/images/202409241252664.png)
+
+设计侧需要定义字体颜色、主题色，功能色用不太到。如果还需要适配暗黑模式的话，需要再多加考虑色彩在暗黑模式下的显示效果。布局框架也需要提前定义，如果不是特别个性化的网站，几个功能模块的位置也是不会变化的。定义好色彩、布局这两部分之后，开发也可以同步开展了。
+
+### 前后端开发
+
+开发这块我主要以介绍前端开发为主，后端方面了解的不多。
+
+#### 前端环境配置
+
+以 Mac 为例，进行前端开发需要准备以下工具：
+
+- 代码编辑器: Visual Studio Code (VS Code)：用于编写和管理代码的软件
+- 运行环境: Node.js：允许在计算机上运行 JavaScript 的平台
+- 版本控制系统: Git：用于跟踪和管理代码变更的工具
+- 包管理器: Homebrew (可选)：简化 Mac 上软件安装过程的工具
+
+基本的流程是先安装软件市场，然后在软件市场中安装 Node.js、Git、VS Code 等开发相关软件。安装完毕就可以在 VS Code 中写代码，用 Node.js 构建出你的博客。然后通过 Git 记录你的代码的修改日志，方便管理。
+
+在 macOS 的终端运行以下命令可以配置你所需的前端环境：
+
+```zsh
+# 安装 macOS 软件包管理：brew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# 通过 brew 安装 VS Code、git
+brew install --cask visual-studio-code
+brew install git
+# 安装 node 管理工具：nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+# 通过 nvm 安装长期支持的 node 版本
+nvm install --lts
+# （可选）安装 pnpm 软件包管理器
+npm install -g pnpm
+```
+
+前端所需环境就配置完毕了，有额外需要安装也可以通过 `brew` 软件市场安装。网络问题需自行解决。
+
+#### 前端技术选型
+
+前端环境是开发所有前端项目的基础。现在我们需要考虑有关这个项目的技术选型了。
+
+正如我们之前讨论的，「内容框架」对技术选型有重要影响。为了帮助您更好地做出选择，我整理了一张基于内容特性（静态/动态）的「技术选型」推荐表。
+
+![博客技术选型推荐](https://cdn.yikzero.com/markdown/images/202409301502160.png)
+
+我使用过表格中的 [Hugo](https://gohugo.io/)、[Next.js](https://nextjs.org/)、[Astro](https://astro.build/)，而 [Nuxt](https://nuxt.com/) 是 Next.js 较有力的基于 Vue 的竞争者。我的博客也经过了从 Hugo -> Next.js -> Astro 的变化，也算是有一点点说服力。了解变化历程与原因，具体可查看博客[更新日志](https://ro.yikzero.com/changelog)。
+
+在这几个框架里，[Astro](https://astro.build/) 是我目前比较推荐的，具体原因如下：
+
+1. Astro 构建的网站性能卓越，加载速度足够快
+2. Astro 原生支持 Markdown，非常适合作为博客的框架
+3. Astro 学习曲线相对平缓，只需要熟悉 HTML、CSS 和 JavaScript
+4. 静态构建方便我后期分平台快速部署
+5. 我购买的服务器性能较弱，纯静态对服务器要求低
+6. 静态内容也非常适合配置 CDN 加速
+
+你也可以查看 [2023 年网络框架性能报告](https://astro.build/blog/2023-web-framework-performance-report/)，报告中对比了 Astro、Next.js等网络框架的性能，或许能够辅助你进行选择。
+
+环境配置完毕后，以 Astro 项目为例，我们可以参照 [Astro 文档](https://docs.astro.build/en/install-and-setup/) 所说的创建一个基于 Astro 的新项目：
+
+```zsh
+# 如果没有安装 pnpm，npm 请使用 npm create astro@latest
+pnpm create astro@latest
+```
+
+接下来，你就可以找一些教程来一步步学习怎么基于 Astro 写代码了，上手难度不高的。
+
+项目初始化完毕，你可以会想，我怎么跟设计侧的规范链接在一起。我在使用的是 [Tailwindcss - 实用至上的 CSS 框架，用于快速用户界面开发](https://github.com/tailwindlabs/tailwindcss)。这就像项目的插件，可以帮你更好进行前端开发。在 Tailwindcss 中，你可以预先定义字体、主题色、功能色，甚至间距、圆角等等。这时候就跟你设计时定义的色彩等规范不就配合在一起了嘛，配置一次，用起来、统一调整起来都很方便。
+
+```zsh
+# 如果没安装 pnpm，npm 请使用 npx astro add tailwind
+pnpm astro add tailwind
+```
+
+Tailwindcss 配置示例：
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ['selector'], // 暗黑模式支持
+  theme: {
+    colors: {
+      white: '#ffffff', // 定义颜色名称 调用方式：text-white bg-white
+      black: '#000000',
+      brand: {
+        500: '#0ea5e9', // 定义品牌色 调用方式一致：text-brand-500
+        600: '#0284c7',
+      },
+    },
+  },
+};
+```
+
+#### 后端开发
+
+前面我们选择了 Astro 作为技术栈，这比较适合静态内容的开发。如果你的博客需要很多动态数据，需要一个简单的后端，那么我推荐你使用 [Next.js](https://nextjs.org/) 或者 [Nuxt](https://nuxt.com/)。
+
+基本流程：
+
+1. 有一个数据库（推荐 Supabase 免费或者国内云商的数据库）来存储你的数据
+2. 通过插件 [Prisma](https://www.prisma.io/) 链接到你的 Next.js 项目
+3. 在项目中写逻辑代码来操作数据库中的数据
+
+举一个查询我「近况」的 API 为例：
+
+```ts title="api/route.ts"
+export async function GET(req: NextRequest) {
+  // Get 方法
+  const number = Number(req.nextUrl.searchParams.get('number')); // 让程序知道你想要几条数据
+
+  const records = await prisma.recent_states.findMany({
+    take: number, // 程序知道之后，去数据库对应数量的数据
+    orderBy: { created_at: 'desc' }, // 排序方法 按照时间降序
+  });
+
+  return Response.json(records); // 返回 json 格式的数据 方便返回到页面中
+}
+```
+
+通过 `Get` 方法调用这个 API 我就能够查询到我的近况，然后将其展示在博客上，让你看到，了解我最近发生的事情。
+
+相对于静态内容，需要进行的操作变多了。这多了向数据库查询、处理的过程。如果数据库访问速度，或者你的云服务器性能不好，这也将直接影响到你网站的访问速度。而且动态内容也不适合部署在传统 CDN 分发。网站访问速度不行的话，就应该放弃动态内容了。
+
+### 部署上线
+
+博客在本地开发测试完毕之后，推荐上传到 [Github](https://github.com/)。Github 是使用 Git 进行在线项目托管。这个平台类似是文件的版本管理工具，其能够管理你项目的代码。
+
+![Github 仓库代码提交记录](https://cdn.yikzero.com/markdown/images/202410010911982.png)
+
+每次修改一个代码的问题，就可以提交到 Github 上。如果哪次项目代码构建出问题了，可以非常方便进行回滚。
+
+博客开发完毕后，我们主要是想其被别人看到。那么，我们就需要有一个地方承载网站，这个地方也需要能够被大家访问到。例如：具有外网 IP 的家庭设备、云服务器、轻量应用服务器、Paas 平台等。
+
+家里的笔记本其实是可以作为承载网站的设备的，前提是你需要有外网 IP，其他人能够在互联网中访问到你。目前外网 IP 都需要跟客服去申请。将笔记本作为服务器的话，你的设备也不能够关机等。也还是有一些局限性的。
+
+![腾讯云 轻量应用服务器 产品页](https://cdn.yikzero.com/markdown/images/202410010918138.png)
+
+所以目前大部分人还是主要会把网站部署在云服务器、轻量应用服务器上，这些都具有外网 IP，同时是 24 小时开机的，非常适合作为网站服务器，性能不需要太好的话，一年 99 元等设备就够了。还是挺实惠的。如果你还是学生，你可以在阿里云拿到免费的服务器。
+
+以云服务器为例简单介绍一下流程：
+
+1. Linux 服务器跟 macOS 系统一样，需要安装配置前端环境，然后进行构建
+2. 如果文件不是很大的话，也可以在本地构建完毕然后上传 `dist` 包到服务器上
+3. 配置好 nginx 转发，你就可以通过云服务器 IP 地址访问你的网站了
+4. 如果不想直接通过 IP 地址访问，你也可以购买一个自己的专属域名，国内几家较大的云商平台都能够购买域名
+5. 购买域名之后，你需要进行 DNS 解析，这一步步骤你可以在你购买域名的平台或者专门的 DNS 解析平台来处理，例如 [Dnspod](https://www.dnspod.cn/)
+6. 将 A 记录的 IP 地址与域名绑定，这样，你就能通过域名访问到你的网站了
+
+以上介绍了一个简单的流程，如果需要详细的部署上线流程，你也可以参考左子祯老师的文章：[写给设计师的个人网站搭建指南（一）：从域名到网站](https://zuozizhen.com/blog/website-for-designer-1/)
+
+如果，你不想用自己的服务器，你只想设计、写写代码，那其实也有很多平台来补齐服务器、域名这两步走，这些平台通过授权之后从你的 Github 仓库中拉取你项目的代码，然后在他们的云平台上构建并发布到网络上。
+
+类似的平台有 [Vercel](https://vercel.com/)、[Zeabur](https://zeabur.com/)、[Cloudflare Page](https://pages.cloudflare.com/)等。如果不想维护自己的云服务器，这种也是不错的方式。
+
+![Vercel 项目部署 - Rosure](https://cdn.yikzero.com/markdown/images/202410010013326.png)
+
+以 Vercel 为例简单介绍一下流程：
+
+1. 创建 Github 仓库，将本地项目代码通过 Git 上传到 Github 私有仓库中。
+2. 注册登录 Vercel 平台，赋予平台读取 Github 仓库权限，选择对应项目仓库。
+3. 自动识别项目框架，点击按钮进行构建，平台会展示构建日志，如果出问题也可以及时排查。
+4. 构建完成，平台会免费提供二级域名供你使用，你直接访问域名就能够在看到你的网站已经发布到网上了。
+5. 你也可以选择购买域名，然后根据平台提示，将项目与你拥有的域名绑定。
+
+以上提供了两种将网站部署到外网的方式，你可以按照自己的喜好以及难度进行选择。这两种方式也是可以进行结合的。
+
+### 总结
+
+由于篇幅问题，每一部分流程都讲到了，但是也没有讲的非常细节，还是需要你们自己去多查询其他资料。这篇文章只能提供大致方向性的知道，希望这个开发流程的介绍能够帮助到你。
+
+## 设计/开发工具推荐
+
+众所不知，我挺喜欢屯东西的，所以在网站开发这块，我也收集到不少好用的工具等，趁这个机会跟大家分享下，或许能帮助到你的开发。
+
+### 设计
+
+| 名称                                                                     | 描述                                       | 分类 | 推荐程度 |
+| ------------------------------------------------------------------------ | ------------------------------------------ | ---- | -------- |
+| [**Figma** ](https://figma.com/)                                         | 协作式界面设计工具                         | 通用 | ⭐⭐⭐   |
+| [**Rosure** ](https://rosure.yikzero.com/)                               | 我的设计收藏夹，包含图标、字体、网站灵感等 | 灵感 | ⭐⭐⭐   |
+| [**Toolfolio** ](https://toolfolio.io/)                                  | 设计工具、灵感聚合                         | 灵感 | ⭐⭐⭐⭐ |
+| [**Tailwind CSS 梯度色彩生成** ](https://uicolors.app/create)            | 根据你提供的颜色，生成色彩阶梯             | 色彩 | ⭐⭐⭐   |
+| [**Palettte** ](https://palettte.app/)                                   | 明确的调色板编辑和重映射工具               | 色彩 | ⭐⭐⭐   |
+| [**Radix Colors 自定义调色板** ](https://www.radix-ui.com/colors/custom) | 生成色板，并且能够预览效果，支持暗黑       | 色彩 | ⭐⭐⭐   |
+| [**Huetone** ](https://toolfolio.io/)                                    | 创建无障碍色彩系统的工具                   | 色彩 | ⭐⭐⭐   |
+
+### 开发
+
+| 名称                                                          | 描述                          | 分类 | 推荐程度 |
+| ------------------------------------------------------------- | ----------------------------- | ---- | -------- |
+| [**Homebrew** ](https://brew.sh/)                             | macOS（或 Linux）软件包管理器 | 通用 | ⭐⭐⭐   |
+| [**pnpm** ](https://pnpm.io/)                                 | 项目软件包管理器              | 通用 | ⭐⭐⭐   |
+| [**nvm** ](https://github.com/nvm-sh/nvm)                     | Node 版本管理器               | 通用 | ⭐⭐⭐   |
+| [**Tailwindcss** ](https://tailwindcss.com/docs/installation) | 实用至上的 CSS 框架           | CSS  | ⭐⭐⭐⭐ |

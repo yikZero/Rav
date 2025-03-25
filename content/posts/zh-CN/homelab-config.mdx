@@ -1,0 +1,89 @@
+---
+title: 'HomeLab 家庭环境配置'
+titleEn: 'HomeLab Home Environment Configuration'
+publishedAt: 2023-09-12
+description: 'Documenting the configuration of an optical cat, R4S soft route, and Linksys hard route'
+descriptionEn: '123'
+image: 'https://cdn.yikzero.com/markdown/images/post-background.jpg'
+category: 'Other'
+state: 'published'
+---
+
+## 背景与目的
+
+家庭网络配置通常涉及光猫作为 ISP 连接的入口，R4S 软路由（基于 OpenWrt 的 NanoPi R4S）和 Linksys 硬路由用于管理内部网络。本文的目标是通过桥接模式优化网络性能，减少 NAT 冲突，并利用 R4S 和 Linksys 实现高效的网络管理和无线覆盖。
+
+## 拓扑图
+
+![家庭网络拓扑图](https://cdn.yikzero.com/markdown/images/202311052100776.png)
+
+光猫桥接模式连接 R4S WAN 口，R4S 作为主路由处理 PPPoE，Linksys 通过 WAN 口连接 R4S LAN 口，设置为桥接模式作为无线接入点。
+
+## 光猫桥接配置
+
+### 桥接理由
+
+- 防止 NAT 转发重复，避免双 NAT 问题影响某些应用。
+- 减轻光猫网络压力，光猫仅负责光电信号转换，不进行路由。
+- 光猫功能受限，桥接后可利用 R4S 或 Linksys 提供更强大的路由功能。
+- 光猫 WiFi 信号弱，桥接后可使用 Linksys 提供更好的无线覆盖。
+
+### 具体配置步骤
+
+#### 杭州联通光猫
+
+- **登录信息**：  
+  - 地址：[http://192.168.1.1/cu.html](http://192.168.1.1/cu.html)  
+  - 账号：`CUAdmin`  
+  - 密码：`CUAdmin`  
+- **PPPoE 设置**：  
+  - 账号：通常以 0571（杭州区号）开头，需查看后台获取。  
+  - 密码：账号后六位。  
+- **桥接模式设置**：通过登录界面找到 WAN 设置，将模式调整为桥接，保存并重启。  
+
+#### 杭州移动光猫  
+
+- **登录信息**：  
+  - 地址：[http://192.168.1.1/](http://192.168.1.1/)  
+  - 账号：`CMCCAdmin`  
+  - 密码：`aDm8H%MdA`
+- **PPPoE设置**：  
+  - 账号：以`hz`开头，后面加区域首字母（如滨江区为`hzbj`），再加a-z字母按宽带开通顺序（如第一条为`hzbja`）。  
+  - 密码：尝试`000000`、`888888`、`123456`、账号后六位或身份证后六/八位。  
+- **桥接模式设置**：登录后调整 WAN 为桥接模式，保存并重启。  
+
+### 桥接模式使用 PPPOE
+
+桥接后，R4S 或 Linksys 需通过 PPPoE 账号密码进行网络拨号，确保互联网连接正常。
+
+---
+
+## Linksys 桥接模式
+
+### 初期配置
+
+不管你后续想改成「桥接模式」还是「自动配置 - DHCP」，你初期都需要先进行初始化设置。按照「配置向导」正常设置路由器密码，配置 WiFi 密码。不额外配置且网线没问题，能够正常上网了。
+
+### 高级设置
+
+#### 桥接模式
+
+1. **连接**：将 R4S LAN 口连接到 Linksys WAN 口（Internet 端口）。  
+2. **登录界面**：访问 Linksys web 界面（默认192.168.1.1），跳过初始设置提示。  
+3. **设置桥接模式**：  
+   - 进入`Configuration > Connectivity > WAN Setup`。  
+   - 选择`Bridge Mode`，将路由器作为无线接入点使用。  
+   - 选择“自动获取 IP 地址”或手动指定IP（如192.168.31.2，默认网关为192.168.31.1）。  
+   - 保存并重启路由器。  
+
+设置完毕，点击「保存」重启路由器
+
+#### 额外优化
+
+- **无线网络 - 高级设置 - 漫游助手**：选择关闭，可提升稳定性。  
+- **无线网络 - 高级设置 - 地区**：选择澳大利亚，可能增强信号强度，但需注意合规性，可能不适用于所有地区。  
+- **如使用 Homeassistant**：建议关闭 WiFi 双频合并模式，以避免兼容性问题。  
+
+## 总结
+
+本文提供了光猫桥接模式、R4S PPPOE 配置和 Linksys 桥接模式的详细步骤，确保家庭网络高效运行。

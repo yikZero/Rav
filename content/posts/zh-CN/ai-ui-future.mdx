@@ -1,0 +1,104 @@
+---
+title: '人工智能时代的视觉交互新范式'
+titleEn: 'Visual Interaction in the AI Era'
+publishedAt: 2024-04-24
+description: '探讨了人工智能时代视觉交互的新范式，包括硬件和软件两个方面的创新'
+descriptionEn: 'Explored a new paradigm for visual interaction in the age of artificial intelligence, including innovations in both hardware and software'
+image: 'https://cdn.yikzero.com/markdown/images/202406191225.jpg'
+category: 'Design'
+state: 'published'
+---
+
+## 前言
+
+我一直思考，在人工智能时代，这些我们习以为常的「工具」会以一种什么样的形态展示？
+
+当前，人工智能最普遍的应用方式通常局限聊天界面，它们通常采用一种基于文本的问答模式进行交互。随着技术的不断进步，Vercel 也推出了能够根据对话内容和需求动态生成定制化的交互式用户界面 [Generative UI](https://sdk.vercel.ai/docs/concepts/ai-rsc) 。未来的 UI 会是怎么样的一个形态，会演变成电影中所展示的那样，拥有炫酷的全息显示和直观的交互式 HUD，或者，我们可能会迎来一个不再依赖传统 GUI 的新时代？
+
+> Natural language becoming the fundamental interface for every software application might mean the end of GUIs
+
+## 胡思乱想
+
+以后是不是我可以直接一句「Siri，帮我订个飞机票。」，或者直接就跟马斯克做的脑机实验一样，只需要一个想法即可传递信息。需要呈现的信息，直接展示在眼球前（这样的话，盲人也能看得见吗？），不需要再外接其他设备。需要操控的内容也可像 VR 眼镜一样通过手指、眼球进行交互。以后或许就真的像[黑镜](https://www.themoviedb.org/tv/42009-black-mirror)一样了。
+
+## 调研
+
+### AI Pin
+
+Humane 推出的 [Ai Pin](https://humane.com/aipin) 算是一位先行者，这款产品通过磁性夹在衣服上，它没有屏幕，通过语音和小型触摸表面进行控制。有一个激光可以将图像投射到你的手掌上，它还有一个摄像头，可以识别手势进行切换等操作。
+
+其目前及未来可能支持的功能：激光投影显示、手势和语音交互、AI助理、实时翻译、健康监测、音乐播放、消息提醒等等
+
+![AI Pin 产品截图](https://cdn.yikzero.com/markdown/images/2024042301.png)
+
+### Rabbit
+
+[Rabbit R1](https://www.rabbit.tech/rabbit-r1) 是一款由Rabbit公司推出的AI设备，定位为您的口袋伴侣。主要由屏幕、摄像头、滚轮、按钮组成。
+
+其目前及未来可能支持的功能：理解并执行操作（打车、订餐、播放音乐）、实时翻译、教学模式等，可查看[评测视频](https://www.youtube.com/watch?v=ddTV12hErTc)
+
+![Rabbit R1 正面渲染图](https://cdn.yikzero.com/markdown/images/2024042303.png)
+
+### Dot
+
+[Dot](https://new.computer/) 是一个iOS上的聊天应用，用户可以通过它发送文字、语音备忘录、图片、PDF文件，并且它还能为你搜索网络信息。目前，Dot 通过文字进行交流，旨在成为一个随时可用的伴侣。与大多数AI对话不同，Dot能够记住你之前说过的话，几乎不会忘记任何事情。
+
+![Dot 产品界面](https://cdn.yikzero.com/markdown/images/2024042304.jpg)
+
+### Amazon Lex
+
+[Amazon Lex V2](https://docs.aws.amazon.com/lexv2/latest/dg/what-is.html) 是 AWS 提供的一项服务，它允许开发者构建应用程序的对话界面，支持语音和文本输入。用户可以利用自然语言进行交互，例如下单等操作。此外，Lex V2 还可以与网页元素（按钮、选择框等）集成，通过半引导式对话（Semi-Guided Conversations）来解决用户的问题或帮助他们完成特定任务。
+
+### 总结
+
+举的这几个例子不一定具有代表性，但也能简单的看出整体趋势：
+
+- 硬件载体发生了转变。除了手机和电脑之外,人们也在尝试将内容呈现在更多便携式设备上,如项链、勋章和寻呼机等。
+- 视觉图像的呈现方式更加多样化,例如投影和激光显示。由于尺寸的限制,主要以文本、简单图表和按钮信息为主要形式。
+- 自然语言交互形式会运用的越来越广泛。
+
+## 我的想法
+
+#### **生成式 UI 是未来趋势**
+
+目前，界面的设计必须满足尽可能多的人。任何有经验的专业设计人员都知道这种方法的主要弊端 - 你永远无法让任何人完全满意。个性化和定制发挥的作用也比较小。
+
+这个应用场景跟支付宝首屏根据地点实现的动态个性化卡片也有些类似（在机场就展示机场相关信息）。
+
+<video controls preload="metadata">
+  <source src="https://cdn.yikzero.com/markdown/images/2024042305.mp4" type="video/mp4" />
+</video>
+
+![iOS Smarter Siri by @upintheozone](https://cdn.yikzero.com/markdown/images/2024042306.jpg)
+
+而且生成式 UI 不只局限于动态卡片，其也可以根据个人数据为你动态展示一整个系统。[Generative UI and Outcome-Oriented Design](https://www.nngroup.com/articles/generative-ui/) 文中举例，这才是真正的千人千面：
+
+- 有阅读障碍 - 应用程序展示特殊字体与颜色对比
+- 注重费用、时间的用户 - 显性展示，自动增加对应航班权重
+- 虽然是同个应用，但界面、功能等全是个人定制化的
+
+![传统UI与生成式UI对比](https://cdn.yikzero.com/markdown/images/2024042307.png)
+
+设计师也将从普适设计转变为个性化设计，为各种个性化场景制定边界以加强对人工智能的约束。
+
+#### **传统交互不会被取代，但会被极大简化**
+
+尽管自然语言交互具有优势,但在需要快速精准输入的场景下,视觉元素如按钮、图标和手势仍是必需,纯语音输入可能会降低效率。并且也不是所有任务都能通过语音对话就能够很好完成的。
+
+不同交互方式适合不同情况,视觉和语音输入/输出并存能最大限度满足无障碍设计原则,残障人士也能选择适合自身的方式。LLM 能够完成特定任务以后,界面将被极大简化。
+
+另外，自然语言交互也不是所有场景都适用的，例如在公司、在图书馆等，也会造成隐私泄漏等困扰。
+
+## 写在最后
+
+虽然想尽可能展开写，但写着写着还是回到了 GUI 本身，只是想了想现有产品的未来形态...
+
+## 参考资料
+
+- [ScreenAI: A visual language model for UI and visually-situated language understanding](https://research.google/blog/screenai-a-visual-language-model-for-ui-and-visually-situated-language-understanding/)
+- [The AI Device Revolution Isn’t Going to Kill the Smartphone](https://www.bloomberg.com/news/newsletters/2024-04-14/humane-ai-pin-review-the-device-isn-t-going-to-kill-apple-s-iphone-luziqlew)
+- [Meet Dot, an AI companion designed by an Apple alum, here to help you live your best life](https://www.fastcompany.com/90975882/meet-dot-an-ai-companion-designed-by-an-apple-alum-here-to-help-you-live-your-best-life)
+- [Malleable software in the age of LLMs](https://www.geoffreylitt.com/2023/03/25/llm-end-user-programming.html)
+- [Generative UI and Outcome-Oriented Design](https://www.nngroup.com/articles/generative-ui/)
+- [UFO: A UI-Focused Agent for Windows OS Interaction](https://arxiv.org/abs/2402.07939)
+- [Ferret-UI: Grounded Mobile UI Understanding with Multimodal LLMs](https://arxiv.org/abs/2404.05719)
