@@ -3,6 +3,9 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
+import BackgroundGradient from '@/components/background-gradient';
+import Header from '@/components/header';
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -22,8 +25,12 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className="antialiased">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+      <body className="min-h-dvh bg-background text-sm antialiased">
+        <NextIntlClientProvider>
+          <Header />
+          {children}
+          <BackgroundGradient />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
