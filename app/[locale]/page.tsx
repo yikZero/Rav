@@ -49,7 +49,7 @@ export default function HomePage({
             yikZero, Web3 Product Designer based in Hangzhou, China.
           </h1>
           <span className="text-base text-soft text-shadow-sm">
-            I enjoy hiking, cycling, coding and exploring. Let's connect.
+            {`I enjoy hiking, cycling, coding and exploring. Let's connect.`}
           </span>
         </div>
       </section>
