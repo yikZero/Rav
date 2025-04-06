@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.yikzero.com',
       },
     ],
+    unoptimized: true,
   },
   async redirects() {
     return [

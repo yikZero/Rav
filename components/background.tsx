@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Background() {
   return (
-    <div className="absolute top-0 right-0 left-0 -z-1 h-200 w-full [mask-image:linear-gradient(180deg,#000_0%,rgba(0,0,0,0)_100%)]">
+    <div className="absolute top-0 right-0 left-0 -z-1 h-200 w-full mask-b-from-0">
       <Image
         aria-hidden
         className="inset-0h-full absolute -z-1 w-full"
