@@ -1,5 +1,4 @@
 import { routing } from '@/i18n/routing';
-import Avatar from '@/public/avatar.jpg';
 import { type Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { Instrument_Serif } from 'next/font/google';
@@ -29,7 +28,7 @@ export default function HomePage({
   return (
     <main className="relative">
       <Background />
-      <section className="mx-auto flex w-full flex-col items-center gap-12 pt-45">
+      <section className="mx-auto flex w-full flex-col items-center gap-12 pt-54">
         <div className="relative rotate-2">
           <Image
             src="https://cdn.yikzero.com/common/avatar.jpg!/fw/100"
