@@ -49,7 +49,7 @@ export default function Nav() {
                 <motion.div
                   layoutId={`background-${locale}`}
                   aria-hidden
-                  className="absolute inset-0 rounded-lg bg-linear-to-b from-white/3 to-white/5 to-70%"
+                  className="absolute inset-0 rounded-lg bg-linear-to-b from-white/5 to-white/9 to-70%"
                 />
               )}
             </Link>

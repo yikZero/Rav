@@ -24,7 +24,7 @@ export default function HomePage({
 
   return (
     <main className="relative">
-      <section className="mx-auto flex w-full flex-col items-center gap-12 pt-48">
+      <section className="mx-auto flex w-full flex-col items-center gap-12 px-4 pt-40 sm:pt-48">
         <motion.div
           initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -51,7 +51,7 @@ export default function HomePage({
               duration: 0.5,
               delay: 0.5,
             }}
-            className="text-base text-soft text-shadow-sm"
+            className="text-center text-sm text-soft text-shadow-sm sm:text-base"
           >
             {`I enjoy hiking, cycling, coding and exploring. Let's connect.`}
           </motion.span>

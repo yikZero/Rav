@@ -12,7 +12,7 @@ const instrumentSerif = Instrument_Serif({
 export default function HeroTitle() {
   return (
     <h1
-      className={`${instrumentSerif.className} max-w-140 text-center text-5xl leading-[3.875rem] tracking-[0.01em] text-strong text-shadow-md`}
+      className={`${instrumentSerif.className} max-w-140 text-center text-4xl tracking-[0.01em] text-strong text-shadow-md sm:text-5xl sm:leading-[3.875rem]`}
     >
       <motion.span
         className="inline-block"
