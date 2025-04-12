@@ -1,3 +1,4 @@
+import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { type Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
@@ -6,6 +7,8 @@ import Image from 'next/image';
 import { use } from 'react';
 
 import Background from '@/components/background';
+import { ArrowRight } from '@/components/icons';
+import Trusted from '@/components/trusted';
 
 const instrumentSerif = Instrument_Serif({
   weight: '400',
@@ -28,7 +31,7 @@ export default function HomePage({
   return (
     <main className="relative">
       <Background />
-      <section className="mx-auto flex w-full flex-col items-center gap-12 pt-54">
+      <section className="mx-auto flex w-full flex-col items-center gap-12 pt-48">
         <div className="relative rotate-2">
           <Image
             src="https://cdn.yikzero.com/common/avatar.jpg!/fw/100"
@@ -51,7 +54,15 @@ export default function HomePage({
             {`I enjoy hiking, cycling, coding and exploring. Let's connect.`}
           </span>
         </div>
+        <Link
+          href="mailto:yiikzero@gmail.com"
+          className="flex flex-row items-center gap-1 rounded-full bg-gradient-to-b from-[#020717] to-[#0A2341] py-2.5 pr-4 pl-5 outline outline-strong/9"
+        >
+          <span className="text-base font-medium text-strong">Email me</span>
+          <ArrowRight className="size-4" />
+        </Link>
       </section>
+      <Trusted />
     </main>
   );
 }

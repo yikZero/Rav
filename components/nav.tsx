@@ -3,7 +3,6 @@
 import { Link } from '@/i18n/navigation';
 import { locales } from '@/i18n/routing';
 import { motion } from 'motion/react';
-import { li } from 'motion/react-client';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
@@ -36,6 +35,7 @@ export default function Nav() {
         return (
           <li key={link.id}>
             <Link
+              prefetch={true}
               href={link.url}
               className={cn(
                 'relative cursor-pointer px-3 py-2 leading-4 text-sub transition duration-300 hover:text-strong',
