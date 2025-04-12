@@ -29,7 +29,7 @@ export default function Nav() {
   );
 
   return (
-    <ul className="flex flex-row items-center gap-1 text-sm">
+    <ul className="flex flex-row items-center gap-1 text-sm font-normal">
       {AllLinks.map((link) => {
         const isActive = isActiveLink(link.id);
         return (
@@ -49,7 +49,7 @@ export default function Nav() {
                 <motion.div
                   layoutId={`background-${locale}`}
                   aria-hidden
-                  className="absolute inset-0 rounded-lg bg-linear-to-b from-white/6 to-white/9 hover:from-white/9 hover:to-white/12"
+                  className="absolute inset-0 rounded-lg bg-linear-to-b from-white/3 to-white/5 to-70%"
                 />
               )}
             </Link>

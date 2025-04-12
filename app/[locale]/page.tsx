@@ -54,10 +54,10 @@ export default function HomePage({
         </div>
         <Link
           href="mailto:yiikzero@gmail.com"
-          className="group flex flex-row items-center gap-1 rounded-full bg-gradient-to-b from-[#020717] to-[#0A2341] py-2.5 pr-4 pl-5 outline outline-strong/9"
+          className="group relative flex flex-row items-center gap-1 rounded-full bg-linear-to-b from-white/5 to-white/10 to-70% px-4 py-2 pr-4 pl-5 text-sm font-semibold text-strong shadow-md ring inset-shadow-2xs ring-[#01040E]/20 inset-shadow-white/10 text-shadow-2xs"
         >
           <span className="text-base font-medium text-strong">Email me</span>
-          <ArrowRight className="size-4 transition duration-800 group-hover:translate-x-0.5" />
+          <ArrowRight className="size-4 opacity-60 transition duration-800 group-hover:translate-x-0.5 group-hover:opacity-100" />
         </Link>
       </section>
       <Trusted />
