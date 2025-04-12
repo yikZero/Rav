@@ -6,7 +6,7 @@ import { setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import { use } from 'react';
 
-import HeroTitle from '@/components/HeroTitle';
+import HeroTitle from '@/components/hero-title';
 import { ArrowRight } from '@/components/icons';
 import Trusted from '@/components/trusted';
 
