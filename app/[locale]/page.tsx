@@ -26,10 +26,10 @@ export default function HomePage({
     <main className="relative">
       <section className="mx-auto flex w-full flex-col items-center gap-12 pt-48">
         <motion.div
-          className="group relative rotate-2 hover:rotate-3"
-          initial={{ opacity: 0, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.5 }}
+          className="group relative rotate-2 hover:rotate-3"
         >
           <Image
             src="https://cdn.yikzero.com/common/avatar.jpg!/fw/96"
@@ -49,8 +49,7 @@ export default function HomePage({
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.5,
-              delay: 0.4,
-              ease: 'easeOut',
+              delay: 0.5,
             }}
             className="text-base text-soft text-shadow-sm"
           >
@@ -60,7 +59,7 @@ export default function HomePage({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5, ease: 'easeOut' }}
+          transition={{ duration: 0.5, delay: 0.6 }}
         >
           <Link
             href="mailto:yiikzero@gmail.com"
@@ -74,7 +73,7 @@ export default function HomePage({
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+        transition={{ duration: 0.5, delay: 0.7 }}
       >
         <Trusted />
       </motion.div>
