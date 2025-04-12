@@ -58,7 +58,7 @@ const partners: Partner[] = [
 export default function Trusted() {
   return (
     <section className="mx-auto mt-32 flex max-w-192 flex-col gap-6">
-      <h2 className="text-center text-xs leading-4 font-normal text-soft select-none">
+      <h2 className="text-center text-xs leading-4 font-medium text-soft select-none">
         TRUSTED BY GLOBAL ENTERPRISES
       </h2>
       <div
