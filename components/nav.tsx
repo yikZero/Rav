@@ -57,7 +57,7 @@ export default function Nav() {
         );
       })}
       <li>
-        <button className="cursor-pointer rounded-lg px-3 py-2 leading-4 text-sub transition duration-300 hover:text-strong">
+        <button className="flex cursor-pointer flex-row gap-1 rounded-lg px-3 py-2 leading-4 text-sub transition duration-300 hover:text-strong">
           {t('ask')}
         </button>
       </li>

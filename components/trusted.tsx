@@ -78,7 +78,7 @@ export default function Trusted() {
               href={partner.url}
               target="_blank"
               rel="noreferrer noopener"
-              className="opacity-45 transition duration-500 hover:opacity-100"
+              className="text-white opacity-45 transition duration-500 hover:opacity-100"
             >
               <Icon className={partner.height} />
             </Link>
