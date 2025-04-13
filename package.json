@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 12300",
+    "dev": "next dev -p 11300",
     "build": "next build",
-    "start": "next start -p 12300",
+    "start": "next start -p 11300",
     "lint": "next lint",
     "svg": "npx @svgr/cli --typescript --out-dir components/icons --filename-case pascal --no-prettier assets"
   },
