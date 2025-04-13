@@ -72,7 +72,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="p-1 text-sub transition duration-300 hover:text-strong"
           >
-            <link.icon className="size-4.5" />
+            <link.icon className="size-5" />
           </Link>
         ))}
       </div>

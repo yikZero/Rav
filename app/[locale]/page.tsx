@@ -6,6 +6,8 @@ import { setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import { use } from 'react';
 
+import { getBlogPosts } from '@/lib/post.utils';
+
 import HeroTitle from '@/components/hero-title';
 import { ArrowRight } from '@/components/icons';
 import Trusted from '@/components/trusted';
@@ -21,6 +23,8 @@ export default function HomePage({
 }) {
   const { locale } = use(params);
   setRequestLocale(locale);
+
+  const posts = getBlogPosts({ language: locale });
 
   return (
     <main className="relative">
@@ -77,6 +81,11 @@ export default function HomePage({
       >
         <Trusted />
       </motion.div>
+      {posts.map((post) => (
+        <div key={post.slug} className="text-strong">
+          {post.metadata.title}
+        </div>
+      ))}
     </main>
   );
 }

@@ -67,9 +67,9 @@ export default function Trusted() {
         className="flex flex-row justify-center gap-12 overflow-hidden text-strong"
         style={{
           maskImage:
-            'linear-gradient(90deg, rgba(0, 0, 0, 0.20) 0%, #000 40%, #000 60%, rgba(0, 0, 0, 0.20) 100%)',
+            'linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0%, #000 50%, rgba(0, 0, 0, 0.15) 100%)',
           WebkitMaskImage:
-            'linear-gradient(90deg, rgba(0, 0, 0, 0.20) 0%, #000 40%, #000 60%, rgba(0, 0, 0, 0.20) 100%)',
+            'linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0%, #000 50%, rgba(0, 0, 0, 0.15) 100%)',
         }}
       >
         {partners.map((partner) => {
