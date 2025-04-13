@@ -80,9 +80,9 @@ export default function Trusted() {
               href={partner.url}
               target="_blank"
               rel="noreferrer noopener"
-              className="text-white opacity-45 transition duration-500 hover:opacity-100"
+              className="text-white opacity-65 transition duration-500 hover:opacity-100"
             >
-              <Icon className={cn('w-auto', partner.height)} />
+              <Icon className={cn('w-fit', partner.height)} />
             </Link>
           );
         })}

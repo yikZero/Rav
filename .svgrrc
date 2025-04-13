@@ -1,0 +1,8 @@
+{
+  "typescript": true,
+  "icon": true,
+  "outDir": "components/icons",
+  "filenameCase": "pascal",
+  "prettier": false,
+  "dimensions": false
+}

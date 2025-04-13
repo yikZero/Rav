@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 11300",
     "lint": "next lint",
-    "svg": "npx @svgr/cli --typescript --out-dir components/icons --filename-case pascal --no-prettier assets"
+    "svg": "npx @svgr/cli assets --no-warn"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
@@ -29,21 +29,21 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
+    "@eslint/eslintrc": "^3.3.1",
     "@shikijs/rehype": "^3.2.1",
     "@svgr/cli": "^8.1.0",
     "@tailwindcss/postcss": "^4.1.3",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/mdast": "^4.0.4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
+    "@types/node": "^20.17.25",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "eslint": "^9.23.0",
     "eslint-config-next": "15.2.4",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.1.3",
-    "typescript": "^5"
+    "typescript": "^5.8.2"
   },
   "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88q1147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af",
   "pnpm": {

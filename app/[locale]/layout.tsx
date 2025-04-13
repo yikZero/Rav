@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 
 import Background from '@/components/background';
 import BackgroundGradient from '@/components/background-gradient';
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 
 export function generateStaticParams() {
@@ -32,6 +33,7 @@ export default async function LocaleLayout({
           <Header />
           {children}
           <BackgroundGradient />
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
