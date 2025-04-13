@@ -1,6 +1,6 @@
 import createMDX from '@next/mdx';
 import rehypeShiki from '@shikijs/rehype';
-import { NextConfig } from 'next';
+import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.yikzero.com',
       },
     ],
+    unoptimized: true,
   },
   async redirects() {
     return [
