@@ -30,7 +30,7 @@ export default function HomePage({
 
   return (
     <main className="relative">
-      <section className="mx-auto flex w-full flex-col items-center gap-12 px-4 pt-40 sm:pt-48">
+      <section className="mx-auto flex w-full flex-col items-center gap-12 px-4 pt-32 sm:pt-40">
         <motion.div
           initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}

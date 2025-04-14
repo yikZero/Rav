@@ -4,7 +4,7 @@ import Nav from '@/components/nav';
 
 export default function Header() {
   return (
-    <div className="fixed inset-x-0 top-4 z-50 sm:top-10">
+    <div className="fixed inset-x-0 top-4 z-50 sm:top-8">
       <motion.header
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
