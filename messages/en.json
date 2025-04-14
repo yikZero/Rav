@@ -6,6 +6,9 @@
   "Navigation": {
     "home": "Home",
     "blog": "Blog",
-    "ask": "Ask"
+    "talk": "Talk"
+  },
+  "Footer": {
+    "copyright": "© {currentYear} YIKZERO"
   }
 }

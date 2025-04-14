@@ -6,6 +6,9 @@
   "Navigation": {
     "home": "首页",
     "blog": "博客",
-    "ask": "提问"
+    "talk": "对话"
+  },
+  "Footer": {
+    "copyright": "© {currentYear} YIKZERO"
   }
 }

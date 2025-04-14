@@ -1,19 +1,21 @@
-import { routing } from '@/i18n/routing';
+import { defaultLocale, locales } from '@/i18n/routing';
 import fs from 'fs';
 import path from 'path';
 
-export type SupportedLocale = (typeof routing.locales)[number];
-
 export type PostMetadata = {
   title: string;
-  titleEn: string;
   publishedAt: string;
   updatedAt?: string;
   description: string;
-  descriptionEn: string;
   image: string;
   category: string;
   state: 'draft' | 'published' | 'archived';
+};
+
+type Post = {
+  metadata: PostMetadata;
+  slug: string;
+  content: string;
 };
 
 function parseFrontmatter(fileContent: string) {
@@ -52,7 +54,6 @@ function readMDXFile(filePath: string) {
 }
 
 function getMDXData(dir: string) {
-  // 检查目录是否存在
   if (!fs.existsSync(dir)) {
     return [];
   }
@@ -70,20 +71,46 @@ function getMDXData(dir: string) {
   });
 }
 
-export function getBlogPosts({ filterPublished = true } = {}) {
+export function getBlogPosts({
+  filterPublished = true,
+  language = defaultLocale,
+} = {}) {
   const baseDir = path.join(process.cwd(), 'content', 'posts');
 
-  const allPosts = routing.locales.flatMap((locale) =>
-    getMDXData(path.join(baseDir, locale)),
-  );
+  const allPosts = locales.map((locale: string) => ({
+    locale,
+    posts: getMDXData(path.join(baseDir, locale)),
+  }));
 
-  const uniquePosts = Array.from(
-    new Map(allPosts.map((post) => [post.slug, post])).values(),
-  );
+  const postsBySlug = new Map<string, Map<string, Post>>();
+
+  allPosts.forEach(({ locale, posts }) => {
+    posts.forEach((post: Post) => {
+      if (!postsBySlug.has(post.slug)) {
+        postsBySlug.set(post.slug, new Map());
+      }
+      postsBySlug.get(post.slug)!.set(locale, post);
+    });
+  });
+
+  const result = Array.from(postsBySlug.values())
+    .filter((localePosts) => {
+      return localePosts.has(defaultLocale);
+    })
+    .map((localePosts) => {
+      let post = localePosts.get(language);
+
+      if (!post) {
+        post = localePosts.get(defaultLocale);
+      }
+
+      return post;
+    })
+    .filter(Boolean) as Post[];
 
   const filteredData = filterPublished
-    ? uniquePosts.filter((item) => item.metadata.state === 'published')
-    : uniquePosts;
+    ? result.filter((item) => item.metadata.state === 'published')
+    : result;
 
   return filteredData.sort((a, b) => {
     const dateA = new Date(a.metadata.publishedAt);
