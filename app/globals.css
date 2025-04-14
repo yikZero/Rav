@@ -36,3 +36,193 @@
     background-color: var(--shiki-dark-bg) !important;
   }
 }
+
+html {
+  @apply overflow-y-scroll;
+}
+
+body {
+  font-family:
+    Inter,
+    -apple-system,
+    system-ui,
+    Segoe UI,
+    Noto Sans,
+    sans-serif,
+    BlinkMacSystemFont,
+    Helvetica Neue,
+    PingFang SC,
+    Hiragino Sans GB,
+    Microsoft YaHei,
+    Arial;
+}
+
+/* Adapted and upgraded from vitepress */
+
+/**
+ * Headings
+ * -------------------------------------------------------------------------- */
+
+.rypo {
+  @apply text-[0.9375rem] leading-[1.625rem] text-pretty text-sub;
+}
+
+.rypo h1,
+.rypo h2,
+.rypo h3,
+.rypo h4,
+.rypo h5,
+.rypo h6 {
+  @apply relative font-semibold text-strong outline-none;
+}
+
+.rypo h1 {
+  @apply text-[1.75rem] leading-10 tracking-tight sm:text-[2rem];
+}
+
+.rypo h2 {
+  @apply mt-8 mb-2 pt-4 text-2xl leading-8 tracking-tight;
+}
+
+.rypo h3 {
+  @apply mt-8 mb-2 text-xl leading-7 tracking-[-0.01rem];
+}
+
+/**
+* Paragraph and inline elements
+* -------------------------------------------------------------------------- */
+
+.rypo p,
+.rypo summary {
+  @apply my-4;
+}
+
+.rypo summary {
+  @apply cursor-pointer font-medium transition-opacity duration-200 hover:opacity-85;
+}
+
+.rypo p {
+  @apply text-base leading-[1.625rem] text-pretty sm:text-[0.9375rem];
+}
+
+.rypo figure {
+  @apply my-6;
+}
+
+.rypo img {
+  @apply h-auto w-full rounded-sm dark:brightness-95;
+}
+
+.rypo figcaption {
+  @apply mt-2 text-center text-sm text-soft;
+}
+
+.rypo video {
+  @apply my-6 h-auto w-full rounded-sm shadow-xs;
+}
+
+.rypo blockquote {
+  @apply my-4 border-l-2 border-strong/20 pl-4 transition duration-500;
+}
+
+.rypo blockquote > p {
+  @apply m-0 text-base text-sub transition-colors duration-500 sm:text-[0.9375rem];
+}
+
+.rypo a {
+  @apply font-medium text-brand-500 transition duration-300 hover:text-brand-400;
+}
+
+.rypo strong {
+  @apply font-medium;
+}
+
+/**
+* Lists
+* -------------------------------------------------------------------------- */
+
+.rypo ul,
+.rypo ol {
+  @apply my-4 pl-5;
+}
+
+.rypo ul {
+  @apply list-disc;
+}
+
+.rypo ol {
+  @apply list-decimal;
+}
+
+.rypo li + li {
+  @apply mt-2;
+}
+
+.rypo li > ol,
+.rypo li > ul {
+  @apply mx-0 mt-2 mb-0;
+}
+
+/**
+* Table
+* -------------------------------------------------------------------------- */
+
+.rypo table {
+  @apply my-5 block border-collapse overflow-x-auto;
+}
+
+.rypo thead {
+  @apply font-medium text-strong;
+}
+
+.rypo tr {
+  @apply border-t border-strong/20 even:bg-disabled;
+}
+
+.rypo th,
+.rypo td {
+  @apply border border-strong/20 px-4 py-2;
+}
+
+.rypo th {
+  @apply bg-soft/50 text-left text-sm font-medium text-sub;
+}
+
+.rypo td {
+  @apply text-sm;
+}
+
+/**
+* Decorational elements
+* -------------------------------------------------------------------------- */
+
+.rypo hr {
+  @apply mx-0 my-4 border-t border-none border-strong/20;
+}
+
+/**
+* Code
+* -------------------------------------------------------------------------- */
+
+/* inline code */
+.rypo :not(pre, h1, h2, h3, h4, h5, h6) > code {
+  @apply text-sm;
+}
+
+.rypo :not(pre) > code {
+  @apply rounded border border-strong/10 bg-strong/10 px-[0.375rem] py-[0.1875rem];
+}
+
+.rypo a > code {
+  @apply text-brand-500;
+}
+
+.rypo a:hover > code {
+  @apply text-brand-400;
+}
+
+.rypo h1 > code,
+.rypo h2 > code,
+.rypo h3 > code {
+  @apply text-[0.9em];
+}

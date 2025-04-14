@@ -1,9 +1,9 @@
 'use client';
 
 import { Link } from '@/i18n/navigation';
+import { usePathname } from '@/i18n/navigation';
 import { locales } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { AllLinks } from '@/lib/navigation';
