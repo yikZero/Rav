@@ -82,7 +82,7 @@ export default function Trusted() {
               rel="noreferrer noopener"
               className="text-white opacity-65 transition duration-500 hover:opacity-100"
             >
-              <Icon className={cn('w-fit', partner.height)} />
+              <Icon className={cn('w-auto', partner.height)} />
             </Link>
           );
         })}
