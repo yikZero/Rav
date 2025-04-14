@@ -34,7 +34,7 @@ export default function Footer() {
   const locale = useLocale();
 
   return (
-    <footer className="mx-auto mt-24 flex max-w-196 flex-row justify-between">
+    <footer className="z-50 mx-auto mt-24 flex max-w-240 translate-z-0 flex-row justify-between pt-8 pb-4">
       <div className="flex flex-row items-center gap-3">
         <p className="text-center text-sm font-medium text-soft select-none">
           {t.rich('copyright', {

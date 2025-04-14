@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 11300",
     "lint": "next lint",
-    "svg": "npx @svgr/cli assets --no-warn"
+    "svg": "npx @svgr/cli assets"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",

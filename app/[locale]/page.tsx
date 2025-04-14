@@ -7,9 +7,11 @@ import Image from 'next/image';
 import { use } from 'react';
 
 import { getBlogPosts } from '@/lib/post.utils';
+import { cn } from '@/lib/utils';
 
 import HeroTitle from '@/components/hero-title';
 import { ArrowRight } from '@/components/icons';
+import PostCard from '@/components/post-card';
 import Trusted from '@/components/trusted';
 
 export function generateStaticParams() {
@@ -81,11 +83,17 @@ export default function HomePage({
       >
         <Trusted />
       </motion.div>
-      {posts.map((post) => (
-        <div key={post.slug} className="text-strong">
-          {post.metadata.title}
-        </div>
-      ))}
+      <section className="mx-auto mt-52 grid h-90 max-w-240 grid-flow-col grid-cols-2 grid-rows-2 gap-4">
+        {posts.slice(0, 3).map((post, index) => (
+          <PostCard
+            key={post.slug}
+            slug={post.slug}
+            metadata={post.metadata}
+            isFirst={index === 0}
+            className={cn(index === 0 && 'row-span-2')}
+          />
+        ))}
+      </section>
     </main>
   );
 }
