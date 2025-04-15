@@ -39,6 +39,7 @@ export default function PostCard({
           src={`${metadata.image}!/fw/944`}
           alt={metadata.title}
           fill
+          loading="lazy"
         />
         <div className="flex flex-col gap-3 p-5">
           {isFirst && (
