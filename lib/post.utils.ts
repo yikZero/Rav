@@ -12,7 +12,7 @@ export type PostMetadata = {
   state: 'draft' | 'published' | 'archived';
 };
 
-type Post = {
+export type Post = {
   metadata: PostMetadata;
   slug: string;
   content: string;
