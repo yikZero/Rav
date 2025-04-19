@@ -22,7 +22,7 @@ export default function BlogPostGrid({ posts }: BlogPostGridProps) {
         'mx-auto mt-40 grid h-90 max-w-240 grid-flow-col grid-cols-2 grid-rows-2 gap-4',
       )}
     >
-      {posts.slice(0, 3).map((post, index) => (
+      {posts.map((post, index) => (
         <PostCard
           key={post.slug}
           slug={post.slug}
