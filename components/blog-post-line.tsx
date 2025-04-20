@@ -15,8 +15,8 @@ export default function BlogPostLine({ posts }: BlogPostLineProps) {
     <motion.div
       initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
       className="mx-auto mt-16 flex max-w-240 flex-col justify-center"
     >
       <div className="mb-2 flex w-full flex-row items-center gap-2 sm:mb-4">
@@ -29,14 +29,20 @@ export default function BlogPostLine({ posts }: BlogPostLineProps) {
         />
       </div>
       <div className="flex flex-col gap-1">
-        {posts.map((post) => (
-          <PostLine
+        {posts.map((post, index) => (
+          <motion.div
             key={post.slug}
-            slug={post.slug}
-            title={post.metadata.title}
-            category={post.metadata.category}
-            date={post.metadata.updatedAt || post.metadata.publishedAt}
-          />
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+          >
+            <PostLine
+              slug={post.slug}
+              title={post.metadata.title}
+              category={post.metadata.category}
+              date={post.metadata.updatedAt || post.metadata.publishedAt}
+            />
+          </motion.div>
         ))}
       </div>
     </motion.div>
