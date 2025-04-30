@@ -6,6 +6,7 @@ import { loadLocalizedMDX } from '@/lib/mdx.utils';
 import { getBlogPosts } from '@/lib/post.utils';
 
 import DateDisplay from '@/components/date-display';
+import TableOfContents from '@/components/table-of-contents';
 
 export default async function Page({
   params,
@@ -27,7 +28,7 @@ export default async function Page({
 
   const { content: Content } = result;
   return (
-    <main className="mx-auto max-w-180 pt-28 pb-12 sm:pt-36">
+    <main className="mx-auto max-w-240 pt-28 pb-12 sm:pt-36">
       <article className="sm:pt-4">
         <div className="mb-10 flex flex-col gap-4">
           <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-pretty text-strong outline-none sm:text-[2rem]">
@@ -45,22 +46,27 @@ export default async function Page({
             />
           </div>
         </div>
-        <div className="rypo sm:col-span-7">
-          {locale === 'en' && (
-            <div className="mt-8 rounded-lg border border-brand-900 bg-brand-500/15 px-4 py-2 font-medium">
-              This article is currently only available in Chinese. You can use
-              <a
-                href="https://immersivetranslate.com/en/"
-                className="inline-flex px-1"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Immersive Translate
-              </a>
-              Website Extension for automatic translation.
-            </div>
-          )}
-          <Content />
+        <div className="sm:grid sm:grid-cols-12 sm:gap-12">
+          <div className="rypo sm:col-span-9">
+            {locale === 'en' && (
+              <div className="mt-8 rounded-lg border border-brand-900 bg-brand-500/15 px-4 py-2 font-medium">
+                This article is currently only available in Chinese. You can use
+                <a
+                  href="https://immersivetranslate.com/en/"
+                  className="inline-flex px-1"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Immersive Translate
+                </a>
+                Website Extension for automatic translation.
+              </div>
+            )}
+            <Content />
+          </div>
+          <div className="hidden sm:col-span-3 sm:block">
+            <TableOfContents post={post} />
+          </div>
         </div>
       </article>
     </main>
