@@ -9,6 +9,9 @@
     "talk": "对话",
     "about": "关于"
   },
+  "TableOfContents": {
+    "onThisPage": "本页内容"
+  },
   "Footer": {
     "copyright": "© {currentYear} YIKZERO"
   }

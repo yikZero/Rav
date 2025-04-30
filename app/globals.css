@@ -110,7 +110,7 @@ body {
 }
 
 .rypo img {
-  @apply h-auto w-full rounded-sm dark:brightness-95;
+  @apply h-auto w-full rounded-md sm:rounded-lg dark:brightness-95;
 }
 
 .rypo figcaption {
