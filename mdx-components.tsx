@@ -1,13 +1,40 @@
+import { Link } from '@/i18n/navigation';
 import type { MDXComponents } from 'mdx/types';
 
-// This file allows you to provide custom React components
-// to be used in MDX files. You can import and use any
-// React component you want, including inline styles,
-// components from other libraries, and more.
+import customImage from '@/components/custom-image';
+
+function CustomLink({
+  href,
+  children,
+  ...props
+}: React.LinkHTMLAttributes<HTMLAnchorElement>) {
+  if (href?.startsWith('/')) {
+    return (
+      <Link href={href} {...props}>
+        {children}
+      </Link>
+    );
+  }
+
+  if (href?.startsWith('#')) {
+    return (
+      <a href={href} {...props}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+      {children}
+    </a>
+  );
+}
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
-    // Allows customizing built-in components, e.g. to add styling.
+    a: CustomLink,
+    img: customImage,
     ...components,
   };
 }

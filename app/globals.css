@@ -29,14 +29,6 @@
   --color-white: #fff;
 }
 
-@media (prefers-color-scheme: dark) {
-  .shiki,
-  .shiki span {
-    color: var(--shiki-dark) !important;
-    background-color: var(--shiki-dark-bg) !important;
-  }
-}
-
 html {
   @apply overflow-y-scroll;
 }
@@ -118,7 +110,7 @@ body {
 }
 
 .rypo video {
-  @apply my-6 h-auto w-full rounded-sm shadow-xs;
+  @apply my-6 h-auto w-full rounded-md shadow-xs sm:rounded-lg;
 }
 
 .rypo blockquote {
@@ -130,7 +122,7 @@ body {
 }
 
 .rypo a {
-  @apply font-medium text-brand-500 transition duration-300 hover:text-brand-400;
+  @apply font-medium underline decoration-brand-400/30 underline-offset-4 transition duration-300 hover:decoration-brand-400/50;
 }
 
 .rypo strong {
@@ -176,16 +168,16 @@ body {
 }
 
 .rypo tr {
-  @apply border-t border-strong/20 even:bg-disabled;
+  @apply border-t border-strong/5 even:bg-strong/5;
 }
 
 .rypo th,
 .rypo td {
-  @apply border border-strong/20 px-4 py-2;
+  @apply border border-strong/5 px-4 py-2;
 }
 
 .rypo th {
-  @apply bg-soft/50 text-left text-sm font-medium text-sub;
+  @apply bg-strong/5 text-left text-sm font-medium text-sub;
 }
 
 .rypo td {
@@ -197,7 +189,7 @@ body {
 * -------------------------------------------------------------------------- */
 
 .rypo hr {
-  @apply mx-0 my-4 border-t border-none border-strong/20;
+  @apply mx-0 my-4 border-t border-none border-strong/5;
 }
 
 /**
@@ -214,15 +206,34 @@ body {
 }
 
 .rypo a > code {
-  @apply text-brand-500;
+  @apply text-brand-400;
 }
 
 .rypo a:hover > code {
-  @apply text-brand-400;
+  @apply text-brand-300;
 }
 
 .rypo h1 > code,
 .rypo h2 > code,
 .rypo h3 > code {
   @apply text-[0.9em];
+}
+
+.rypo pre.shiki {
+  @apply my-4 overflow-x-auto rounded-md px-5 py-4 text-sm whitespace-pre sm:rounded-lg;
+  max-height: min(68vh, 1000px) !important;
+  overflow: auto;
+}
+
+.rypo pre::-webkit-scrollbar-corner {
+  display: none;
+}
+
+.medium-zoom-overlay,
+.medium-zoom-image {
+  @apply z-50;
+}
+
+.medium-zoom-image {
+  @apply rounded-sm sm:rounded-md;
 }

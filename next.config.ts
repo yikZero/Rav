@@ -67,11 +67,9 @@ const withMDX = createMDX({
       [
         rehypeShiki,
         {
-          themes: {
-            light: 'github-light',
-            dark: 'github-dark',
-          },
+          theme: 'poimandres',
           inline: 'tailing-curly-colon',
+          overflow: 'scroll',
         },
       ],
     ],
