@@ -6,6 +6,7 @@ import { loadLocalizedMDX } from '@/lib/mdx.utils';
 import { getBlogPosts } from '@/lib/post.utils';
 
 import DateDisplay from '@/components/date-display';
+import PostNavigation from '@/components/post-navigation';
 import TableOfContents from '@/components/table-of-contents';
 
 export default async function Page({
@@ -63,6 +64,7 @@ export default async function Page({
               </div>
             )}
             <Content />
+            <PostNavigation currentId={post.slug} />
           </div>
           <div className="hidden sm:col-span-3 sm:block">
             <TableOfContents post={post} />
