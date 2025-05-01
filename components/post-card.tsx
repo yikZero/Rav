@@ -22,6 +22,7 @@ export default function PostCard({
   return (
     <>
       <Link
+        prefetch={true}
         href={`/blog/${slug}`}
         className={cn(
           'group relative flex cursor-pointer flex-col justify-end rounded-xl outline outline-[#EFF6FF]/7',

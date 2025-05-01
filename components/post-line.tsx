@@ -17,6 +17,7 @@ export default function PostLine({
 }: PostLineProps) {
   return (
     <Link
+      prefetch={true}
       href={`/blog/${slug}`}
       className="group relative flex w-full justify-between gap-4 rounded-lg py-4 text-sm sm:grid sm:grid-cols-5"
     >
