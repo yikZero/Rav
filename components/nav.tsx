@@ -76,7 +76,7 @@ export default function Nav() {
               href={link.url}
               className={cn(
                 'group relative z-10 block cursor-pointer px-3 py-2 leading-4 font-medium text-sub transition duration-300 hover:text-strong',
-                { 'text-strong': isActive },
+                { 'font-medium text-strong': isActive },
               )}
             >
               {t(link.id)}
@@ -94,7 +94,7 @@ export default function Nav() {
       })}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-0 bottom-0 h-full rounded-lg bg-linear-to-b from-white/5 to-white/9 to-70% transition-all duration-300 ease-in-out"
+        className="pointer-events-none absolute top-0 bottom-0 h-full rounded-lg border border-brand-400/2 bg-linear-to-b from-white/5 to-white/7 to-70% transition-all duration-300 ease-in-out"
         style={backgroundStyle}
       />
     </ul>

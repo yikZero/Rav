@@ -122,7 +122,7 @@ body {
 }
 
 .rypo a {
-  @apply font-medium underline decoration-brand-400/30 underline-offset-4 transition duration-300 hover:decoration-brand-400/50;
+  @apply font-medium underline decoration-brand-400/30 underline-offset-4 transition duration-300 hover:text-brand-400;
 }
 
 .rypo strong {
@@ -202,7 +202,7 @@ body {
 }
 
 .rypo :not(pre) > code {
-  @apply rounded border border-strong/10 bg-strong/10 px-[0.375rem] py-[0.1875rem];
+  @apply mx-0.5 rounded-md border border-strong/10 bg-strong/10 px-[0.375rem] py-[0.1875rem];
 }
 
 .rypo a > code {

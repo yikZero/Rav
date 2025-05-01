@@ -50,7 +50,7 @@ export default async function Page({
         <div className="sm:grid sm:grid-cols-12 sm:gap-12">
           <div className="rypo sm:col-span-9">
             {locale === 'en' && (
-              <div className="mt-8 rounded-lg border border-brand-900 bg-brand-500/15 px-4 py-2 font-medium">
+              <div className="mt-8 rounded-lg border border-brand-950 bg-brand-600/9 px-4 py-2 font-medium">
                 This article is currently only available in Chinese. You can use
                 <a
                   href="https://immersivetranslate.com/en/"
