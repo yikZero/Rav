@@ -36,12 +36,7 @@ export default function Background() {
         />
         Your browser does not support the video tag.
       </video>
-      <Image
-        aria-hidden
-        className="absolute inset-0 z-3 h-full w-full opacity-20"
-        src={Noise}
-        alt="Noise Background"
-      />
+      <div className="absolute inset-0 z-3 bg-[url(https://cdn.yikzero.com/rav/noise.png)] bg-center bg-repeat opacity-10"></div>
     </div>
   );
 }
