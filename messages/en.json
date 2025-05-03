@@ -14,5 +14,10 @@
   },
   "Footer": {
     "copyright": "© {currentYear} YIKZERO"
+  },
+  "NotFound": {
+    "title": "Ah, the page has disappeared",
+    "description": "the link is broken, or the page does not exist on this site",
+    "returnHome": "Return Home"
   }
 }
