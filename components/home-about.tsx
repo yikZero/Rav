@@ -11,7 +11,7 @@ export default function HomeAbout() {
   const locale = useLocale();
 
   return (
-    <section className="flex flex-col items-center gap-48">
+    <section className="flex flex-col items-center gap-40">
       <div className="mx-auto mt-32 grid max-w-240 grid-cols-1 gap-16 sm:mt-48 sm:grid-cols-4">
         <div className="flex flex-row sm:col-span-2">
           <PhotoCard
@@ -22,7 +22,7 @@ export default function HomeAbout() {
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-5.jpg"
-            className="-ml-12 translate-y-4 rotate-[6deg]"
+            className="-ml-12 translate-y-4 rotate-[7deg]"
           />
         </div>
         <div className="mt-8 flex flex-col gap-16 sm:col-span-2">

@@ -12,7 +12,7 @@ export default function PhotoCard({ title, url, className }: PhotoCardProps) {
   return (
     <div
       className={cn(
-        'relative w-full rounded-2xl bg-[#020626]/25 p-1 shadow-sm outline outline-strong/9 backdrop-blur-md transition duration-300 hover:shadow-md md:h-88',
+        'relative w-full rounded-2xl bg-[#020626]/25 p-1 shadow-sm outline outline-strong/9 backdrop-blur-md transition duration-300 hover:shadow-md md:h-82',
         className,
       )}
     >
