@@ -17,7 +17,9 @@ export default async function Page({
   const { slug, locale } = await params;
   setRequestLocale(locale);
 
-  const post = getBlogPosts().find((post) => post.slug === slug);
+  const post = getBlogPosts({ language: locale }).find(
+    (post) => post.slug === slug,
+  );
   if (!post) {
     notFound();
   }
@@ -50,7 +52,7 @@ export default async function Page({
         <div className="sm:grid sm:grid-cols-12 sm:gap-12">
           <div className="rypo sm:col-span-9">
             {locale === 'en' && (
-              <div className="mt-8 rounded-lg border border-brand-950 bg-brand-600/9 px-4 py-2 font-medium">
+              <div className="mt-8 rounded-lg border border-brand-950 bg-brand-600/9 px-4 py-2 font-medium text-brand-300">
                 This article is currently only available in Chinese. You can use
                 <a
                   href="https://immersivetranslate.com/en/"
