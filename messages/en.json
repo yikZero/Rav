@@ -9,6 +9,32 @@
     "talk": "Talk",
     "about": "About"
   },
+  "Blog": {
+    "title": "Blog",
+    "description": "Passionate about writing and sharing knowledge",
+    "more": "More Posts"
+  },
+  "About": {
+    "introduction": "Hello, I'm <highlight>yikZero</highlight>, also known as <highlight>Zhang YiJi</highlight>, a product designer based in <highlight>Hangzhou, China</highlight>, currently working at OneKey, responsible for product design in the Web3 cryptocurrency space.",
+    "hobby": "In my spare time, I enjoy hiking, cycling, writing code, and exploring new things.",
+    "experience": {
+      "onekey": {
+        "time": "2025.02 - Now",
+        "title": "OneKey",
+        "description": "Product Designer"
+      },
+      "asiainfo": {
+        "time": "2022 - 2025.01",
+        "title": "AsiaInfo",
+        "description": "UI Designer"
+      },
+      "zjut": {
+        "time": "2018 - 2022",
+        "title": "Zhejiang University of Technology",
+        "description": "Visual Communication Design"
+      }
+    }
+  },
   "TableOfContents": {
     "onThisPage": "On this page"
   },
