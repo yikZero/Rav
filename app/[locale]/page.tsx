@@ -8,8 +8,8 @@ import { use } from 'react';
 import { getBlogPosts } from '@/lib/post.utils';
 
 import BlogPostGrid from '@/components/blog-post-grid';
-import BlogPostLine from '@/components/blog-post-line';
 import HeroTitle from '@/components/hero-title';
+import HomeAbout from '@/components/home-about';
 import { ArrowRight } from '@/components/icons';
 import Trusted from '@/components/trusted';
 
@@ -27,7 +27,6 @@ export default function HomePage({
 
   const posts = getBlogPosts({ language: locale });
   const cardPosts = posts.slice(0, 3);
-  const linePosts = posts.slice(3);
 
   return (
     <main className="relative">
@@ -60,11 +59,11 @@ export default function HomePage({
           </Link>
         </div>
       </section>
-      <div>
+      <div className="mb-40">
         <Trusted />
       </div>
-      <BlogPostGrid posts={cardPosts} />
-      <BlogPostLine posts={linePosts} />
+      <BlogPostGrid posts={cardPosts} isHome />
+      <HomeAbout />
     </main>
   );
 }

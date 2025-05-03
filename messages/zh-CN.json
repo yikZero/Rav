@@ -9,6 +9,32 @@
     "talk": "对话",
     "about": "关于"
   },
+  "Blog": {
+    "title": "博客",
+    "description": "热衷于写作和分享知识",
+    "more": "更多文章"
+  },
+  "About": {
+    "introduction": "你好，我是 <highlight>yikZero</highlight>，也叫<highlight>张毅吉</highlight>，一位来自<highlight>杭州</highlight>的产品设计师，目前在 OneKey 就职，负责 Web3 加密货币领域的产品设计。",
+    "hobby": "空闲时间，我喜欢徒步旅行、骑行、编程，以及探索各种新鲜事物。",
+    "experience": {
+      "onekey": {
+        "time": "2025.02 - 现在",
+        "title": "OneKey",
+        "description": "产品设计师"
+      },
+      "asiainfo": {
+        "time": "2022 - 2025.01",
+        "title": "亚信科技",
+        "description": "UI 设计师"
+      },
+      "zjut": {
+        "time": "2018 - 2022",
+        "title": "浙江工业大学",
+        "description": "视觉传达设计"
+      }
+    }
+  },
   "TableOfContents": {
     "onThisPage": "本页内容"
   },

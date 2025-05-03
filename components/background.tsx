@@ -2,8 +2,6 @@
 
 import { usePathname } from '@/i18n/navigation';
 import { locales } from '@/i18n/routing';
-import Noise from '@/public/noise.png';
-import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
 
