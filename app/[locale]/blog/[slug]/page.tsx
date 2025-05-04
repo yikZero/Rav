@@ -74,7 +74,9 @@ export default async function Page({
         >
           <div className="rypo sm:col-span-9">
             {locale === 'en' && <BlogTranslateNotice />}
-            <Content />
+            <div lang="zh-CN">
+              <Content />
+            </div>
             <PostNavigation currentId={post.slug} />
           </div>
           <div className="hidden sm:col-span-3 sm:block">
