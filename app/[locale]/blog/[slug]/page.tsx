@@ -1,4 +1,7 @@
+import { defaultLocale } from '@/i18n/routing';
+import ravConfig from '@/rav.config';
 import * as motion from 'motion/react-client';
+import type { Metadata } from 'next';
 import { type Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -10,6 +13,64 @@ import BlogTranslateNotice from '@/components/blog-translate-notice';
 import DateDisplay from '@/components/date-display';
 import PostNavigation from '@/components/post-navigation';
 import TableOfContents from '@/components/table-of-contents';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: Locale }>;
+}): Promise<Metadata> {
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
+  const post = getBlogPosts({ language: locale }).find(
+    (post) => post.slug === slug,
+  );
+
+  const title = post?.metadata.title;
+  const description = post?.metadata.description;
+
+  const ogImageUrl =
+    `${ravConfig.siteUrl}/api/og?` +
+    new URLSearchParams({
+      title: title || '',
+      description: description || '',
+      pubDate: post?.metadata.updatedAt || post?.metadata.publishedAt || '',
+      imageUrl: post?.metadata.image || '',
+      locale: locale,
+    }).toString();
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${ravConfig.siteUrl}/blog/${slug}`,
+      languages: {
+        'zh-CN': `${ravConfig.siteUrl}/blog/${slug}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      publishedTime: post?.metadata.publishedAt,
+      modifiedTime: post?.metadata.updatedAt,
+      url: `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog/${slug}`,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: title || '',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImageUrl],
+    },
+  };
+}
 
 const transition = { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] };
 const variants = {

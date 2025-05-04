@@ -1,8 +1,10 @@
+import { routing } from '@/i18n/routing';
 import { easeOut } from 'motion';
 import * as motion from 'motion/react-client';
+import type { Metadata } from 'next';
 import { type Locale } from 'next-intl';
 import { useTranslations } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { use } from 'react';
 
@@ -12,6 +14,14 @@ import BlogPostGrid from '@/components/blog-post-grid';
 import BlogPostLine from '@/components/blog-post-line';
 import { Rss } from '@/components/icons';
 import Title from '@/components/title';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('Blog');
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
 const transition = { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] };
 const variants = {
@@ -64,4 +74,8 @@ export default function BlogPage({
       </motion.div>
     </motion.main>
   );
+}
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
 }
