@@ -17,7 +17,7 @@ export default function HomeAbout() {
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-6.jpg"
-            className="translate-y-2 scale-85 -rotate-[6deg] hover:scale-86 hover:-rotate-[5deg]"
+            className="hidden translate-y-2 scale-85 -rotate-[6deg] hover:scale-86 hover:-rotate-[5deg] md:block"
           />
           <PhotoCard
             title="Hello,World!"

@@ -1,5 +1,3 @@
-'use client';
-
 import { Instrument_Serif } from 'next/font/google';
 
 const instrumentSerif = Instrument_Serif({
