@@ -36,7 +36,7 @@ export default function ConfettiButton() {
       className="group w-fit cursor-pointer"
       onClick={handleClick}
     >
-      <Sign className="h-auto w-32 text-strong/90 transition duration-300 group-active:scale-75 hover:text-strong sm:w-36" />
+      <Sign className="h-auto w-28 text-strong/90 transition duration-300 group-active:scale-75 hover:text-strong sm:w-36" />
     </button>
   );
 }
