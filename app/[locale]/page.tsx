@@ -6,6 +6,7 @@ import { use } from 'react';
 import { getBlogPosts } from '@/lib/post.utils';
 
 import BlogPostGrid from '@/components/blog-post-grid';
+import FadeIn from '@/components/fade-in';
 import HeroContent from '@/components/hero-content';
 import HomeAbout from '@/components/home-about';
 
@@ -27,8 +28,12 @@ export default function HomePage({
   return (
     <main className="relative">
       <HeroContent />
-      <BlogPostGrid posts={cardPosts} isHome />
-      <HomeAbout />
+      <FadeIn>
+        <BlogPostGrid posts={cardPosts} isHome />
+      </FadeIn>
+      <FadeIn>
+        <HomeAbout />
+      </FadeIn>
     </main>
   );
 }

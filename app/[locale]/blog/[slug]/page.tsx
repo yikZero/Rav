@@ -1,3 +1,4 @@
+import * as motion from 'motion/react-client';
 import { type Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -9,6 +10,12 @@ import BlogTranslateNotice from '@/components/blog-translate-notice';
 import DateDisplay from '@/components/date-display';
 import PostNavigation from '@/components/post-navigation';
 import TableOfContents from '@/components/table-of-contents';
+
+const transition = { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] };
+const variants = {
+  hidden: { filter: 'blur(10px)', y: 50, opacity: 0 },
+  visible: { filter: 'blur(0)', y: 0, opacity: 1 },
+};
 
 export default async function Page({
   params,
@@ -32,9 +39,19 @@ export default async function Page({
 
   const { content: Content } = result;
   return (
-    <main className="mx-auto max-w-240 pt-28 pb-12 sm:pt-36">
+    <motion.main
+      initial="hidden"
+      whileInView="visible"
+      transition={{ staggerChildren: 0.06 }}
+      viewport={{ once: true }}
+      className="mx-auto max-w-240 pt-28 pb-12 sm:pt-36"
+    >
       <article className="sm:pt-4">
-        <div className="mb-10 flex flex-col gap-4">
+        <motion.div
+          variants={variants}
+          transition={transition}
+          className="mb-10 flex flex-col gap-4"
+        >
           <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-pretty text-strong outline-none sm:text-[2rem]">
             {post.metadata.title}
           </h1>
@@ -49,8 +66,12 @@ export default async function Page({
               updatedAt={post.metadata.updatedAt}
             />
           </div>
-        </div>
-        <div className="sm:grid sm:grid-cols-12 sm:gap-12">
+        </motion.div>
+        <motion.div
+          variants={variants}
+          transition={transition}
+          className="sm:grid sm:grid-cols-12 sm:gap-12"
+        >
           <div className="rypo sm:col-span-9">
             {locale === 'en' && <BlogTranslateNotice />}
             <Content />
@@ -59,9 +80,9 @@ export default async function Page({
           <div className="hidden sm:col-span-3 sm:block">
             <TableOfContents post={post} />
           </div>
-        </div>
+        </motion.div>
       </article>
-    </main>
+    </motion.main>
   );
 }
 
