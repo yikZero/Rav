@@ -1,7 +1,10 @@
 import { routing } from '@/i18n/routing';
+import ravConfig from '@/rav.config';
+import type { Metadata } from 'next';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 
 import Background from '@/components/background';
 import BackgroundGradient from '@/components/background-gradient';
@@ -10,6 +13,62 @@ import Header from '@/components/header';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const t = await getTranslations('Seo');
+  const { locale } = await params;
+
+  const metadataBaseUrl = ravConfig.siteUrl
+    ? new URL(ravConfig.siteUrl)
+    : undefined;
+
+  return {
+    title: {
+      default: `${ravConfig.title}`,
+      template: `%s - ${ravConfig.title}`,
+    },
+    description: t('description'),
+    keywords: [
+      'Roominess',
+      'Portfolio',
+      'yikZero',
+      'Designer',
+      'Hangzhou',
+      'Developer',
+      'Product Designer',
+    ],
+    applicationName: ravConfig.title,
+    authors: [{ name: ravConfig.author, url: ravConfig.siteUrl }],
+    creator: ravConfig.author,
+    generator: 'Next.js',
+    ...(metadataBaseUrl && { metadataBase: metadataBaseUrl }),
+    openGraph: {
+      images: [
+        {
+          url: `${ravConfig.siteUrl}/${locale === 'en' ? 'opengraph-image-en.png' : 'opengraph-image.png'}`,
+        },
+      ],
+    },
+    alternates: {
+      types: {
+        'application/rss+xml': [
+          {
+            title: ravConfig.title,
+            url: `${ravConfig.siteUrl}/rss.xml`,
+          },
+        ],
+      },
+      languages: {
+        'zh-CN': '/',
+        en: '/en',
+      },
+    },
+  };
 }
 
 export default async function LocaleLayout({
@@ -27,6 +86,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <link rel="preconnect" href="https://cdn.yikzero.com" />
+        <link rel="dns-prefetch" href="https://cdn.yikzero.com" />
+      </head>
       <body className="relative min-h-dvh bg-background text-sm antialiased">
         <NextIntlClientProvider>
           <Background />
@@ -36,6 +99,13 @@ export default async function LocaleLayout({
           <Footer />
         </NextIntlClientProvider>
       </body>
+      {process.env.NODE_ENV === 'production' && (
+        <Script
+          data-website-id="73888dca-90ee-4917-bdcc-d3a0e9120a41"
+          src="https://anal.yikzero.com/script.js"
+          strategy="afterInteractive"
+        />
+      )}
     </html>
   );
 }

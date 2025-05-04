@@ -1,6 +1,8 @@
 import { routing } from '@/i18n/routing';
+import ravConfig from '@/rav.config';
+import type { Metadata } from 'next';
 import { type Locale } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { use } from 'react';
 
 import { getBlogPosts } from '@/lib/post.utils';
@@ -12,6 +14,15 @@ import HomeAbout from '@/components/home-about';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('Home');
+  return {
+    title: {
+      absolute: `${t('title')} - ${ravConfig.title}`,
+    },
+  };
 }
 
 export default function HomePage({
