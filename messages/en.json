@@ -24,12 +24,12 @@
     "hobby": "In my spare time, I enjoy hiking, cycling, writing code, and exploring new things.",
     "experience": {
       "onekey": {
-        "time": "2025.02 - Now",
+        "time": "2025 - Now",
         "title": "OneKey",
         "description": "Product Designer"
       },
       "asiainfo": {
-        "time": "2022 - 2025.01",
+        "time": "2022 - 2025",
         "title": "AsiaInfo",
         "description": "UI Designer"
       },
