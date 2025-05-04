@@ -9,6 +9,11 @@
     "talk": "对话",
     "about": "关于"
   },
+  "Hero": {
+    "description": "设计之外，我喜欢徒步、骑车、写点代码、探索各种新鲜事物。欢迎联系。",
+    "emailMe": "联系我",
+    "trustTitle": "受到全球企业的信赖"
+  },
   "Blog": {
     "title": "博客",
     "description": "热衷于写作和分享知识",

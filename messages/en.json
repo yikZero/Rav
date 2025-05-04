@@ -9,6 +9,11 @@
     "talk": "Talk",
     "about": "About"
   },
+  "Hero": {
+    "description": "Besides design, I enjoy hiking, cycling, coding & exploring new things. Feel free to connect.",
+    "emailMe": "Email me",
+    "trustTitle": "TRUSTED BY GLOBAL ENTERPRISES"
+  },
   "Blog": {
     "title": "Blog",
     "description": "Passionate about writing and sharing knowledge",

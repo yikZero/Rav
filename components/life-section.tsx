@@ -29,17 +29,18 @@ export default function LifeSection({
           alt={title}
           loading="lazy"
           className="mt-0.5 size-5.5 rounded-2xl"
+          draggable="false"
         />
         <div className="flex flex-col gap-1">
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex flex-row items-center gap-1.5 py-0.5 text-base font-medium text-strong transition duration-200 hover:text-brand-500 sm:max-w-fit sm:py-0"
+            className="group relative flex flex-row items-center gap-1.5 py-0.5 text-base font-medium text-sub transition duration-200 hover:text-brand-500 sm:max-w-fit sm:py-0"
           >
             {title}
           </a>
-          <p className="text-sm text-sub">{description}</p>
+          <p className="text-sm text-soft">{description}</p>
         </div>
       </div>
     </div>

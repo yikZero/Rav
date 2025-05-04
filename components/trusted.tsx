@@ -1,4 +1,5 @@
 import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
 
@@ -58,10 +59,11 @@ const partners: Partner[] = [
 ];
 
 export default function Trusted() {
+  const t = useTranslations('Hero');
   return (
-    <section className="mx-auto mt-32 flex max-w-fit flex-col gap-6">
+    <section className="mx-auto mt-32 flex max-w-fit flex-col gap-8">
       <p className="text-center text-xs leading-4 font-medium text-soft select-none">
-        TRUSTED BY GLOBAL ENTERPRISES
+        {t('trustTitle')}
       </p>
       <div
         className="flex flex-row justify-center gap-12 overflow-hidden text-strong"
