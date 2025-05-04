@@ -20,6 +20,7 @@
   --color-strong: oklch(1 0 0);
   --color-sub: oklch(1 0 0 / 85%);
   --color-soft: oklch(1 0 0 / 65%);
+  --color-weak: oklch(1 0 0 / 45%);
   --color-disabled: oklch(1 0 0 / 25%);
 
   --color-background: oklch(0.12 0.0295 259.58);

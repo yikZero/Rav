@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { loadLocalizedMDX } from '@/lib/mdx.utils';
 import { getBlogPosts } from '@/lib/post.utils';
 
+import BlogTranslateNotice from '@/components/blog-translate-notice';
 import DateDisplay from '@/components/date-display';
 import PostNavigation from '@/components/post-navigation';
 import TableOfContents from '@/components/table-of-contents';
@@ -51,20 +52,7 @@ export default async function Page({
         </div>
         <div className="sm:grid sm:grid-cols-12 sm:gap-12">
           <div className="rypo sm:col-span-9">
-            {locale === 'en' && (
-              <div className="mt-8 rounded-lg border border-brand-950 bg-brand-600/9 px-4 py-2 font-medium text-brand-300">
-                This article is currently only available in Chinese. You can use
-                <a
-                  href="https://immersivetranslate.com/en/"
-                  className="inline-flex px-1"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Immersive Translate
-                </a>
-                Website Extension for automatic translation.
-              </div>
-            )}
+            {locale === 'en' && <BlogTranslateNotice />}
             <Content />
             <PostNavigation currentId={post.slug} />
           </div>
