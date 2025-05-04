@@ -11,8 +11,8 @@ export default function HomeAbout() {
   const locale = useLocale();
 
   return (
-    <section className="flex flex-col items-center gap-40">
-      <div className="mx-auto mt-32 grid max-w-240 grid-cols-1 gap-16 sm:mt-48 sm:grid-cols-4">
+    <section className="mt-32 flex flex-col items-center gap-28 sm:mt-40">
+      <div className="mx-auto grid max-w-240 grid-cols-1 gap-16 sm:grid-cols-4">
         <div className="flex flex-row sm:col-span-2">
           <PhotoCard
             title="Hello,World!"
