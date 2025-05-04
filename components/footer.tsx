@@ -23,7 +23,7 @@ const footerLinks: FooterLink[] = [
   },
   {
     name: 'X (Twitter)',
-    url: 'http://onekey.so',
+    url: 'https://x.com/yikZero',
     icon: Twitter,
   },
 ];
