@@ -30,6 +30,7 @@ export default function TableOfContents({ post }: TableOfContentsProps) {
   const HEADER_OFFSET = 56;
   const slugger = new GithubSlugger();
   const t = useTranslations('TableOfContents');
+
   const extractHeadings = (content: string): TOCItem[] => {
     const headings: TOCItem[] = [];
     const lines = content.split('\n');
