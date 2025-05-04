@@ -1,7 +1,6 @@
 import { routing } from '@/i18n/routing';
 import { type Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
-import Image from 'next/image';
 import { use } from 'react';
 
 import { getBlogPosts } from '@/lib/post.utils';
@@ -9,7 +8,6 @@ import { getBlogPosts } from '@/lib/post.utils';
 import BlogPostGrid from '@/components/blog-post-grid';
 import HeroContent from '@/components/hero-content';
 import HomeAbout from '@/components/home-about';
-import Trusted from '@/components/trusted';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
