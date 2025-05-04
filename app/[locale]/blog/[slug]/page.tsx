@@ -32,7 +32,7 @@ export default async function Page({
     notFound();
   }
 
-  const result = await loadLocalizedMDX('posts', locale, slug);
+  const result = await loadLocalizedMDX('posts', 'zh-CN', slug);
   if (!result) {
     notFound();
   }

@@ -99,9 +99,20 @@ export function getBlogPosts({
     })
     .map((localePosts) => {
       let post = localePosts.get(language);
+      const defaultPost = localePosts.get(defaultLocale);
 
-      if (!post) {
-        post = localePosts.get(defaultLocale);
+      // If the requested language post doesn't exist or has no content,
+      // fallback to default language content while keeping other metadata
+      if (!post || !post.content) {
+        if (defaultPost) {
+          post = {
+            ...(post || {
+              metadata: defaultPost.metadata,
+              slug: defaultPost.slug,
+            }),
+            content: defaultPost.content,
+          };
+        }
       }
 
       return post;
