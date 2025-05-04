@@ -77,7 +77,12 @@ export default function Nav() {
               className={cn(
                 'group relative z-10 block cursor-pointer px-3 py-2 leading-4 font-medium text-soft transition duration-300 hover:text-strong',
                 { 'font-medium text-strong': isActive },
+                {
+                  'cursor-not-allowed text-disabled select-none hover:text-disabled':
+                    link.id === 'talk',
+                },
               )}
+              onClick={(e) => link.id === 'talk' && e.preventDefault()}
             >
               {t(link.id)}
               {link.id === 'talk' && (
@@ -94,7 +99,7 @@ export default function Nav() {
       })}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-0 bottom-0 h-full rounded-lg border border-brand-400/2 bg-linear-to-b from-white/3 to-white/5 to-70% transition-all duration-300 ease-in-out"
+        className="pointer-events-none absolute top-0 bottom-0 h-full rounded-lg border border-brand-400/2 bg-linear-to-b from-white/5 to-white/7 to-70% transition-all duration-300 ease-in-out"
         style={backgroundStyle}
       />
     </ul>
