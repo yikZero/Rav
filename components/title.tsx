@@ -25,7 +25,7 @@ export default function Title({
           <span className="text-sm text-soft">{description}</span>
         )}
       </div>
-      <div className="flex flex-row items-center gap-3">{right}</div>
+      <div className="flex flex-row items-start gap-3">{right}</div>
     </div>
   );
 }

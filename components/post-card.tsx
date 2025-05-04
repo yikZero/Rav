@@ -41,6 +41,7 @@ export default function PostCard({
           alt={metadata.title}
           fill
           loading="lazy"
+          draggable="false"
         />
         <div className="flex flex-col gap-3 p-5">
           {isFirst && (

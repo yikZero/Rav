@@ -17,15 +17,15 @@ export default function HomeAbout() {
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-6.jpg"
-            className="translate-y-2 scale-85 -rotate-[10deg]"
+            className="translate-y-2 scale-85 -rotate-[6deg] hover:scale-86 hover:-rotate-[5deg]"
           />
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-5.jpg"
-            className="-ml-12 translate-y-4 rotate-[7deg]"
+            className="-ml-12 translate-y-4 rotate-[5deg] hover:scale-101 hover:rotate-[3deg]"
           />
         </div>
-        <div className="mt-8 flex flex-col gap-16 sm:col-span-2">
+        <div className="mt-6 flex flex-col gap-20 sm:col-span-2">
           <div
             className={cn(
               'flex flex-col gap-2.5 text-base leading-6 text-soft sm:leading-6.5',

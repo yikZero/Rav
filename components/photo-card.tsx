@@ -12,7 +12,7 @@ export default function PhotoCard({ title, url, className }: PhotoCardProps) {
   return (
     <div
       className={cn(
-        'relative w-full rounded-2xl bg-[#020626]/25 p-1 shadow-sm outline outline-strong/9 backdrop-blur-md transition duration-300 hover:shadow-md md:h-82',
+        'relative w-full cursor-crosshair rounded-2xl bg-background/45 p-1 shadow-sm outline outline-strong/9 brightness-99 transition-all duration-300 hover:shadow-lg hover:brightness-100 md:h-80',
         className,
       )}
     >
@@ -21,8 +21,9 @@ export default function PhotoCard({ title, url, className }: PhotoCardProps) {
         width="429"
         height="572"
         loading="lazy"
-        className="size-full rounded-xl object-cover object-bottom"
+        className="size-full rounded-xl object-cover object-bottom select-none"
         src={`${url}!/fh/572`}
+        draggable="false"
       />
     </div>
   );
