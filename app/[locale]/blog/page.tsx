@@ -15,8 +15,8 @@ import Title from '@/components/title';
 
 const transition = { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] };
 const variants = {
-  hidden: { filter: 'blur(10px)', y: 50, opacity: 0 },
-  visible: { filter: 'blur(0)', y: 0, opacity: 1 },
+  hidden: { y: 50, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
 };
 
 export default function BlogPage({
