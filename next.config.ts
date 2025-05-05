@@ -2,6 +2,7 @@ import createMDX from '@next/mdx';
 import rehypeShiki from '@shikijs/rehype';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 import rehypeUnwrapImages from 'rehype-unwrap-images';
@@ -64,10 +65,11 @@ const withMDX = createMDX({
       rehypeUnwrapImages,
       rehypeSlug,
       rehypeAutolinkHeadings,
+      rehypeAccessibleEmojis,
       [
         rehypeShiki,
         {
-          theme: 'poimandres',
+          theme: 'houston',
           inline: 'tailing-curly-colon',
           overflow: 'scroll',
         },
