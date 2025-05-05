@@ -61,12 +61,12 @@ const partners: Partner[] = [
 export default function Trusted() {
   const t = useTranslations('Hero');
   return (
-    <section className="mx-auto mt-32 flex max-w-fit flex-col gap-8">
+    <section className="mx-auto mt-8 flex max-w-fit flex-col gap-8 sm:mt-16">
       <p className="text-center text-xs leading-4 font-medium text-soft select-none">
         {t('trustTitle')}
       </p>
       <div
-        className="flex flex-row justify-center gap-12 overflow-hidden text-strong"
+        className="flex flex-row flex-wrap justify-center gap-8 overflow-hidden text-strong sm:gap-12"
         style={{
           maskImage:
             'linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0%, #000 50%, rgba(0, 0, 0, 0.15) 100%)',

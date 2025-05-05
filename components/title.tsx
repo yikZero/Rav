@@ -15,12 +15,13 @@ export default function Title({
 }: TitleProps) {
   return (
     <div
-      className={cn('mx-auto mb-16 flex max-w-240 flex-row gap-8', className)}
+      className={cn(
+        'mx-auto mb-16 flex max-w-240 flex-row gap-8 px-4 sm:px-0',
+        className,
+      )}
     >
       <div className="flex w-full flex-col gap-2">
-        <h1 className="text-xl font-semibold text-strong sm:text-2xl">
-          {title}
-        </h1>
+        <h1 className="text-2xl font-semibold text-strong">{title}</h1>
         {description && (
           <span className="text-sm text-soft">{description}</span>
         )}

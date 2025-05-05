@@ -102,10 +102,10 @@ export default async function Page({
   return (
     <motion.main
       initial="hidden"
-      whileInView="visible"
+      animate="visible"
       transition={{ staggerChildren: 0.06 }}
       viewport={{ once: true }}
-      className="mx-auto max-w-240 pt-28 pb-12 sm:pt-36"
+      className="mx-auto max-w-240 px-4 pt-28 pb-12 sm:px-0 sm:pt-36"
     >
       <article className="sm:pt-4">
         <motion.div

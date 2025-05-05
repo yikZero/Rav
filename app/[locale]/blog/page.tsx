@@ -45,7 +45,7 @@ export default function BlogPage({
   return (
     <motion.main
       initial="hidden"
-      whileInView="visible"
+      animate="visible"
       transition={{ staggerChildren: 0.06 }}
       viewport={{ once: true }}
       className="pt-32"
