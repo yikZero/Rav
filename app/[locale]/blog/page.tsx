@@ -48,7 +48,7 @@ export default function BlogPage({
       animate="visible"
       transition={{ staggerChildren: 0.06 }}
       viewport={{ once: true }}
-      className="pt-32"
+      className="pt-24 sm:pt-32"
     >
       <motion.div variants={variants} transition={transition}>
         <Title

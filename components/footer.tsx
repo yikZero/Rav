@@ -34,8 +34,8 @@ export default function Footer() {
   const locale = useLocale();
 
   return (
-    <footer className="z-50 mx-auto mt-32 flex max-w-240 translate-z-0 flex-row justify-between px-4 pb-4 sm:px-0">
-      <div className="flex flex-row items-center gap-3">
+    <footer className="z-50 mx-auto mt-32 flex max-w-240 translate-z-0 flex-col-reverse items-center justify-between gap-6 px-4 pb-4 sm:flex-row sm:gap-0 sm:px-0">
+      <div className="flex flex-row items-center gap-4 sm:gap-3">
         <p className="text-center text-sm font-medium text-soft select-none">
           {t.rich('copyright', {
             currentYear: currentYear,
