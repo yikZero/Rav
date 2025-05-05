@@ -75,7 +75,7 @@ export default function Nav() {
               prefetch
               href={link.url}
               className={cn(
-                'group relative z-10 block cursor-pointer px-3 py-2 leading-4 font-medium text-soft transition duration-300 hover:text-strong',
+                'group relative z-10 block cursor-pointer px-3.5 py-2.5 leading-4 font-medium text-soft transition duration-300 hover:text-strong sm:px-3 sm:py-2',
                 { 'font-medium text-strong': isActive },
                 {
                   'cursor-not-allowed text-disabled select-none hover:text-disabled':

@@ -32,7 +32,7 @@ export default function HeroContent() {
       whileInView="visible"
       transition={{ staggerChildren: 0.04 }}
       viewport={{ once: true }}
-      className="mx-auto flex w-full flex-col items-center gap-12 px-4 pt-32 sm:pt-40"
+      className="mx-auto flex w-full flex-col items-center gap-12 px-4 pt-32 sm:px-0 sm:pt-40"
     >
       <motion.div
         transition={transition}
@@ -94,7 +94,7 @@ export default function HeroContent() {
       <motion.div
         transition={transition}
         variants={variants}
-        className="mb-40 max-w-full"
+        className="mb-32 max-w-full sm:mb-40"
       >
         <Trusted />
       </motion.div>

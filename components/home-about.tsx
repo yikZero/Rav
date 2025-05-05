@@ -12,20 +12,20 @@ export default function HomeAbout() {
 
   return (
     <section className="mt-32 flex flex-col items-center gap-28 sm:mt-40">
-      <div className="mx-auto grid max-w-240 grid-cols-1 gap-16 sm:grid-cols-4">
+      <div className="mx-auto grid max-w-240 grid-cols-1 gap-16 overflow-hidden sm:grid-cols-4">
         <div className="flex flex-row sm:col-span-2">
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-6.jpg"
-            className="hidden translate-y-2 scale-85 -rotate-[6deg] hover:scale-86 hover:-rotate-[5deg] md:block"
+            className="translate-y-2 scale-85 -rotate-[6deg] hover:scale-86 hover:-rotate-[5deg]"
           />
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-5.jpg"
-            className="-ml-12 translate-y-4 rotate-[5deg] hover:scale-101 hover:rotate-[3deg]"
+            className="-ml-16 translate-y-4 rotate-[5deg] hover:scale-101 hover:rotate-[3deg] sm:-ml-12"
           />
         </div>
-        <div className="mt-6 flex flex-col gap-20 sm:col-span-2">
+        <div className="mt-6 flex flex-col gap-20 px-4 sm:col-span-2 sm:px-0">
           <div
             className={cn(
               'flex flex-col gap-2.5 text-base leading-6 text-soft sm:leading-6.5',

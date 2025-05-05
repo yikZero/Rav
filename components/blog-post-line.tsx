@@ -8,7 +8,7 @@ interface BlogPostLineProps {
 
 export default function BlogPostLine({ posts }: BlogPostLineProps) {
   return (
-    <div className="mx-auto mt-16 flex max-w-240 flex-col justify-center">
+    <div className="mx-auto mt-16 flex max-w-240 flex-col justify-center px-4 sm:px-0">
       <div className="mb-2 flex w-full flex-row items-center gap-2 sm:mb-4">
         <h2 className="shrink-0 text-sm font-medium text-soft select-none">
           More Posts

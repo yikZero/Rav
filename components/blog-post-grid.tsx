@@ -19,15 +19,15 @@ export default function BlogPostGrid({
   const t = useTranslations('Blog');
 
   return (
-    <section className={cn('mx-auto max-w-240')}>
-      <div className="grid h-90 grid-flow-col grid-cols-2 grid-rows-2 gap-4">
+    <section className={cn('mx-auto max-w-240 px-4 sm:px-0')}>
+      <div className="grid grid-cols-1 gap-5 sm:h-90 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-2 sm:gap-4">
         {posts.map((post, index) => (
           <PostCard
             key={post.slug}
             slug={post.slug}
             metadata={post.metadata}
             isFirst={index === 0}
-            className={cn(index === 0 && 'row-span-2')}
+            className={cn('h-48', index === 0 && 'h-72 sm:row-span-2')}
           />
         ))}
       </div>
