@@ -53,7 +53,7 @@ export default function HeroContent() {
       </motion.div>
       <div className="flex flex-col items-center gap-4">
         <h1
-          className={`${instrumentSerif.className} max-w-140 text-center text-4xl tracking-[0.01em] text-strong text-shadow-md sm:text-5xl sm:leading-[3.875rem]`}
+          className={`${instrumentSerif.className} max-w-140 text-center text-4xl tracking-[0.01em] text-strong text-shadow-sm sm:text-5xl sm:leading-[3.875rem]`}
         >
           {words.map((word, index) => (
             <Fragment key={index}>
@@ -91,7 +91,11 @@ export default function HeroContent() {
           </Link>
         </motion.div>
       </div>
-      <motion.div transition={transition} variants={variants} className="mb-40">
+      <motion.div
+        transition={transition}
+        variants={variants}
+        className="mb-40 max-w-full"
+      >
         <Trusted />
       </motion.div>
     </motion.section>
