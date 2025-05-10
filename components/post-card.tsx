@@ -31,7 +31,7 @@ export default function PostCard({
       >
         <div
           className={cn(
-            'absolute inset-0 -z-1 bg-gradient-to-t from-[#01040E] to-[#01040E]/90',
+            'absolute inset-0 -z-1 bg-linear-to-t from-[#01040E] to-[#01040E]/90',
             isFirst && 'from-[#01040E] from-20% to-[#01040E]/40',
           )}
         ></div>
@@ -54,7 +54,7 @@ export default function PostCard({
               {metadata.title}
             </h3>
             {isFirst ? (
-              <p className="line-clamp-2 text-sm leading-[1.1875rem] text-strong/45">
+              <p className="line-clamp-2 text-sm leading-4.75 text-strong/45">
                 {metadata.description}
               </p>
             ) : (

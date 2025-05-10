@@ -19,7 +19,7 @@ export default function Background() {
     >
       <div
         aria-hidden
-        className="absolute inset-0 h-full w-full bg-gradient-to-b from-[#01040E] to-[#0A122B]"
+        className="absolute inset-0 h-full w-full bg-linear-to-b from-[#01040E] to-[#0A122B]"
       />
       <video
         className="z-2 mx-auto h-full w-full scale-150 opacity-80 blur-[48px]"

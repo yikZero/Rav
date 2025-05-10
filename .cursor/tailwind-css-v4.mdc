@@ -163,7 +163,7 @@ alwaysApply: false
   - Hover styles only apply on devices that support hover (`@media (hover: hover)`)
 
 - **Syntax changes**:
-  - CSS variables in arbitrary values: `bg-(--brand-color)` instead of `bg-[--brand-color]`
+  - CSS variables in arbitrary values: `bg-(--brand-color)` instead of `bg-(--brand-color)`
   - Stacked variants now apply left-to-right (not right-to-left)
   - Use CSS variables instead of `theme()` function 
 
