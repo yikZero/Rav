@@ -21,7 +21,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export default function HeroContent() {
-  const text = 'yikZero, Web3 Product Designer based in Hangzhou China';
+  const text = 'yikZero, Web3 Product Designer based in Hangzhou, China';
   const words = text.split(' ');
 
   const t = useTranslations('Hero');
