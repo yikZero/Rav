@@ -17,12 +17,12 @@ export default function HomeAbout() {
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-6.jpg"
-            className="translate-y-2 scale-85 -rotate-[6deg] hover:scale-86 hover:-rotate-[5deg]"
+            className="translate-y-2 scale-85 -rotate-6 hover:scale-86 hover:-rotate-[5deg]"
           />
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-5.jpg"
-            className="-ml-16 translate-y-4 rotate-[5deg] hover:scale-101 hover:rotate-[3deg] sm:-ml-12"
+            className="-ml-16 translate-y-4 rotate-[5deg] hover:scale-101 hover:rotate-3 sm:-ml-12"
           />
         </div>
         <div className="mt-6 flex flex-col gap-20 px-4 sm:col-span-2 sm:px-0">
@@ -66,7 +66,7 @@ export default function HomeAbout() {
               description={t('experience.zjut.description')}
             />
             <div className="absolute inset-y-0 -z-10 flex w-1.5 items-start justify-center sm:left-1">
-              <div className="mt-3.5 h-36 w-[1px] bg-linear-to-b from-strong/10 via-strong/15 to-strong/10" />
+              <div className="mt-3.5 h-36 w-px bg-linear-to-b from-strong/10 via-strong/15 to-strong/10" />
             </div>
           </div>
         </div>

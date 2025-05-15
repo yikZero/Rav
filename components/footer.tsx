@@ -43,7 +43,7 @@ export default function Footer() {
         </p>
         {locale === 'zh-CN' && (
           <>
-            <div className="hidden h-2 w-[1px] bg-disabled sm:block"></div>
+            <div className="hidden h-2 w-px bg-disabled sm:block"></div>
             <Link
               rel="noopener noreferrer"
               className="flex flex-row items-center gap-1 text-center text-sm font-medium text-soft transition-colors duration-300 hover:text-brand-500"

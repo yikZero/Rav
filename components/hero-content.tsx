@@ -21,7 +21,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export default function HeroContent() {
-  const text = 'yikZero, Web3 Product Designer based in Hangzhou China';
+  const text = 'yikZero, Web3 Product Designer based in Hangzhou, China';
   const words = text.split(' ');
 
   const t = useTranslations('Hero');
@@ -53,7 +53,7 @@ export default function HeroContent() {
       </motion.div>
       <div className="flex flex-col items-center gap-4">
         <h1
-          className={`${instrumentSerif.className} max-w-140 text-center text-4xl tracking-[0.01em] text-strong text-shadow-sm sm:text-5xl sm:leading-[3.875rem]`}
+          className={`${instrumentSerif.className} max-w-140 text-center text-4xl tracking-[0.01em] text-strong text-shadow-sm sm:text-5xl sm:leading-15.5`}
         >
           {words.map((word, index) => (
             <Fragment key={index}>

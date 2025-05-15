@@ -22,7 +22,8 @@ export default function PostNavigation({ currentId }: PostNavigationProps) {
         {prevPost && (
           <Link
             href={`/blog/${prevPost.slug}`}
-            className="group line-clamp-1 flex max-w-fit flex-row items-center gap-1 py-1 !no-underline"
+            className="group line-clamp-1 flex max-w-fit flex-row items-center gap-1 py-1 no-underline!"
+            prefetch={true}
           >
             <ChevronLeft className="size-4 text-soft duration-500 ease-in-out group-hover:-translate-x-0.5 group-hover:text-sub" />
             <span className="font-medium text-sub transition duration-200 group-hover:text-strong">
@@ -35,7 +36,8 @@ export default function PostNavigation({ currentId }: PostNavigationProps) {
         {nextPost && (
           <Link
             href={`/blog/${nextPost.slug}`}
-            className="group line-clamp-1 flex max-w-fit flex-row items-center gap-1 py-1 !no-underline"
+            className="group line-clamp-1 flex max-w-fit flex-row items-center gap-1 py-1 no-underline!"
+            prefetch={true}
           >
             <span className="font-medium text-sub transition duration-200 group-hover:text-strong">
               {nextPost.metadata.title}
