@@ -35,15 +35,15 @@
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",
     "rss": "^1.2.2",
-    "sanitize-html": "^2.16.0",
+    "sanitize-html": "^2.17.0",
     "tailwind-merge": "^3.3.0",
     "zod": "^3.24.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@shikijs/rehype": "^3.2.1",
+    "@shikijs/rehype": "^3.4.2",
     "@svgr/cli": "^8.1.0",
-    "@tailwindcss/postcss": "^4.1.6",
+    "@tailwindcss/postcss": "^4.1.7",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/canvas-confetti": "^1.9.0",
     "@types/mdast": "^4.0.4",
@@ -57,7 +57,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "rehype-accessible-emojis": "^0.3.2",
-    "tailwindcss": "^4.1.6",
+    "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3"
   },
   "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88q1147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af",
