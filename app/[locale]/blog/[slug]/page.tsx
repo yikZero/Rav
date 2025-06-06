@@ -117,7 +117,7 @@ export default async function Page({
             {post.metadata.title}
           </h1>
           <div className="flex items-center gap-2 text-sm leading-tight">
-            <span className="inline rounded-md border border-strong/20 px-2 py-0.5 text-xs font-medium text-sub">
+            <span className="inline rounded-md border border-strong/20 px-2 py-0.5 text-xs font-medium text-sub uppercase">
               {post.metadata.category}
             </span>
             <span className="text-soft select-none">· </span>

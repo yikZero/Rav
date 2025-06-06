@@ -11,13 +11,18 @@ const processor = remark().use(html);
 export async function GET() {
   const posts = getBlogPosts();
 
+  const siteUrl = ravConfig.siteUrl.replace(/\/$/, '');
   const rss = new RSS({
     title: ravConfig.title,
     description: ravConfig.description,
-    site_url: ravConfig.siteUrl,
-    feed_url: ravConfig.siteUrl + '/rss.xml',
-    language: 'zh-CN',
     generator: 'Next.js',
+    site_url: ravConfig.siteUrl,
+    feed_url: `${siteUrl}/rss.xml`,
+    managingEditor: ravConfig.email + ' (' + ravConfig.author + ')',
+    webMaster: ravConfig.email + ' (' + ravConfig.author + ')',
+    copyright: 'All rights reserved ' + new Date().getFullYear(),
+    language: 'zh-CN',
+    ttl: 60,
   });
 
   for (const post of posts) {
@@ -31,7 +36,6 @@ export async function GET() {
       rss.item({
         title: post.metadata.title,
         guid: `${ravConfig.siteUrl}/blog/${post.slug}/`,
-        author: ravConfig.author,
         url: `${ravConfig.siteUrl}/blog/${post.slug}`,
         description: post.metadata.description,
         custom_elements: [
@@ -46,7 +50,7 @@ export async function GET() {
     }
   }
 
-  return new Response(rss.xml(), {
+  return new Response(rss.xml({ indent: true }), {
     headers: {
       'content-type': 'application/xml',
     },

@@ -1,5 +1,4 @@
 import { routing } from '@/i18n/routing';
-import { easeOut } from 'motion';
 import * as motion from 'motion/react-client';
 import type { Metadata } from 'next';
 import { type Locale } from 'next-intl';
