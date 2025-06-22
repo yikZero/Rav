@@ -32,7 +32,7 @@ Rav is a modern personal blog built with Next.js 15, featuring MDX content manag
 ### Prerequisites
 
 - Node.js 18+
-- pnpm 10.6.5+
+- pnpm 10.6.5
 - Docker (optional, for containerized deployment)
 
 ### Installation
