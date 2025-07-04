@@ -103,9 +103,9 @@ export default async function Page({
     <motion.main
       initial="hidden"
       animate="visible"
-      transition={{ staggerChildren: 0.06 }}
+      transition={{ staggerChildren: 0.08 }}
       viewport={{ once: true }}
-      className="mx-auto max-w-240 px-4 pt-24 pb-12 sm:px-0 sm:pt-36"
+      className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-0 sm:pt-36"
     >
       <article className="sm:pt-4">
         <motion.div
@@ -131,18 +131,18 @@ export default async function Page({
         <motion.div
           variants={variants}
           transition={transition}
-          className="sm:grid sm:grid-cols-12 sm:gap-12"
+          className="sm:grid sm:gap-12"
         >
-          <div className="rypo sm:col-span-9">
+          <div className="rypo max-w-172">
             {locale === 'en' && <BlogTranslateNotice />}
             <div lang="zh-CN">
               <Content />
             </div>
             <PostNavigation currentId={post.slug} />
           </div>
-          <div className="hidden sm:col-span-3 sm:block">
+          {/* <div className="hidden sm:col-span-3 sm:block">
             <TableOfContents post={post} />
-          </div>
+          </div> */}
         </motion.div>
       </article>
     </motion.main>
