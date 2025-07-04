@@ -12,7 +12,6 @@ import { getBlogPosts } from '@/lib/post.utils';
 import BlogTranslateNotice from '@/components/blog-translate-notice';
 import DateDisplay from '@/components/date-display';
 import PostNavigation from '@/components/post-navigation';
-import TableOfContents from '@/components/table-of-contents';
 
 export async function generateMetadata({
   params,

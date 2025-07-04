@@ -1,8 +1,7 @@
 import { routing } from '@/i18n/routing';
 import * as motion from 'motion/react-client';
 import type { Metadata } from 'next';
-import { type Locale } from 'next-intl';
-import { useTranslations } from 'next-intl';
+import { type Locale, useTranslations } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { use } from 'react';
