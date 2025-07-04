@@ -65,8 +65,8 @@ export default function HomeAbout() {
               url="https://www.zjut.edu.cn/"
               description={t('experience.zjut.description')}
             />
-            <div className="absolute inset-y-0 -z-10 flex w-1.5 items-start justify-center sm:left-1">
-              <div className="mt-3.5 h-36 w-px bg-linear-to-b from-strong/10 via-strong/15 to-strong/10" />
+            <div className="absolute inset-y-0 -z-10 flex w-1.5 items-start justify-center sm:left-1.25">
+              <div className="mt-3.5 h-36 w-0.5 bg-linear-to-b from-strong/7 via-strong/10 to-strong/7" />
             </div>
           </div>
         </div>

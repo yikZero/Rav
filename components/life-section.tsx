@@ -18,17 +18,17 @@ export default function LifeSection({
   return (
     <div className="grid grid-cols-7 gap-2">
       <div className="col-span-3 flex shrink-0 flex-row items-center gap-2 self-start text-[0.9375rem] leading-6 font-medium text-soft sm:pl-1">
-        <div className="bg-body-background size-1.5 rounded-full border border-sub" />
+        <div className="size-2 rounded-full border border-sub bg-background" />
         {time}
       </div>
-      <div className="col-span-4 flex w-full flex-row gap-2">
+      <div className="col-span-4 flex w-full flex-row gap-2.5">
         <Image
           src={image}
           width={22}
           height={22}
           alt={title}
           loading="lazy"
-          className="mt-0.5 size-5.5 rounded-2xl"
+          className="mt-0.5 size-5.5 rounded-md"
           draggable="false"
         />
         <div className="flex flex-col gap-1">
