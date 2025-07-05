@@ -1,6 +1,11 @@
+'use client';
+
 import { Link } from '@/i18n/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+
+import { cn } from '@/lib/utils';
 
 import { Github, Telegram, Twitter } from '@/components/icons';
 
@@ -32,9 +37,18 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('Footer');
   const locale = useLocale();
+  const pathname = usePathname();
+
+  // Check if we're on a blog detail page (matches pattern like /blog/slug or /en/blog/slug)
+  const isBlogDetail = /^\/([a-z-]+\/)?blog\/[^/]+\/?$/.test(pathname);
 
   return (
-    <footer className="z-50 mx-auto mt-32 flex max-w-240 translate-z-0 flex-col-reverse items-center justify-between gap-6 px-4 pb-4 sm:flex-row sm:gap-0 sm:px-0">
+    <footer
+      className={cn(
+        'z-50 mx-auto mt-20 flex translate-z-0 flex-col-reverse items-center justify-between gap-6 px-4 pb-4 sm:mt-32 sm:flex-row sm:gap-0 sm:px-0',
+        isBlogDetail ? 'max-w-172' : 'max-w-240',
+      )}
+    >
       <div className="flex flex-row items-center gap-4 sm:gap-3">
         <p className="text-center text-sm font-medium text-soft select-none">
           {t.rich('copyright', {
@@ -53,8 +67,8 @@ export default function Footer() {
               <Image
                 alt="ICP License Icon"
                 className="pointer-events-none size-4"
-                width="20"
-                height="20"
+                width="16"
+                height="16"
                 loading="lazy"
                 src="https://cdn.yikzero.com/roominess5/beian.png!/format/webp"
               />
