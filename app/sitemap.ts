@@ -5,8 +5,6 @@ import type { MetadataRoute } from 'next';
 import { getBlogPosts } from '@/lib/post.utils';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getBlogPosts();
-
   if (!ravConfig.siteUrl) {
     throw new Error('site url is not defined');
   }
@@ -31,16 +29,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: route.priority,
       })),
     ),
-    // 博客文章的多语言版本
-    ...posts.flatMap((post) =>
-      locales.map((locale) => ({
+    // 博客文章 - 为每个语言单独获取
+    ...locales.flatMap((locale) => {
+      const posts = getBlogPosts({ language: locale });
+      return posts.map((post) => ({
         url: generateLocalizedUrl(`/blog/${post.slug}`, locale),
         lastModified: new Date(
           post.metadata.updatedAt || post.metadata.publishedAt || '',
         ),
         changeFrequency: 'monthly' as const,
         priority: 0.8,
-      })),
-    ),
+      }));
+    }),
   ];
 }

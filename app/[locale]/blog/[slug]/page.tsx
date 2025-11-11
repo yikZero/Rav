@@ -1,4 +1,4 @@
-import { defaultLocale } from '@/i18n/routing';
+import { defaultLocale, routing } from '@/i18n/routing';
 import ravConfig from '@/rav.config';
 import * as motion from 'motion/react-client';
 import type { Metadata } from 'next';
@@ -9,7 +9,6 @@ import { notFound } from 'next/navigation';
 import { loadLocalizedMDX } from '@/lib/mdx.utils';
 import { getBlogPosts } from '@/lib/post.utils';
 
-import BlogTranslateNotice from '@/components/blog-translate-notice';
 import DateDisplay from '@/components/date-display';
 import PostNavigation from '@/components/post-navigation';
 
@@ -92,12 +91,11 @@ export default async function Page({
     notFound();
   }
 
-  const result = await loadLocalizedMDX('posts', 'zh-CN', slug);
-  if (!result) {
+  const Content = await loadLocalizedMDX('posts', locale, slug);
+  if (!Content) {
     notFound();
   }
 
-  const { content: Content } = result;
   return (
     <motion.main
       initial="hidden"
@@ -133,8 +131,7 @@ export default async function Page({
           className="sm:grid sm:gap-12"
         >
           <div className="rypo max-w-172">
-            {locale === 'en' && <BlogTranslateNotice />}
-            <div lang="zh-CN">
+            <div lang={locale}>
               <Content />
             </div>
             <PostNavigation currentId={post.slug} />
@@ -149,10 +146,18 @@ export default async function Page({
 }
 
 export async function generateStaticParams() {
-  const posts = getBlogPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  const { locales } = routing;
+
+  // Generate slug params for all locales
+  const allParams = locales.flatMap((locale) => {
+    const posts = getBlogPosts({ language: locale });
+    return posts.map((post) => ({
+      locale,
+      slug: post.slug,
+    }));
+  });
+
+  return allParams;
 }
 
 export const dynamicParams = false;

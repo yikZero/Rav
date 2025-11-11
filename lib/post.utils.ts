@@ -1,4 +1,4 @@
-import { defaultLocale, locales } from '@/i18n/routing';
+import { defaultLocale } from '@/i18n/routing';
 import fs from 'fs';
 import path from 'path';
 
@@ -75,53 +75,14 @@ export function getBlogPosts({
   filterPublished = true,
   language = defaultLocale,
 } = {}) {
-  const baseDir = path.join(process.cwd(), 'content', 'posts');
+  const postsDir = path.join(process.cwd(), 'content', 'posts', language);
 
-  const allPosts = locales.map((locale: string) => ({
-    locale,
-    posts: getMDXData(path.join(baseDir, locale)),
-  }));
-
-  const postsBySlug = new Map<string, Map<string, Post>>();
-
-  allPosts.forEach(({ locale, posts }) => {
-    posts.forEach((post: Post) => {
-      if (!postsBySlug.has(post.slug)) {
-        postsBySlug.set(post.slug, new Map());
-      }
-      postsBySlug.get(post.slug)!.set(locale, post);
-    });
-  });
-
-  const result = Array.from(postsBySlug.values())
-    .filter((localePosts) => {
-      return localePosts.has(defaultLocale);
-    })
-    .map((localePosts) => {
-      let post = localePosts.get(language);
-      const defaultPost = localePosts.get(defaultLocale);
-
-      // If the requested language post doesn't exist or has no content,
-      // fallback to default language content while keeping other metadata
-      if (!post || !post.content) {
-        if (defaultPost) {
-          post = {
-            ...(post || {
-              metadata: defaultPost.metadata,
-              slug: defaultPost.slug,
-            }),
-            content: defaultPost.content,
-          };
-        }
-      }
-
-      return post;
-    })
-    .filter(Boolean) as Post[];
+  // Only load posts for the requested language
+  const posts = getMDXData(postsDir);
 
   const filteredData = filterPublished
-    ? result.filter((item) => item.metadata.state === 'published')
-    : result;
+    ? posts.filter((item) => item.metadata.state === 'published')
+    : posts;
 
   return filteredData.sort((a, b) => {
     const dateA = new Date(a.metadata.publishedAt);

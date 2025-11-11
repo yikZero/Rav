@@ -48,6 +48,7 @@ body {
     Hiragino Sans GB,
     Microsoft YaHei,
     Arial;
+  text-autospace: normal;
 }
 
 /* Adapted and upgraded from vitepress */

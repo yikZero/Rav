@@ -1,8 +1,96 @@
 ---
-title: 'Next.js calls Notion API records'
-publishedAt: 2023-10-04
-description: 'Summarizes the problems Next.js encounters when fetching Notion data'
+title: 'A Log of Calling the Notion API with Next.js'
+publishedAt: '2023-10-04'
+description: 'A summary of the various problems encountered when fetching Notion data with Next.js'
 image: 'https://cdn.yikzero.com/markdown/images/202407132049.jpg'
 category: 'Develop'
 state: 'published'
 ---
+
+## Pitfalls Collection
+
+The pitfalls come from Next.js on the one hand, and the Notion API on the other. Of course, I am the biggest pitfall myself.
+
+1. Next.js Server-Side Rendering
+2. Notion API Data Filtering
+3. Notion Block Data Rendering
+4. Notion Temporary Image Expiration
+5. Next.js Image Component Usage
+6. Notion Article Page Style Rendering
+
+The above are basically all the pitfalls I've encountered. Before introducing the experiences of these pitfalls, let me briefly talk about the original intention of the project.
+
+## Original Intention
+
+Initially, because I learned front-end development, I wanted to understand back-end development. I initially created a full-stack speech-to-text project based on edge-tts called [Rotts](https://rotts.yikzero.com/) (front-end React + back-end Flask), but this project was very simple. The back-end basically just requested the API to get the sound list, and then passed the sound, pitch, text and other information to edge-tts, waited for the sound to return, and then played/downloaded it. I felt like it was over before I even experienced the back-end.
+
+So, I wanted to find another project to continue learning the back-end. The first thing I thought of was Node.js. During the research process, I saw many people recommending Next.js, which is also based on Node.js. So it hit it off, and I also wanted to simply build a wheel and make a blog system using Notion as a CMS. Visually, everything should be kept simple to reduce the burden and focus on content rendering.
+
+I originally thought that with ChatGPT, I could just ask him about anything I didn't know. As a result, Next.js App is too new, and he doesn't have it in his database, so every time I ask him about relevant content, his answers are not accurate enough.
+
+## Project Information
+
+- Name: **Brog**
+- Introduction: A minimalist blog system built with Next.js, with Notion as the CMS
+- Technology Stack: React + Next.js + Typescript + TailwindCSS
+- Github: [https://github.com/yikZero/Brog](https://github.com/yikZero/Brog)
+
+## Next.js Pitfalls
+
+### Duplicate Requests
+
+In fact, when I first started getting data, I had doubts. I fetch here, and I fetch there. They are all the same data, will there be multiple requests, will it be a waste?
+
+For this reason, I have been separating the function functions from the requests and passing several props... But in fact, you don't have to care about this at least in React.
+
+> Passing data between a parent layout and its children is not possible. However, you can fetch the same data in a route more than once, and React will automatically dedupe the requests without affecting performance.
+
+If the link and parameters you fetch remain unchanged, React will merge multiple requests into one. So you don't have to forward props between components all the time, just request the same data multiple times, there is no problem. React will automatically merge requests, and will not repeat requests multiple times, affecting the network.
+
+### Server Components
+
+What counts as a server component? Anything placed in the `app/` directory should be a server component. When I didn't know if it was a server component, I threw all the components and lib file directories I used into `app/`... just for the server component.
+
+If you want to turn it into a client component, just add a `use client` at the top, and it will be recognized as a client component. Next.js officially recommends using the server side whenever possible.
+
+### next/image Application
+
+Next.js officially optimized the application of the img element due to [LCP performance](https://almanac.httparchive.org/en/2022/performance#lcp-image-optimization) reasons, and recommends using the official Image.
+
+For specific usage methods, please refer to [Image Optimization](https://nextjs.org/docs/app/building-your-application/optimizing/images)
+
+I thought it would be very simple, just replace the name, but it requires me to provide specific height and width. I dynamically get the image, how can I know the height and width of the image. So I used tricks... also a solution from [stackoverflow](https://stackoverflow.com/questions/65169431/how-to-set-the-next-image-component-to-100-height).
+
+```html
+<figure className="relative">
+  <image
+    src="{src}"
+    width="{0}"
+    height="{0}"
+    sizes="100vw"
+    className="w-full h-auto"
+  />
+</figure>
+```
+
+## Notion-Client Pitfalls
+
+![Notion API](https://cdn.yikzero.com/markdown/images/202311050659712.png)
+
+### Data Acquisition
+
+Notion officially has [@notionhq/client](https://www.npmjs.com/package/@notionhq/client), and react-notion-x also has a [notion-client](https://www.npmjs.com/package/notion-client). I learned about notion-client first, so after writing the style, I tried to integrate the third-party implementation.
+
+How should I put it, notion-client is also good. It provides a public `NOTION_PAGE_ID` environment variable to get the data. But the data obtained is the full amount of data, and there is no way to filter according to the field name like the official API, so organizing the data will be much more troublesome. This is too much trouble for a novice like me... After all, the data obtained in Notion is nested layer by layer, and each block has its own ID, which makes me dizzy.
+
+In the end, I still referred to the official API of the [notion-blog-nextjs](https://github.com/samuelkraft/notion-blog-nextjs) application to obtain the corresponding data.
+
+### Image Expiration
+
+The image links in the data provided by the official Notion are temporary Amazon links, which will expire in one hour. Then the image will be broken.
+
+**Vercel Cron:** Many people also choose to use the Vercel cron function to rebuild and render every hour. But I think this is too wasteful of resources and not environmentally friendly enough (：
+
+**Convert temporary addresses to permanent addresses:** For solutions, you can refer to [fix: solve linked img crash #524](https://github.com/tangly1024/NotionNext/pull/524/files)
+
+**PicGo upload to UPYUN:** Because I have migrated data, it would be a disaster if Markdown images were all relative addresses. Therefore, I now choose to upload to UPYUN through PicGo and return my CDN address. If you want to migrate, at least the pictures will not be lost.
