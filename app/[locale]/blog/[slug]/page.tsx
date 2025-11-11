@@ -71,7 +71,7 @@ export async function generateMetadata({
   };
 }
 
-const transition = { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] };
+const transition = { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const };
 const variants = {
   hidden: { y: 50, opacity: 0 },
   visible: { y: 0, opacity: 1 },

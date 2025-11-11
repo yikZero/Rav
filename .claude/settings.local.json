@@ -1,0 +1,11 @@
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "next-devtools"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__next-devtools__nextjs_docs"
+    ]
+  }
+}
