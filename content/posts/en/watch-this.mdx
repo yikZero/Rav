@@ -1,8 +1,304 @@
 ---
-title: 'Create Your Personal Movie List with AI'
-publishedAt: 2024-11-23
-description: 'This article introduces how to use AI's powerful data analysis capabilities to integrate multiple movie and TV lists and generate a weekly list of popular movies for you'
+title: 'Say Goodbye to Movie Indecision: Create a Personalized Watchlist with AI'
+publishedAt: '2024-11-23'
+description: 'This article explains how to leverage AI's powerful data analysis capabilities to consolidate multiple film and TV charts, generating a weekly popular watch list for you.'
 image: 'https://cdn.yikzero.com/markdown/images/202411281032532.jpg'
 category: 'Develop'
 state: 'published'
 ---
+
+## Foreword
+
+My friend Xiao Chen and I both enjoy watching movies and TV series, but we often struggle to decide what to watch, maybe because we have a bit of decision paralysis. Recently, I discovered something interesting in the MisakaF Emby group: this group keeps track of the most popular movies and TV series on their platform daily and weekly. This sparked an idea: I could find more similar lists and then have AI organize and aggregate them. That way, I can also have a weekly hot list that combines existing lists and personal preferences.
+
+![Personal Hot List Effect](https://cdn.yikzero.com/markdown/images/202411261805598.png!/fw/1920/format/webp)
+
+## Basic Idea
+
+The core process of the project can be summarized into three steps:
+
+1. Collect hot list data
+2. Perform data analysis and processing through AI
+3. Push the processed results to designated channels
+
+## Solution Iteration
+
+Initially, I designed an integrated solution based on multiple professional services:
+
+1. First, get the information source of the Telegram channel through [RSSHub](https://rsshub.app/).
+
+2. Then, use automation tools such as [IFTTT](https://ifttt.com/), [Zapier](https://zapier.com/) or [n8n](https://n8n.io/) to synchronize and organize the RSS data into document databases such as Notion or Feishu for storage.
+
+3. Then, [Dify](https://dify.ai/) periodically filters data from the database for the past week according to the set requirements.
+
+4. Dify sends the filtered data along with preset prompts to AI for processing.
+
+5. Finally, the processing results returned by the AI are sent to the designated group through the [Telegram Bot](https://core.telegram.org/bots/api).
+
+Although this solution is fully functional and achieves full process automation, it has obvious over-design problems and is too complex. In the end, I gave up after practicing only halfway.
+
+## Final Solution
+
+Considering the project scale and actual needs, I finally adopted a lighter and more direct technology stack:
+
+- Core implementation: Node.js
+- Automated scheduling: GitHub Actions
+
+### Data Input/Organization
+
+In the data source selection process, I mainly considered data authenticity and sample representativeness.
+
+Based on the above criteria, three data sources were finally determined:
+
+- Two Telegram channels with high activity, both providing weekly viewing data:
+  - [MisakaF-Emby](https://t.me/s/misakaf_emby): More than 22K followers, average reading volume of a single push is 2,000+
+  - [Odyssey+](https://t.me/s/odysseyplus?q=%23TopOnOdyssey): More than 23K followers, average reading volume of a single push is 3,000+
+- A third-party film and television platform:
+  - [爱壹帆](https://www.aiyifan.tv/rank/all): Its ranking data is updated in a timely manner and has high market representativeness
+
+Ai Yifan data is relatively easy to obtain, just check the network request to call its API.
+
+The data related to the Telegram channel needs to be transferred through [RSSHub](https://rsshub.app/), which also supports the `searchQuery` parameter to filter the channel content. For specific parameters, please refer to the [documentation](https://docs.rsshub.app/routes/social-media#channel).
+
+In the actual call, a problem was found that the official service of RSSHub returns Telegram channel data very slowly and is very prone to timeouts.
+
+Here is a trick to tell everyone, try Google search [Welcome to RSSHub](https://www.google.com/search?q=Welcome+to+RSSHub), Google has included many RSSHub services built by netizens, you can quietly choose which one is faster and replace the original service.
+
+Now that we have the original data, we can filter out the information of this week according to the release time and process it.
+
+The final organized data will be similar to this:
+
+```text
+MisakaF Hot Data:
+
+#Weekly Ranking
+
+In the past week, a total of 2122 movies and 2424 TV series have been favored by you, among which the more prominent ones are:
+
+Movies:
+- Venom: The Last Dance-870
+- Path of Fire-585
+- Some Kind of Substance-333
+- The Fatal Encounter-270
+- Deadpool & Wolverine-245
+
+TV Shows:
+- Alley Family-13210
+- The Starry Love-5893
+- Arcane: League of Legends-3667
+- Feud-3535
+```
+
+You can find some data sources you recognize and organize them together.
+
+### AI Application
+
+I am using [AI SDK](https://sdk.vercel.ai/) provided by Vercel, which is very convenient to call large models of different platforms, and it also supports Node.js.
+
+In terms of large models, I am using Anthropic's latest [Claude Sonnet 3.5](https://www.anthropic.com/claude/sonnet), and the $5 quota given when I first registered has not been used up yet.
+
+In the prompt word writing part, there are a few experiences that may help you write a better prompt word:
+
+- You need to write prompts in English, and the final result can be considered to output the language you need
+- You need to directly list specific rules: what can be done and what cannot be done
+- Give the large model enough space to think and encourage it to output the process first and then the result at the end. This has an academic name called Chain of thought/CoT prompting
+- Give the large model specific examples of output results
+- Use XML tags to structure your prompts
+
+For more specific details, you can also refer to the [Prompt engineering](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) document written by Claude.
+
+Below is the prompt word I asked it to output a movie list, where the `rssRankings` and `hotSearchRanking` variables are the data organized earlier, which need to be pieced together and provided to Claude:
+
+```markdown
+You are a professional film and TV analyst specialized in entertainment rankings. Your task is to analyze weekly entertainment data and generate a ranking list of popular TV series and movies.
+
+First, review the input data:
+
+<rss_rankings>
+${rssRankings}
+</rss_rankings>
+
+<hot_search_ranking>
+${hotSearchRanking}
+</hot_search_ranking>
+
+Instructions:
+
+1. Data Analysis:
+
+- Exclude children's content from consideration.
+- Works must appear in at least 2 data sources to be ranked.
+- Analyze ranking data using the Scoring Criteria.
+
+2. Scoring Criteria:
+
+- Primary source (MisakaF热度数据) ranking positions: 1-2 = 40 points, 3-4 = 30 points, 5 = 20 points
+- Public service (Odyssey+公益服点播数据) ranking positions: 1-2 = 40 points, 3-4 = 35 points, 5-6 = 30 points, 7-8 = 25 points
+- Search ranking (搜索热度) positions: Top 5 = 20 points, 6-10 = 10 points
+- Sum up weighted scores to determine the final ranking
+
+3. Ranking Generation:
+
+- Generate separate rankings for TV series and movies
+- List exactly 5 works per category
+
+4. Output Formatting:
+
+- Use the following template, writing in Simplified Chinese:
+
+**热门剧集**
+
+1. [TV Series 1]
+2. [TV Series 2]
+3. [TV Series 3]
+4. [TV Series 4]
+5. [TV Series 5]
+
+**热门电影**
+
+1. [Movie 1]
+2. [Movie 2]
+3. [Movie 3]
+4. [Movie 4]
+5. [Movie 5]
+
+- Use numerical prefixes (1.-5.) for each item
+- Only bold category headers using markdown **header**
+- Remove all markdown formatting from list items
+
+Before providing the final output, wrap your scoring and ranking process inside <scoring_process> tags. In this section:
+
+- List each TV series and movie with their respective scores from each source.
+- Show your calculations for the weighted scores.
+- Explain your reasoning for combining multiple seasons of TV series, if applicable.
+- Demonstrate how you arrived at the final rankings.
+  This will help ensure accuracy and alignment with the given criteria. It's OK for this section to be quite long.
+
+After your scoring process, present the final ranking list in the specified format, the final ranking must inside <final_ranking> tags.
+
+Remember to carefully consider all aspects of the data to ensure the list is calculated in line with the specified requirements.
+```
+
+In the prompt, you can decide the weight of each list according to personal preferences.
+
+If you don't like a film or television work, you can also try to let AI filter it.
+
+<details>
+
+<summary>Claude 3.5 Sonnet Output Result</summary>
+
+```plain
+<scoring_process>
+TV Series Scoring:
+
+1. 小巷人家
+
+- MisakaF: #1 (40 points)
+- Odyssey+: #2 (40 points)
+- Hot Search: #4 (20 points)
+  Total: 100 points
+
+2. 永夜星河
+
+- MisakaF: #2 (40 points)
+- Odyssey+: #4 (35 points)
+- Hot Search: #7 (10 points)
+  Total: 85 points
+
+3. 英雄联盟：双城之战
+
+- MisakaF: #3 (30 points)
+- Odyssey+: #3 (35 points)
+  Total: 65 points
+
+4. 白夜追凶/白夜破晓 (combined as same series)
+
+- Odyssey+: #1 (40 points)
+- Hot Search: #2 (20 points)
+  Total: 60 points
+
+5. 宿敌
+
+- MisakaF: #4 (30 points)
+- Odyssey+: #6 (30 points)
+  Total: 60 points
+
+Movies Scoring:
+
+1. 夺命微笑
+
+- Odyssey+: #1 (40 points)
+  Insufficient appearances - excluded
+
+2. 夫妻吵架狗都不理，而查理笑了
+
+- Odyssey+: #2 (40 points)
+  Insufficient appearances - excluded
+
+3. 毒液：最后一舞
+
+- MisakaF: #1 (40 points)
+  Insufficient appearances - excluded
+
+4. 浴火之路
+
+- MisakaF: #2 (40 points)
+  Insufficient appearances - excluded
+
+5. 某种物质
+
+- MisakaF: #3 (30 points)
+  Insufficient appearances - excluded
+
+Note: For movies, none appeared in multiple data sources, so we'll need to rely on single-source appearances despite the criteria. This is a limitation of the available data.
+
+</scoring_process>
+
+<final_ranking>
+**热门剧集**
+
+1. 小巷人家
+2. 永夜星河
+3. 英雄联盟：双城之战
+4. 白夜追凶
+5. 宿敌
+
+**热门电影**
+
+1. 毒液：最后一舞
+2. 浴火之路
+3. 某种物质
+4. 逆鳞
+5. 死侍与金刚狼
+</final_ranking>
+```
+
+</details>
+
+We can see that from the scoring process to the final content output, it is very stable, and Claude's instruction following ability is quite strong!
+
+We only need to extract the content in `<final_ranking>` to get the main content of the movie list. The output result is very standard and stable.
+
+If you think it is troublesome to adjust the prompt, you can also choose [Prompt Generator](https://console.anthropic.com/dashboard) produced by Anthropic, which can generate quite professional prompts.
+
+### Result Push
+
+There are many push channels, such as Feishu robot, Telegram robot, Bark push, etc. Choose as you like. The implementation is not complicated either.
+
+After having the output data, we can add head images, bolding, labels, etc. to the movie list according to the specific syntax format of the platform. I also added a quick jump button to the film and television software to start it with one click :)
+
+### Scheduled Operation
+
+Because all are developed using Node.js. Therefore, the lightest and most convenient way is Github Action. Set a Cron scheduled task according to the hot list update time.
+
+Because the MisakaF weekly hot list update time is 7 pm on Friday, I set the scheduled build at 7:30 pm on Friday, and automatically push the message after the build is completed. Start a wonderful weekend.
+
+![Github Action Operation Record](https://cdn.yikzero.com/markdown/images/202411272319711.png)
+
+## Final Words
+
+That's the simplest version of the implementation. But high popularity does not necessarily mean it is good-looking, nor does it mean that the work meets your preferences. If Douban scores, Rotten Tomatoes scores or other dimensions can be integrated, it should be more personalized.
+
+In any case, **I wish you all a happy viewing Cheers🍻**
+
+![](https://cdn.yikzero.com/markdown/images/202411272325006.jpg)

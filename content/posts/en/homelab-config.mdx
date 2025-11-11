@@ -1,8 +1,87 @@
 ---
-title: 'HomeLab Home Environment Configuration'
-publishedAt: 2023-09-12
-description: 'Documenting the configuration of an optical cat, R4S soft route, and Linksys hard route'
+title: 'HomeLab Configuration'
+publishedAt: '2023-09-12'
+description: 'Recording the configuration of the optical modem, R4S soft router, and Linksys hardware router'
 image: 'https://cdn.yikzero.com/markdown/images/post-background.jpg'
 category: 'Other'
 state: 'published'
 ---
+
+## Background and Purpose
+
+Home network configuration typically involves an optical modem (ONT) as the ISP connection entry point, an R4S soft router (NanoPi R4S based on OpenWrt), and a Linksys hard router for managing the internal network. The goal of this article is to optimize network performance through bridge mode, reduce NAT conflicts, and utilize the R4S and Linksys to achieve efficient network management and wireless coverage.
+
+## Topology Diagram
+
+![Home Network Topology](https://cdn.yikzero.com/markdown/images/202311052100776.png)
+
+The ONT is in bridge mode, connected to the R4S WAN port. The R4S acts as the main router, handling PPPoE. The Linksys is connected to the R4S LAN port via its WAN port and set to bridge mode as a wireless access point.
+
+## ONT Bridge Configuration
+
+### Reasons for Bridging
+
+- Prevent duplicate NAT forwarding and avoid double NAT issues affecting some applications.
+- Reduce network load on the ONT, which will only be responsible for optical-electrical signal conversion without routing.
+- The ONT has limited functions. Bridging allows the R4S or Linksys to provide more powerful routing functions.
+- The ONT's WiFi signal is weak. Bridging allows the Linksys to provide better wireless coverage.
+
+### Specific Configuration Steps
+
+#### Hangzhou Unicom ONT
+
+- **Login Information**:
+  - Address: [http://192.168.1.1/cu.html](http://192.168.1.1/cu.html)
+  - Account: `CUAdmin`
+  - Password: `CUAdmin`
+- **PPPoE Settings**:
+  - Account: Usually starts with 0571 (Hangzhou area code), need to check the backend to get it.
+  - Password: The last six digits of the account.
+- **Bridge Mode Settings**: Find the WAN settings through the login interface, adjust the mode to bridge, save and restart.
+
+#### Hangzhou Mobile ONT
+
+- **Login Information**:
+  - Address: [http://192.168.1.1/](http://192.168.1.1/)
+  - Account: `CMCCAdmin`
+  - Password: `aDm8H%MdA`
+- **PPPoE Settings**:
+  - Account: Starts with `hz`, followed by the first letters of the district (e.g., Binjiang district is `hzbj`), then a-z letters in the order of broadband activation (e.g., the first one is `hzbja`).
+  - Password: Try `000000`, `888888`, `123456`, the last six digits of the account or the last six/eight digits of the ID card.
+- **Bridge Mode Settings**: After logging in, adjust the WAN to bridge mode, save and restart.
+
+### Using PPPOE in Bridge Mode
+
+After bridging, the R4S or Linksys needs to dial up the network using the PPPoE account and password to ensure a normal internet connection.
+
+---
+
+## Linksys Bridge Mode
+
+### Initial Configuration
+
+Regardless of whether you want to change to "Bridge Mode" or "Automatic Configuration - DHCP" later, you need to perform the initial setup first. Follow the "Setup Wizard" to set the router password and WiFi password normally. If no additional configuration is needed and the network cable is fine, you can access the Internet normally.
+
+### Advanced Settings
+
+#### Bridge Mode
+
+1. **Connection**: Connect the R4S LAN port to the Linksys WAN port (Internet port).
+2. **Login Interface**: Access the Linksys web interface (default 192.168.1.1), skip the initial setup prompts.
+3. **Set Bridge Mode**:
+   - Go to `Configuration > Connectivity > WAN Setup`.
+   - Select `Bridge Mode` to use the router as a wireless access point.
+   - Select "Automatically obtain IP address" or manually specify an IP address (e.g., 192.168.31.2, default gateway is 192.168.31.1).
+   - Save and restart the router.
+
+After setting, click "Save" to restart the router.
+
+#### Additional Optimizations
+
+- **Wireless - Advanced Settings - Roaming Assist**: Select "Off" to improve stability.
+- **Wireless - Advanced Settings - Region**: Select Australia, which may enhance signal strength, but pay attention to compliance and may not be applicable to all regions.
+- **If using Homeassistant**: It is recommended to turn off the WiFi dual-band merging mode to avoid compatibility issues.
+
+## Summary
+
+This article provides detailed steps for ONT bridge mode, R4S PPPOE configuration, and Linksys bridge mode to ensure efficient operation of the home network.

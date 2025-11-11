@@ -1,8 +1,197 @@
 ---
-title: '2025 Internet New Jobs Guide'
-publishedAt: 2025-03-17
-description: 'At the beginning of 2025, I went through the entire process of being unemployed and looking for a job. I want to share my experience and hope to be of some help to everyone'
+title: 'A 2025 Guide to New Internet Jobs'
+publishedAt: '2025-03-17'
+description: 'Earlier this year, I went through the entire process of being unemployed and job hunting. I wanted to share my experience in the hope that it can help others.'
 image: 'https://cdn.yikzero.com/markdown/images/priscilla-du-preez-OEdkPaxYMXU-unsplash.jpg'
 category: 'Life'
 state: 'published'
 ---
+
+## Preface
+
+At the end of January 2025, due to organizational restructuring, the company required me to relocate. We didn't reach an agreement, and ultimately, we terminated the labor contract through **N+1** compensation negotiation. Naturally, I joined the ranks of the unemployed.
+
+This timing was right before the Chinese New Year. I planned to properly look for a job after the holiday and use this time to organize my work. I would start applying after the Spring Festival in 2025.
+
+In early March, I joined a new company. Taking advantage of my free time, I'm sharing my experience with you all.
+
+## Layoff Compensation
+
+Company layoffs are a normal business practice. We may not be able to change this, but we can try to maximize our own interests.
+
+Looking back, I fell into a few pitfalls, including **communication about the departure date** and **social security and housing fund for the current month**.
+
+### Communication about the Departure Date
+
+If the company doesn't ask you to leave on the same day, there's likely room for negotiation. When my manager was trying to get me more benefits, they gave me a date, but HR said they couldn't give it to me, and I believed them. But in the end, I learned that many others negotiated a departure date one or two weeks later than me.
+
+Here are some suggestions for this type of situation:
+
+1.  When you first receive a layoff notice, don't immediately accept the first proposed date. Try to negotiate a more favorable arrangement amicably.
+2.  If you're not being asked to leave immediately, there's usually room for negotiation.
+3.  Extending the departure date appropriately gives you more time to prepare: update your resume, gather work materials, adjust your mindset, etc.
+
+### Social Security and Housing Fund for the Current Month
+
+Initially, I wanted to ensure that my social security and housing fund contributions wouldn't be interrupted after leaving, so I negotiated and successfully got the company to pay my social security for the current month. However, when it came to the actual departure, I realized that no matter what I did, it seemed inevitable that my social security would be interrupted after unemployment.
+
+The specific reasons are as follows (Hangzhou policy):
+
+1.  Although I was still on the company's social security payment list in January, the actual social security deduction wouldn't be completed until early February, and HR could only process the reduction in personnel after the deduction.
+2.  Because the reduction in personnel couldn't be processed in time, I couldn't apply for unemployment insurance in January and could only apply in February. Unemployment insurance takes effect the following month, meaning I couldn't continue to enjoy social security in February and would have to wait until March for the unemployment insurance to cover my social security contributions.
+
+So, if you need to ensure uninterrupted social security, you'll need to find another way. You don't need to consider uninterrupted social security as a factor in negotiating with the company. Just consider how much you would gain from the company paying social security for the current month.
+
+## Job Hunting During Unemployment
+
+While unemployed at home, you'll definitely feel anxious. You can calculate how many months your savings can support you. If you have enough, consider traveling for a while to change your mindset. Although companies in China don't really like gaps in resumes, you can't push yourself too hard.
+
+I don't have experience in adjusting my mindset, because frankly, I didn't adjust well myself. I had insomnia many nights. Although I don't have any loans yet, this was the first time I encountered this situation, so it was hard to avoid feeling anxious.
+
+All I can do is share the channels I used to find a job. The best is definitely internal referrals. Of course, besides internal referrals, there are also other job search channels, and I'll share a few here.
+
+### Common Channels
+
+[Boss 直聘](https://www.zhipin.com/), [猎聘](https://www.liepin.com/), [智联招聘](https://www.zhaopin.com/) are some of the most common job search channels, and the competition is the fiercest. You'll definitely encounter many "read but no reply" situations.
+
+Among the above channels, I mainly used Boss 直聘. The main troubles I encountered were company screening and sending greetings. I also don't like casting a wide net and prefer to contact companies with a targeted approach.
+
+Recommended company screening methods:
+
+1.  Venture capital-backed startups
+    *   You can view the investment portfolios of venture capital firms through platforms like [风潮](https://current.vc/), and these companies usually have good development prospects.
+2.  Government-certified quality companies
+    *   Search for "your area + specialized and innovative enterprise list" in search engines to filter out officially recognized high-potential companies.
+3.  Company rankings on social media platforms
+    *   Search for the unicorn company rankings of your city on Xiaohongshu.
+
+![2024 杭州独角兽名单](https://cdn.yikzero.com/markdown/images/%E7%8B%AC%E8%A7%92%E5%85%BD.png)
+
+After you have a list of companies, you can go to their official websites and Boss 直聘 to further understand their operations and recruitment situation.
+
+The second trouble is sending greetings. Even after screening, there are still many companies on the list, and it's a bit tiring to send targeted greetings to each one.
+
+So I used [WXT](https://wxt.dev/) to write a simple browser extension. The extension can get information such as the company, position, job requirements, and recruiter's name from the current page of the job posting details. It sends this information along with your personal work information to Claude, which generates a more targeted greeting message.
+
+<details>
+
+<summary>Claude 3.7 Sonnet prompt</summary>
+
+```plain
+以下是您需要处理的求职信息：
+
+<job_requirements>
+{{JOB_REQUIREMENTS}}
+</job_requirements>
+
+<target_company>
+{{TARGET_COMPANY}}
+</target_company>
+
+<job_position>
+{{JOB_Position}}
+</job_position>
+
+<applicant_info>
+# 个人简历
+
+## 基本信息
+- **姓名**：yikZero
+- **职位**：产品设计师
+- **所在地**：杭州
+- **工作经验**：3年
+- **联系方式**：
+  - 邮箱：x@example.com
+  - 个人网站：ro.yikzero.com
+
+## 专业背景
+- 家里蹲大学电气专业
+- GPA 4.5，学院综合排名优秀
+
+## 职业经历
+### 家里蹲产品设计师（2022-2025/01）
+
+#### 参与项目名称
+项目描述
+
+## 设计与技术技能
+- **设计工具**：Figma、Sketch、AI、AE、Blender、Spline
+- **前端能力**：React、Tailwind CSS、shadcn/ui、Motion
+- **设计技能**：UI设计、交互设计、设计系统构建、可视化设计
+
+## 个人项目
+- **Rosure**：设计资源导航网站，展示设计品味与前端实现能力
+- **Brog**：极简主义界面设计博客系统
+
+## 证书
+- 英语证书
+</applicant_info>
+
+请按照以下步骤创建一个个性化的问候语：
+
+1. 仔细分析目标职位的要求。
+2. 确定求职者的关键技能和经验中与职位要求最匹配的部分。
+3. 起草一个简洁的问候语，突出求职者的优势和与职位的匹配程度。
+4. 确保问候语的长度在 150-250 字之间。
+5. 调整语气和重点，以适应不同的行业和公司（科技公司强调创新，传统企业强调稳定）。
+6. 确保内容真实可信，不要夸大或虚构经历。
+7. 使用清晰的文本结构，包括简短的自我介绍、核心能力概述和期望表达。
+8. 需要附上我的个人网站作品集：我的作品集网站（ro.yikzero.com）展示了我的项目经历、设计流程与成果。期待有机会详细分享我如何为XX产品带来价值。
+
+在生成最终的问候语之前，请在<analysis>标签内的思考过程中完成以下步骤：
+
+1. 分析职位要求，列出关键点。
+2. 将求职者的技能与职位要求进行匹配，指出最相关的部分。
+3. 为问候语构思2-3个潜在的开场句。
+4. 规划问候语的整体结构。
+
+然后，在<greeting_message>标签中提供最终的问候语。
+
+请用简体中文编写问候语，确保语言专业、诚恳，避免夸张或华丽的表达。问候语应该适合在 BOSS直聘、智联招聘等平台上使用。
+
+您的最终输出应仅包含<greeting_message>标签中的问候语，不要重复或重述思考过程中的任何内容。
+```
+
+</details>
+
+![Boss 直聘打招呼示例](https://cdn.yikzero.com/markdown/images/Boss-Message.png)
+
+My own designed plugin is not very complete. You can directly use the [boos-helper](https://github.com/Ocyss/boos-helper) developed by Ocyss, which also has an AI greeting function.
+
+Find the company you like and send a greeting. Then make a cup of tea 🍵 and wait.
+
+### Official Website "Join Us"
+
+Almost every company's official website has a "Join Us" section where you can find some job postings.
+
+Many companies' "Join Us" sections actually connect to third-party recruitment platforms. For example, companies that use the Feishu ecosystem usually use Feishu recruitment services, and the corresponding recruitment page domain format is xxxx.jobs.feishu.cn.
+
+So you can also use the `site:jobs.feishu.cn keyword` command in search engines to accurately filter recruitment information for specific positions or regions.
+
+For example, searching for [jobs.feishu.cn 产品经理 杭州](https://www.google.com/search?q=site%3Ajobs.feishu.cn+%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86+%E6%9D%AD%E5%B7%9E) will quickly locate companies in Hangzhou that are recruiting product managers and using the Feishu recruitment system.
+
+Niu客网 also has similar services that can be found using similar methods.
+
+### Other Channels
+
+**The following channels have not been verified and require careful consideration.**
+
+If you have internet work, short-term work, or remote work needs, you can consider platforms such as [电鸭社区](https://eleduck.com/) and [v2ex 酷工作](https://www.v2ex.com/go/jobs). I also found a recruitment website that aggregates these sources, [X-Hiring](https://woky.cc/).
+
+For Web3 jobs, you can refer to [Web3-Recruitment-Platform](https://github.com/WorkWorkWeb3/Web3-Recruitment-Platform) and [Web3 招聘聚合](https://periwinkle-lunaria-151.notion.site/WEB3-1a75afa9e44e80dca909fc9f40258f6f). Of course, Twitter is also a good platform for recruiting and finding jobs.
+
+The job I currently found was through a job posting on Twitter, and I passed the interview after submitting my resume.
+
+## Summary
+
+The job market is essentially a market. You choose companies, and companies choose you.
+
+As the saying goes, "A loss may turn out to be a blessing in disguise." The closing of one door often means the opening of another window. What seems like the end of a career may actually be the beginning of a new journey.
+
+Being forced to stop and think about the future direction may also be a good choice.
+
+The above are some well-known truths, but they are also words of encouragement for myself. In short, believe in your abilities and you will be able to find a suitable place.
+
+I hope everyone is successful.
+
+![](https://cdn.yikzero.com/markdown/images/wil-stewart-UErWoQEoMrc-unsplash.jpg)

@@ -1,9 +1,116 @@
 ---
-title: 'Research on UI Design: Icon Section'
-publishedAt: 2023-11-11
-updatedAt: 2024-01-11
-description: 'A comprehensive introduction to the importance of icons and their application in UI design'
+title: 'A Study on Modular UI Design: Icons'
+publishedAt: '2023-11-11'
+updatedAt: '2024-01-11'
+description: 'A comprehensive overview of the importance and application of icons in UI design'
 image: 'https://cdn.yikzero.com/markdown/images/202406191228.jpg'
 category: 'Design'
 state: 'published'
 ---
+
+## Background
+
+There are many existing high-quality icon libraries, such as [Untitled](https://www.untitledui.com/icons), [Lucide](https://lucide.dev/icons/), [Remix](https://remixicon.com/), and for more comprehensive options, you can refer to [React Icons](https://react-icons.github.io/react-icons), [Iconfont](https://www.iconfont.cn/).
+
+Despite the abundance of existing icon libraries, simply selecting icons based on their meaning... is something even non-designers can do.
+
+We shouldn't just "know what but not why," so let's start with icons to understand the theory behind the design.
+
+## Overview
+
+In the field of UI design, icons play a central role. They transform textual information into visual symbols, simplifying users' understanding of content and enhancing the aesthetics of the interface. Especially in B-end design, although the use of icons is not as frequent or complex as in C-end, appropriate icon design in form-based page layouts can highlight the style and brand identity of the product and even the entire enterprise.
+
+The earliest form of visual communication was basically through graphics. These are prehistoric cave paintings by Native Americans in North America. Although cave paintings are said to be the predecessor of writing, I personally feel that they are also very similar to icons. Icons are more like a universal language, transcending various languages such as Simplified Chinese, English, and Korean.
+
+![Prehistoric cave paintings by Native Americans](https://cdn.yikzero.com/markdown/images/202311112055138.png)
+
+## The Details in Icons
+
+First and foremost, an icon should clearly represent an object, action, or idea. If users cannot see/understand its meaning, the icon becomes a flashy decoration, or even hinders task completion.
+
+### Icon Size
+
+Actually, when using various component libraries, I noticed that the icons in these libraries are all based on the `24px` size.
+
+![Untitled UI Icons](https://cdn.yikzero.com/markdown/images/202311121908492.png)
+
+After searching the internet, I found the possible reasons for this:
+
+- The 24px size ensures that the icon remains clear and legible across various screen resolutions and devices.
+- The 24px size adapts to various grid systems (e.g., [8-Point Grid System](https://medium.com/built-to-adapt/intro-to-the-8-point-grid-system-d2573cde8632#.5h95d066j)), making it easy for designers and developers to collaborate.
+- 24dp\*24dp @x1 is the "perfect size" for icons recommended by the [Material Design 3](https://m3.material.io/styles/icons/applying-icons#661945dc-8621-41c6-b88d-bdb7c945b4e7) specification. At the same time, Material Design recommends a minimum touch target size of 48dp.
+
+No data support has been found behind this, and it is applied according to convention:
+
+![Icon Size](https://cdn.yikzero.com/markdown/images/202311112329467.png)
+
+- The recommended standard icon size is 24px\*24px, usually with a 2px padding around it, but this is not absolute, and the specific padding should be determined based on the Keyline. The corresponding recommended touch target size is 48px\*48px.
+- In desktop environments, the icon size can be adjusted to 20px\*20px, and the corresponding touch target size is recommended to be 40px\*40px.
+- 16px is usually used as the minimum size. At this size, the icon should be designed to be more concise, and its decorative effect will be greater than its functional effect.
+
+"Rules are dead, but people are alive." We can apply this guiding principle while also combining it with the actual situation.
+
+px is not equal to dp and pt, and there is a conversion relationship between them. You can find specific information online.
+
+### Icon Styles
+
+The existing icon styles are complex and diverse, and are no longer limited to linear and filled styles. C-end icons are even more diverse. Here, we will temporarily analyze based on basic styles.
+
+Below are the icon styles of Untitled Icons that I found: Line, Duocolor, Duotone, and Solid.
+
+![Example of various icon styles](https://cdn.yikzero.com/markdown/images/202311122131581.png)
+
+The above four icon styles can basically meet all the needs of B-end design.
+
+If divided more meticulously, Material Design also divides "linear icons" into: OutLine, Rounded, and Sharp.
+
+![Material Design Icon Styles](https://cdn.yikzero.com/markdown/images/202311122203904.png)
+
+Combined with the stroke thickness and corner radius of linear icons, this can basically meet the customized needs of the enterprise and product personality.
+
+In addition, the style of the icon not only affects the overall interface style, but also affects the functionality and user experience of the icon:
+
+- Complex icons are not suitable for too small sizes (16px \* 16px icons require a more concise linear style)
+- Filled icons are generally easier to recognize than linear icons, but the specific situation needs to be judged according to the icon shape [Conclusion Source](https://cdr.lib.unc.edu/concern/masters_papers/6w924g35w)
+
+## Icon Design
+
+First of all, I want to say that I have never completely independently designed an icon. In the past, if there were no icons that met my needs, I would basically take an icon with a similar meaning and simply adjust its shape.
+
+So, taking this opportunity, I can also get in touch with icon design. Ant design's [icon design guidelines](https://ant.design/docs/spec/icon-cn) have actually written a lot of relevant content, and I recommend you to understand it first.
+
+### Use of Keylines
+
+Keylines are the foundation of the grid. By using these core shapes as guidance, we can maintain consistent visual proportions between system icons.
+
+The following figure shows the Keyline grid drawn according to the [Material Design 3 Icon design template](https://m3.material.io/styles/icons/designing-icons#8754553f-29d9-4671-b163-123b8e7b8f1e) specification. Based on this grid, various icons can basically be drawn.
+
+![Keyline Demonstration](https://cdn.yikzero.com/markdown/images/202311131752115.png)
+
+![Keyline Basic Shapes Collection](https://cdn.yikzero.com/markdown/images/202311131752144.png)
+
+In today's world where design resources are flying everywhere, you can completely find icons that meet your style needs on [iconfont](https://www.iconfont.cn/). Then, you can redraw them according to the product's style. There is very little need for designers to create them completely from scratch.
+
+I also tried to use Keyline to draw a few basic icons: home, card, lock, and file, which are also the four basic shapes on Keyline.
+
+![Icon Design Attempt](https://cdn.yikzero.com/markdown/images/202311131902436.png)
+
+In the process of doing it myself, I discovered a few icon design tips:
+
+- Try to use "basic shape" boolean operations to construct icons.
+- Keyline provides numerical balance, but numerical equality does not equal visual balance (for example: the play icon).
+- When choosing the Stroke Alignment method, most icon designs use Center or Inside. Center-aligned icons will look larger under the same conditions.
+- In Figma, using `Shift + Backspace` to delete points and using the center point function of the pen tool can greatly improve the efficiency of icon design.
+- After the icon design is completed, you can use Flatten to integrate the icon lines together, which is convenient for unified processing. There is no need to turn the stroke into a surface, because this is not conducive to later adjustment of the line thickness.
+
+## Icon Application
+
+After the icon design is completed, the next step is to consider how to effectively present these icons to the audience. As the saying goes, "An ugly daughter-in-law must eventually meet her in-laws," which means that no matter how the design turns out, there needs to be a process of display and feedback. This is not only to show the results, but also to get feedback, improve and optimize the design.
+
+### Image Method
+
+The most traditional way to display is naturally through images. The designer cuts out the @1x and @2x icons according to the default, hover, pressed, activated, and disabled states, puts them in a compressed package, and sends them to the front-end developer. Alternatively, the designer cuts the images and uploads them to Lanhu, and the front-end developer downloads the icons they need in "Lanhu".
+
+If the front-end developer needs image format icons, I usually compress the icons with [TinyPNG](https://tinypng.com/) to make the icons take up as little space as possible while ensuring the clarity of the icons. My most commonly used tool is [TinyPNG4Mac](https://github.com/kyleduo/TinyPNG4Mac), which is more convenient. Some front-end scaffolding also comes with image compression functions, and images that take up less than a certain value will also be converted to Base64 encoding for storage.
+
+![Image after Base 64](data:image/png;base64,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

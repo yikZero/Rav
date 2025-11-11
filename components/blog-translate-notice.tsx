@@ -1,16 +1,16 @@
 export default function BlogTranslateNotice() {
   return (
     <div className="mt-8 rounded-lg border border-brand-950 bg-brand-600/9 px-4 py-2 font-medium text-brand-300">
-      This article is currently only available in Chinese. You can use
+      This article was translated from Chinese by
       <a
-        href="https://immersivetranslate.com/en/"
+        href="https://gemini.google/about"
         className="inline-flex px-1"
         rel="noopener noreferrer"
         target="_blank"
       >
-        Immersive Translate
+        Gemini 2.5 Pro
       </a>
-      Website Extension for automatic translation.
+      . If there are any discrepancies, please refer to the Chinese version.
     </div>
   );
 }

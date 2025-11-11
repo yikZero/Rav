@@ -1,8 +1,77 @@
 ---
-title: 'Aria2: Email Notifications for Downloads'
-publishedAt: 2020-02-09
-description: 'Automatically send email notifications via sendmail and custom scripts after download completion using Aria2'
+title: 'Aria2: Automatic Email Notification on Download Completion'
+publishedAt: '2020-02-09'
+description: 'Automatically send email notifications via sendmail and a custom script upon Aria2 download completion'
 image: 'https://cdn.yikzero.com/markdown/images/post-background.jpg'
 category: 'Develop'
 state: 'published'
 ---
+
+## Preface
+
+Since I have no coding background and have never learned anything about coding, my descriptions may not be very accurate. This script came to me when I was downloading movies. In today's society, everything is becoming intelligent, so I wanted to tinker and create an email download notification.
+
+## Screenshot
+
+![Email 截图](https://cdn.yikzero.com/markdown/images/202311050924340.png)
+
+## Building an Email System
+
+I encountered quite a few problems during installation and debugging, but I searched around. Following this blogger's [operation record](https://www.cnblogs.com/kevingrace/p/6143977.html), and with the help of Baota, you can usually configure it successfully. Just test it a few more times.
+
+## Finding and Modifying the Script
+
+I first found a script modified by a user on the [Enshan Wireless Forum](https://www.right.com.cn/forum/thread-163098-1-1.html) for notification purposes.
+
+In the script provided by the author, you just need to fill in the email information, but I had some problems with the `sendmail` command at the time, and then I followed the records in the first part. I've already written some of the script stuff to the server, so I changed a lot of the original script.
+
+When I was debugging with the author's script, `aria2.log` kept showing the `no such file or directory` error, but I couldn't find the reason. Then I thought of writing all the scripts using `pipes`... It seems a bit stupid... but I don't know any other methods.
+
+```shell
+echo "
+
+文件路径：$3
+
+完成时间 `date +%Y/%m/%d`  `date +%T`
+
+负载 "`uptime`"
+
+版本 "`uname -a`"
+
+From Zero.
+
+Have a nice day." | mail -s 'Aria2通知' example@qq.com
+```
+
+This is the content of my script. It's very simple, right? But I actually worked on it for a long time to get a working one. `Aria2通知` is the title of the email. The specific meaning of the parameters should be found in the article link in the first part.
+
+## Final Debugging
+
+Specific steps:
+
+1.  Upload the `email.sh` script to the server
+2.  Modify the `on-download-complete=` parameter in `aria2.conf`, fill in the `absolute address` of the script after `=`
+
+In order to simultaneously achieve:
+
+- Email notification
+- Automatic upload
+
+I call `email.sh` in the `autoupload.sh` script.
+
+Specific writing method:
+
+```shell
+. /root/.aria2/email.sh
+```
+
+My `Aria2` is using [Aria2 一键安装管理脚本](https://github.com/P3TERX/aria2.sh)
+
+## Ending
+
+I'm not very satisfied with this script myself. Although it can achieve basic functions, there are these **problems**:
+
+1. Two emails are sent for each download, one when the torrent download is complete and one when the file download is complete.
+2. I don't understand the syntax, I've tried `basename`, `##/` and stuff like that, but I've tried for a long time and haven't been able to get the filename.
+
+**This is my first time writing an article, I don't know anything about layout, and it's quite verbose. But it's fun.**
