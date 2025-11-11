@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation';
 import { loadLocalizedMDX } from '@/lib/mdx.utils';
 import { getBlogPosts } from '@/lib/post.utils';
 
+import BlogTranslateNotice from '@/components/blog-translate-notice';
 import DateDisplay from '@/components/date-display';
 import PostNavigation from '@/components/post-navigation';
 
@@ -131,6 +132,7 @@ export default async function Page({
           className="sm:grid sm:gap-12"
         >
           <div className="rypo max-w-172">
+            {locale === 'en' && <BlogTranslateNotice />}
             <div lang={locale}>
               <Content />
             </div>
