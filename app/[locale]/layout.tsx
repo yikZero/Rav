@@ -1,10 +1,10 @@
 import { routing } from '@/i18n/routing';
 import ravConfig from '@/rav.config';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import Script from 'next/script';
 
 import Background from '@/components/background';
 import BackgroundGradient from '@/components/background-gradient';
@@ -100,11 +100,7 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
       </body>
       {process.env.NODE_ENV === 'production' && (
-        <Script
-          data-website-id="73888dca-90ee-4917-bdcc-d3a0e9120a41"
-          src="https://anal.yikzero.com/script.js"
-          strategy="afterInteractive"
-        />
+        <GoogleAnalytics gaId="G-3KYHM9F914" />
       )}
     </html>
   );
