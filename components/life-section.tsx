@@ -36,11 +36,11 @@ export default function LifeSection({
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex flex-row items-center gap-1.5 py-0.5 text-base font-medium text-sub transition duration-200 hover:text-brand-500 sm:max-w-fit sm:py-0"
+            className="group relative flex flex-row items-center gap-1.5 pb-0.5 text-lg font-medium text-sub transition duration-200 hover:text-brand-500 sm:max-w-fit sm:py-0 sm:text-base"
           >
             {title}
           </a>
-          <p className="text-sm text-soft">{description}</p>
+          <p className="text-base text-soft sm:text-sm">{description}</p>
         </div>
       </div>
     </div>

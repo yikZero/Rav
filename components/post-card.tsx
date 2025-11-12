@@ -31,7 +31,7 @@ export default function PostCard({
       >
         <div
           className={cn(
-            'absolute inset-0 -z-1 bg-linear-to-t from-[#01040E] to-[#01040E]/90',
+            'absolute inset-0 -z-1 bg-linear-to-t from-[#01040E]/90 to-[#01040E]/80',
             isFirst && 'from-[#01040E] from-20% to-[#01040E]/50',
           )}
         ></div>
