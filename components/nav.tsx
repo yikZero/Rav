@@ -60,7 +60,7 @@ export default function Nav() {
   return (
     <ul
       ref={ulRef}
-      className="relative flex flex-row items-center gap-1 text-sm font-normal"
+      className="pointer-events-auto relative flex flex-row items-center gap-1 text-sm font-normal"
     >
       {AllLinks.map((link, index) => {
         const isActive = isActiveLink(link.id);
