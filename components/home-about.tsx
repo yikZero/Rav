@@ -13,7 +13,7 @@ export default function HomeAbout() {
   return (
     <section className="mt-32 flex flex-col items-center gap-28 sm:mt-40">
       <div className="mx-auto grid max-w-240 grid-cols-1 gap-16 overflow-hidden sm:grid-cols-4">
-        <div className="flex flex-row sm:col-span-2">
+        <div className="-ml-4 flex flex-row sm:col-span-2 sm:-ml-0">
           <PhotoCard
             title="Hello,World!"
             url="https://cdn.yikzero.com/roominess5/about/aboutme-6.jpg"
@@ -65,8 +65,8 @@ export default function HomeAbout() {
               url="https://www.zjut.edu.cn/"
               description={t('experience.zjut.description')}
             />
-            <div className="absolute inset-y-0 -z-10 flex w-1.5 items-start justify-center sm:left-1.25">
-              <div className="mt-3.5 h-36 w-0.5 bg-linear-to-b from-strong/7 via-strong/10 to-strong/7" />
+            <div className="absolute inset-y-0 -z-10 mt-1.5 flex w-2 items-stretch justify-center sm:left-1">
+              <div className="w-0.5 bg-linear-to-b from-strong/4 via-strong/10 to-transparent" />
             </div>
           </div>
         </div>

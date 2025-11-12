@@ -1,7 +1,7 @@
 {
   "Seo": {
     "title": "Rav",
-    "description": "你好，我是 yikZero，也叫张毅吉，一位来自杭州的产品设计师，现专注于 Web3 领域的产品设计。空闲时间，我喜欢徒步旅行、骑行、编程，以及探索各种新鲜事物。欢迎与我来做朋友。"
+    "description": "你好，我是 yikZero，也叫张毅吉，一位来自杭州的产品设计师，现专注于 Web3 领域的产品设计。空闲时间，我喜欢徒步、骑行、写点代码，以及探索各种新鲜事物。欢迎与我来做朋友。"
   },
   "Navigation": {
     "home": "首页",
@@ -13,7 +13,7 @@
     "title": "首页"
   },
   "Hero": {
-    "description": "设计之外，我喜欢徒步、骑车、写点代码、探索各种新鲜事物。欢迎联系。",
+    "description": "设计之外，我喜欢徒步、骑行、写点代码、探索各种新鲜事物。欢迎联系。",
     "emailMe": "联系我",
     "trustTitle": "大型企业服务经验"
   },
@@ -24,7 +24,7 @@
   },
   "About": {
     "introduction": "你好，我是 <highlight>yikZero</highlight>，也叫<highlight>张毅吉</highlight>，一位来自<highlight>杭州</highlight>的产品设计师，目前在 OneKey 就职，负责 Web3 加密货币领域的产品设计。",
-    "hobby": "空闲时间，我喜欢徒步旅行、骑行、编程，以及探索各种新鲜事物。",
+    "hobby": "空闲时间，我喜欢徒步、骑行、写点代码，以及探索各种新鲜事物。",
     "experience": {
       "onekey": {
         "time": "2025 - 现在",

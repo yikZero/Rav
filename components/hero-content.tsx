@@ -69,7 +69,7 @@ export default function HeroContent() {
           ))}
         </h1>
         <motion.span
-          className="max-w-108 text-center text-sm text-soft text-shadow-sm sm:text-base"
+          className="max-w-108 px-6 text-center text-sm text-soft text-shadow-sm sm:text-base"
           transition={transition}
           variants={variants}
         >
