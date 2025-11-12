@@ -14,7 +14,7 @@ export default function Background() {
     <div
       className={cn(
         'absolute top-0 right-0 left-0 -z-1 h-200 w-full overflow-hidden mask-b-from-0',
-        !isHomePage && 'opacity-20',
+        !isHomePage && 'opacity-10',
       )}
     >
       <div

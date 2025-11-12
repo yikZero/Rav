@@ -17,7 +17,7 @@
   --color-brand-900: oklch(0.379 0.146 265.522);
   --color-brand-950: oklch(0.282 0.091 267.935);
 
-  --color-strong: oklch(1 0 0);
+  --color-strong: oklch(1 0 0 / 85%);
   --color-sub: oklch(1 0 0 / 85%);
   --color-soft: oklch(1 0 0 / 65%);
   --color-weak: oklch(1 0 0 / 45%);

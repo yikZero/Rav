@@ -53,7 +53,7 @@ export default function HeroContent() {
       </motion.div>
       <div className="flex flex-col items-center gap-4">
         <h1
-          className={`${instrumentSerif.className} max-w-140 text-center text-4xl tracking-[0.01em] text-strong text-shadow-sm sm:text-5xl sm:leading-15.5`}
+          className={`${instrumentSerif.className} max-w-140 text-center text-4xl tracking-[0.01em] text-white/95 text-shadow-sm sm:text-5xl sm:leading-15.5`}
         >
           {words.map((word, index) => (
             <Fragment key={index}>
