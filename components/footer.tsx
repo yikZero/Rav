@@ -18,7 +18,7 @@ interface FooterLink {
 const footerLinks: FooterLink[] = [
   {
     name: 'Github',
-    url: 'https://github.com/yikZero',
+    url: 'https://github.com/yikZero/Rav',
     icon: Github,
   },
   {
