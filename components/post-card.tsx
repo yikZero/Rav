@@ -22,7 +22,7 @@ export default function PostCard({
   return (
     <article
       className={cn(
-        'group relative isolate flex cursor-pointer flex-col justify-end overflow-hidden rounded-xl border border-[#EFF6FF]/4 sm:h-full',
+        'group relative isolate flex cursor-pointer flex-col justify-end overflow-hidden rounded-xl border border-[#EFF6FF]/6 sm:h-full',
         className,
       )}
     >
