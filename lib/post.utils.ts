@@ -21,7 +21,12 @@ export type Post = {
 function parseFrontmatter(fileContent: string) {
   const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
   const match = frontmatterRegex.exec(fileContent);
-  const frontMatterBlock = match![1];
+
+  if (!match) {
+    throw new Error('No frontmatter found in file');
+  }
+
+  const frontMatterBlock = match[1];
   const content = fileContent.replace(frontmatterRegex, '').trim();
   const frontMatterLines = frontMatterBlock.trim().split('\n');
   const metadata: Partial<PostMetadata> = {};
@@ -59,16 +64,27 @@ function getMDXData(dir: string) {
   }
 
   const mdxFiles = getMDXFiles(dir);
-  return mdxFiles.map((file) => {
-    const { metadata, content } = readMDXFile(path.join(dir, file));
-    const slug = path.basename(file, path.extname(file));
+  return mdxFiles
+    .map((file) => {
+      try {
+        const filePath = path.join(dir, file);
+        const { metadata, content } = readMDXFile(filePath);
+        const slug = path.basename(file, path.extname(file));
 
-    return {
-      metadata,
-      slug,
-      content,
-    };
-  });
+        return {
+          metadata,
+          slug,
+          content,
+        };
+      } catch (error) {
+        console.warn(
+          `Warning: Skipping file ${file} due to parsing error:`,
+          error instanceof Error ? error.message : error
+        );
+        return null;
+      }
+    })
+    .filter((post): post is Post => post !== null);
 }
 
 export function getBlogPosts({
@@ -80,7 +96,11 @@ export function getBlogPosts({
   // Only load posts for the requested language
   const posts = getMDXData(postsDir);
 
-  const filteredData = filterPublished
+  // In development environment, show all posts including drafts
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  const shouldFilter = filterPublished && !isDevelopment;
+
+  const filteredData = shouldFilter
     ? posts.filter((item) => item.metadata.state === 'published')
     : posts;
 

@@ -1,0 +1,269 @@
+---
+title: 'Lokalise MCP 自动翻译方案'
+publishedAt: 2025-11-17
+description: '工作中需国际化的场景比较多，需要有自动化翻译方案来提高效率'
+image: 'https://cdn.yikzero.com/markdown/images/romain-vignes-ywqa9IZB-dU-unsplash.jpg'
+category: 'Develop'
+state: 'published'
+---
+
+## 前言
+
+俗话说得好，「偷懒」是第一生产力。在我们目前的需求设计流程中，会涉及到大量的语言翻译工作。每个需求都需要将稿件中的英文标题、描述翻译为中文、法语、日语、泰语等合计十八种语言，并最终通过翻译键 (Translation keys) 的形式提供给开发。这其实是一项重复率非常高并且非常繁琐的工作。我们需要找到方法能够偷懒，并且保证翻译质量。
+
+目前我们使用的多语言平台是 [Lokalise](https://lokalise.com/)，所以接下来我讲的方案主要会围绕 Lokalise 展开，其他平台也可以参考。
+
+![Lokalise MCP 自动翻译方案](https://cdn.yikzero.com/markdown/images/mcp-success-20251119.png)
+
+## 基本思路
+
+要实现全自动，其实就分两步走：
+
+1.  **找个懂行的翻译**：AI 翻译很强，但不懂业务术语（比如 "Gas" 翻译成 "气体"），可能还会把一些不需要翻译的词翻译出来。所以需要给 AI 注入业务上下文、定规矩。
+2.  **给 AI 装上「手」**：翻译完还得一条条复制粘贴到 Lokalise 后台，这才是最累的。通过 MCP 协议，让 AI 直接调用 Lokalise API。
+
+## 最终方案
+
+我选择的技术栈是 **Node.js** + **MCP SDK** + **客户端工具**。
+
+客户端的选择很灵活，只要支持 MCP 均可。最开始我用的是 **[Claude Desktop](https://www.claude.com/download)**，但对于喜欢命令行的朋友，完全可以替换成 **[Claude Code](https://www.claude.com/product/claude-code)** 或者 **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**，效果一样丝滑。
+
+可能 Gemini 对于翻译这种文科类工作更加擅长，推荐一下。
+
+### 1. 核心代码 (MCP Server)
+
+Lokalise 本身提供了完善的 [REST API](https://developers.lokalise.com/reference/lokalise-rest-api)，这正好方便我们通过代码来操作它。
+
+为了少写点样板代码，我直接使用了官方的 Node.js SDK (`@lokalise/node-lokalise-api`)。参考 MCP 的[官方文档](https://modelcontextprotocol.io/docs/develop/build-server#node)，我把这些 API 包装成了一个 MCP Server。
+
+它主要暴露了两个工具给 AI：
+
+- `search-keys`: 用来查重，看看是不是已经有人翻译过了。
+- `create-keys`: 用来干活，把 AI 生成好的多语言文案写入后台。
+
+![调用 Lokalise MCP Server](https://cdn.yikzero.com/markdown/images/mcp-20251119.png)
+
+逻辑其实并不复杂，本质上就是做一个 API 的二传手：
+
+<details>
+
+<summary>点击查看 index.ts 核心代码</summary>
+
+```typescript
+#!/usr/bin/env node
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { LokaliseApi, SupportedPlatforms } from "@lokalise/node-api";
+import { z } from "zod";
+
+const LOKALISE_API_KEY = process.env.LOKALISE_API_KEY;
+const DEFAULT_PROJECT_ID = process.env.DEFAULT_PROJECT_ID;
+const DEFAULT_PLATFORMS = ["web", "ios", "android", "other"];
+const PLATFORMS = (
+  process.env.PLATFORMS
+    ? process.env.PLATFORMS.split(",").map((p) => p.trim())
+    : DEFAULT_PLATFORMS
+) as SupportedPlatforms[];
+
+const lokaliseApi = new LokaliseApi({ apiKey: LOKALISE_API_KEY });
+
+const server = new McpServer(
+  {
+    name: "lokalise-mcp",
+    version: "1.0.0",
+    author: "yikZero",
+  },
+  {
+    capabilities: {
+      tools: {},
+    },
+  }
+);
+
+// ... get-project-info 和 search-keys 工具代码略 ...
+
+server.registerTool(
+  "create-keys",
+  {
+    title: "Create Keys",
+    description: "Creates one or more keys in the project",
+    inputSchema: {
+      projectId: z
+        .string()
+        .describe(
+          "A unique project identifier, if not provide, first use get-project-info tool to get the project id"
+        ),
+      keys: z.array(
+        z.object({
+          keyName: z.string().describe("Key identifier"),
+          platforms: z
+            .array(z.enum(["web", "ios", "android", "other"]))
+            .describe(
+              "Platforms for the key. If not provided, use the default platforms: " +
+                PLATFORMS.join(", ")
+            ),
+          translations: z
+            .array(
+              z.object({
+                languageIso: z
+                  .string()
+                  .describe(
+                    "Unique code of the language of the translation, get the list from the get-project-info tool"
+                  ),
+                translation: z
+                  .string()
+                  .describe("The actual translation. Pass as an object"),
+              })
+            )
+            .describe("Translations for all languages"),
+        })
+      ),
+    },
+  },
+  async ({ projectId, keys }) => {
+    const response = await lokaliseApi.keys().create(
+      {
+        keys: keys.map((key) => ({
+          key_name: key.keyName,
+          platforms: key.platforms,
+          translations: key.translations.map((t) => ({
+            language_iso: t.languageIso,
+            translation: t.translation,
+          })),
+        })),
+      },
+      { project_id: projectId }
+    );
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(response),
+        },
+      ],
+      structuredContent: response as any,
+    };
+  }
+);
+
+// ... update-keys 工具代码略 ...
+
+async function main() {
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  console.error("Lokalise MCP Server running on stdio");
+}
+
+main().catch((error) => {
+  console.error("Fatal error in main():", error);
+  process.exit(1);
+});
+```
+
+</details>
+
+### 2. 调教 AI (Prompt)
+
+这其实就类似 Claude 网页版里的 Project 功能，他会让你预置一些系统提示词，提供一些资料。这都属于给 AI 背景知识，方便其更好的工作。
+
+所以为了让 AI 像个老员工一样，我把所有关于 OneKey 的术语表（Glossary）、Key 的命名规范（Snake Case）都写进了一个 `GEMINI.md` 文件里，如果用的是 Claude Code，也可以写一份 `CLAUDE.md`。
+
+现在其实也有个统一的 [AGENTS.md](https://agents.md/)，只不过还没完成有统一大业。
+
+<details>
+
+<summary>查看 GEMINI.md 提示词详情</summary>
+
+```markdown
+You are a professional web3 project i18n translation expert specializing in translating word/sentence into multiple languages for software localization.
+
+<onekey_background>
+OneKey is a comprehensive cryptocurrency wallet solution...
+</onekey_background>
+
+<i18n_supported_languages>
+English (United States), Bengali, Chinese Simplified...
+</i18n_supported_languages>
+
+<technical_terms>
+OneKey, WalletConnect, iCloud, Google Drive, OneKey Lite, OneKey KeyTag, Face ID, Touch ID, Discord, X, GitHub, recovery phrase, QR-based, NFT, Defi, USB, Mint, Meme, GameFi, Lido, Passphrase...
+</technical_terms>
+
+<translation_namespaces>
+global, onboarding, wallet, swap, earn, market, browser, settings, prime
+</translation_namespaces>
+
+Translation Process:
+
+1. Direct Translation:
+   - Provide a literal translation of the word/sentence into all supported languages
+   - If the text contains a number, replace it with {number}
+   - Preserve all technical terms and variables, like {variableName}, HTML tags, etc
+
+2. Refined Translation:
+   - Create an optimized version that enhances clarity and natural flow in each language
+   - Ensure cultural appropriateness while preserving the original meaning
+   - The title needs to be used Sentence case
+   - A space (half-width space) between a full-width character (Kanji) and a half-width character (letter, number, or symbol)
+
+3. Key Generation:
+   - Create a self-explanatory key in snake_case format
+   - Structure as namespace::descriptive_key_name
+
+4. **Filtering Logic**:
+   - IGNORE common UI elements that likely already exist in the 'global' namespace, such as: "Close", "Open", "Cancel", "Confirm", "Back", "Next", "Done". Do NOT generate keys for these.
+   - Only focus on the unique, business-specific text in the provided context.
+
+Output Format:
+1. Key: [namespace::descriptive_key_name]
+2. Direct Translation Table (brief reference)
+3. Refined Translation Table (primary focus)
+
+Items need checked:
+1. If the user provides the Key, use the user-provided Key.
+2. If there is an obvious spelling error, I need your help to correct it and inform you.
+3. After the translation is completed, need to call the tool to create/update the corresponding key.
+```
+
+</details>
+
+### 3. 配置文件
+
+最后，在 MCP 配置文件（如 `claude_desktop_config.json` 或 `.mcp.json`）里，把我们写好的 Server 挂载上去。
+
+```json
+{
+  "mcpServers": {
+    "lokalise": {
+      "command": "node",
+      "args": ["/Users/yikzero/Code/lokalise-mcp/build/index.js"],
+      "env": {
+        "LOKALISE_API_KEY": "xxxx969xxxxxxxx7c18760c",
+        "DEFAULT_PROJECT_ID": "44xxxxxe4ef8.8099xx5",
+        "PLATFORMS": "ios,android,web,other"
+      }
+    }
+  }
+}
+```
+
+## 实际效果
+
+最好的场景是配合设计稿使用了。
+
+之前每次设计完稿，我都要对着设计稿把文案一个个敲下来。现在可以直接导出设计稿。
+
+比如我在 Figma 里刚画完一个新的 Onboarding 弹窗，随手截个图扔给 AI，说一句（如果过长推荐让其列个 To-Do List）：
+
+> "这是一个新的导入钱包弹窗，把里面的文案处理一下。"
+
+AI 会自动执行以下操作：
+
+1.  **视觉识别**：利用模型自带的视觉能力，直接提取截图中的文案。
+2.  **双重翻译**：这是保证质量的关键。它会严格按照 Prompt 的要求，先生成一份「直译表」以确保变量（如 `{number}`）和术语准确，然后再生成一份「意译表」来润色文案（比如处理日语的全角半角空格、标题的 Sentence case）。
+3.  **自动入库**：确认意译结果无误后，它会自动生成 `onboarding::import_phrase_title` 这种规范的 Key，通过 MCP 将 18 种语言的翻译一次性写入 Lokalise。
+
+## 写在最后
+
+用 Claude 写一个 MCP Server，再供给 Gemini CLI 调用，让他们更好的干活。也不知道谁才是资本家（误。

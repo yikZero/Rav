@@ -1,7 +1,7 @@
 ---
-title: "Dorm WiFi Sharing: Bypassing the Campus Network Limit"
+title: 'Dorm WiFi Sharing: Bypassing Campus Network Restrictions'
 publishedAt: '2020-04-21'
-description: 'This article explains how to flash a third-party firmware (such as Padavan) and configure L2TP to bypass a university's one-account-per-person network restriction (using the Pingfeng Campus China Mobile broadband as an example), enabling WiFi sharing in a dormitory.'
+description: 'This article explains how to flash a third-party firmware (such as Lao Maozi firmware) and configure L2TP to bypass a school's "one person, one account" network restriction (using Pingfeng Campus China Mobile broadband as an example), allowing for shared WiFi in a dormitory.'
 image: 'https://cdn.yikzero.com/markdown/images/post-background.jpg'
 category: 'Develop'
 state: 'published'
@@ -9,39 +9,39 @@ state: 'published'
 
 ## Preface
 
-Dormitory broadband generally requires account login, which makes it impossible to directly use a router to share WiFi. This article will introduce how to break through the campus network's "one account per person" restriction by configuring a router (taking **Asuswrt-Merlin firmware** as an example).
+Dormitory broadband generally requires account login, which makes it impossible to directly use a router to share WiFi. This article will introduce how to bypass the campus network's "one account per person" restriction by configuring a router (using **Asuswrt-Merlin firmware** as an example).
 
-> **Note**: This tutorial is based on testing with **Mobile Broadband** (Pingfeng Campus). For other carriers, please refer to the ideas and configure it yourself.
+> **Note**: This tutorial is based on testing with **Mobile Broadband** (Pingfeng Campus). For other carriers, please refer to the idea and configure it yourself.
 
-## Screenshots
+## Screenshot
 
-![Router Physical Photo](https://cdn.yikzero.com/markdown/images/1565839237.png)
+![Router physical photo](https://cdn.yikzero.com/markdown/images/1565839237.png)
 
 ## Preliminary Preparation
 
-- Router (Recommended **Newifi 3**, **K2P** and other flashable models)
+- Router (recommended models such as **Newifi 3**, **K2P** that can be flashed)
 - **Unbrickable Breed**
 - **Asuswrt-Merlin firmware**
-- School broadband account and password
+- School's broadband account and password
 - Network cable
 
-> **Cost Estimation**: Approximately ￥150
+> **Cost estimate**: Approximately ￥150
 
-**Purchase Suggestions**:
+**Purchase advice**:
 Can be purchased on platforms such as Taobao.
 * If you have strong hands-on skills, you can buy a **brand new, unopened** device and flash it yourself.
-* If you are not familiar with flashing, please purchase a device that has already been flashed with **Unbrickable Breed** and **Asuswrt-Merlin firmware**, which is usually more worry-free.
+* If you are not familiar with flashing, please purchase a device that has been flashed with **Unbrickable Breed** and **Asuswrt-Merlin firmware**, which is usually more worry-free.
 
-> **Hint**: This article does not include flashing tutorials, please search for related information yourself.
+> **Hint**: This article does not include flashing tutorials, please search for relevant information yourself.
 
 ## Preliminary Configuration and Router Usage
 
-> **Important**: If you find that you suddenly cannot connect to the Internet after using it normally for a period of time, your device may have been blacklisted.
+> **Important**: If you find that you cannot connect to the Internet suddenly after using it normally for a period of time, your device may have been blacklisted.
 > **Solution**: Enter the router backend → **External Network (WAN)** → scroll down to find **MAC Address** → click the `+` sign to modify your MAC address.
 
 ### 1. Unbind Device (Important)
 
-First, connect to the school's official WiFi `Wlan-edu`. After connecting, ignore the authentication window that pops up.
+First, connect to the school's official WiFi `Wlan-edu`. After connecting, ignore the pop-up authentication window.
 
 Enter `192.168.210.100` in the browser address bar to enter the **User Self-Service System**.
 
@@ -49,70 +49,70 @@ Enter `192.168.210.100` in the browser address bar to enter the **User Self-Serv
 
 ```plain
 Account: Student ID
-Password: Last eight digits of your ID card (or the password you changed)
+Password: Last eight digits of your ID card (or your modified password)
 ```
 
 After logging in, find and click **Unbind All MAC Addresses**. After completion, disconnect from `Wlan-edu` WiFi.
 
-![Unbind All MAC Addresses](https://cdn.yikzero.com/markdown/images/127070192.jpg)
+![Unbind all MAC addresses](https://cdn.yikzero.com/markdown/images/127070192.jpg)
 
-### 2. Connect Router
+### 2. Connect the Router
 
-1.  Power on the router.
-2.  Connect the **wall** network port (usually a prominent port dedicated to mobile broadband) to the router's **WAN port** (usually a blue port) with a network cable.
+1.  Connect the router to power.
+2.  Use a network cable to connect the **wall** network port (usually a protruding port dedicated to mobile broadband) to the router's **WAN port** (usually a blue port).
 3.  After the router starts, connect to its WiFi (the default SSID is usually `PDCN` or `PDCN 5G`).
 
 ```plain
-Default Wifi Name: PDCN or PDCN 5G
-Default Password: 1234567890
+Default WiFi name: PDCN or PDCN 5G
+Default password: 1234567890
 ```
 
 ## Configuration Method
 
 ### 1. Log in to the Firmware Backend
 
-After connecting to the router's WiFi, open a browser and enter in the address bar: `192.168.123.1` (default backend address for **Asuswrt-Merlin firmware**).
+After connecting to the router's WiFi, open your browser and enter `192.168.123.1` in the address bar (**Asuswrt-Merlin firmware** default backend address).
 
-![Login Popup](https://cdn.yikzero.com/markdown/images/3199039527.jpg)
+![Login pop-up window](https://cdn.yikzero.com/markdown/images/3199039527.jpg)
 
-Enter the default account password:
+Enter the default username and password:
 
 ```plain
 Account: admin
 Password: admin
 ```
 
-**If you cannot log in**
+**If you can't log in**
 
 > 1. Please try changing your browser (Chrome is recommended).
-> 2. Please check that you are properly connected to the router's WiFi.
+> 2. Please check that you are correctly connected to the router's WiFi.
 
 ### 2. VPN Configuration
 
-After logging in to the backend, find and click **External Network (WAN)** in the left menu.
+After logging into the backend, find and click **External Network (WAN)** in the left menu.
 
-On the **External Network (WAN)** settings page, configure the following:
+On the **External Network (WAN)** settings page, configure as follows:
 
 1.  **WAN Connection Type**: Select `L2TP`
 2.  **VPN Server**: `192.168.113.1` (Pingfeng Campus, please check for other campuses)
-3.  **Username**: `hzxhaXXXXXXX` (Pingfeng Campus defaults to `hzxha` + last eight digits of the mobile phone)
-4.  **Password**: `XXXXXX` (Pingfeng Campus defaults to the last six digits of the mobile phone number)
+3.  **Username**: `hzxhaXXXXXXX` (Pingfeng campus defaults to `hzxha` + last eight digits of your phone number)
+4.  **Password**: `XXXXXX` (Pingfeng campus defaults to the last six digits of your phone number)
 
 ![VPN Configuration Interface](https://cdn.yikzero.com/markdown/images/4129165676.jpg)
 
 To prevent detection by the carrier (not necessarily effective), you can make the following settings:
 
-* Find the **Do not decrease TTL for routed packets** option and change it to **All Packets**.
+* Find the **Do not decrease TTL** option and change it to **for all packets**.
 
-![Change to All Packets](https://cdn.yikzero.com/markdown/images/3452305555.jpg)
+![Change to for all packets](https://cdn.yikzero.com/markdown/images/3452305555.jpg)
 
 Click **Apply** at the bottom of the page to save the configuration.
 
 ### 3. Log in to the Campus Network
 
-After saving the settings, wait a moment. Open any webpage and it should automatically redirect to the **Campus Network Login Page**.
+After saving the settings, wait a moment. Open any web page, and theoretically it will automatically redirect to the **campus network login page**.
 
-> **Hint**: If you are not automatically redirected, please manually enter `192.168.210.111` in the browser.
+> **Hint**: If it does not automatically redirect, please manually enter `192.168.210.111` in the browser.
 
 ![Redirect to this page](https://cdn.yikzero.com/markdown/images/3204033419.jpg)
 
@@ -120,7 +120,7 @@ Enter your account and password:
 
 ```plain
 Account: Student ID
-Password: Last eight digits of your ID card (or the password you changed)
+Password: Last eight digits of your ID card (or your modified password)
 ```
 
 ![Login Successful Page](https://cdn.yikzero.com/markdown/images/956320776.jpg)
@@ -144,4 +144,4 @@ After logging in successfully, you can share the network through the router.
 * Account: admin
 * Password: admin
 
-The article may contain errors, corrections are welcome.
+The article may contain errors, and corrections are welcome.
