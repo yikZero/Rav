@@ -38,7 +38,7 @@ export default function PostCard({
       <div
         className={cn(
           'absolute inset-0 -z-1 bg-linear-to-t from-[#01040E]/97 to-[#01040E]/90',
-          isFirst && 'from-[#01040E]/97 from-20% to-[#01040E]/50',
+          isFirst && 'from-[#01040E]/95 from-10% to-[#01040E]/50',
         )}
         aria-hidden="true"
       />

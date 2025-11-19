@@ -111,7 +111,7 @@ export default async function Page({
           transition={transition}
           className="mb-10 flex flex-col gap-4"
         >
-          <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-pretty text-strong outline-none sm:text-[2rem]">
+          <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-pretty text-white outline-none sm:text-[2rem]">
             {post.metadata.title}
           </h1>
           <div className="flex items-center gap-2 text-sm leading-tight">
