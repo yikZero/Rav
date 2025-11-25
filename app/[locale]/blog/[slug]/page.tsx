@@ -131,7 +131,7 @@ export default async function Page({
           transition={transition}
           className="sm:grid sm:gap-12"
         >
-          <div className="rypo max-w-172">
+          <div className="rypo">
             {locale === 'en' && <BlogTranslateNotice />}
             <div lang={locale}>
               <Content />

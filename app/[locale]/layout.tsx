@@ -47,6 +47,11 @@ export async function generateMetadata({
     creator: ravConfig.author,
     generator: 'Next.js',
     ...(metadataBaseUrl && { metadataBase: metadataBaseUrl }),
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+      maximumScale: 5,
+    },
     openGraph: {
       images: [
         {
