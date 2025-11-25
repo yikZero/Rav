@@ -32,6 +32,7 @@
 
 html {
   @apply overflow-y-scroll;
+  overflow-x: hidden;
 }
 
 body {
@@ -49,6 +50,7 @@ body {
     Microsoft YaHei,
     Arial;
   text-autospace: normal;
+  overflow-x: hidden;
 }
 
 /* Adapted and upgraded from vitepress */
@@ -58,7 +60,10 @@ body {
  * -------------------------------------------------------------------------- */
 
 .rypo {
-  @apply text-[0.9375rem] leading-6.5 text-pretty text-sub;
+  @apply text-[0.9375rem] leading-6.5 text-sub;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .rypo h1,
@@ -96,7 +101,7 @@ body {
 }
 
 .rypo p {
-  @apply text-base leading-6.5 text-pretty sm:text-[0.9375rem];
+  @apply text-base leading-6.5 sm:text-[0.9375rem];
 }
 
 .rypo figure {

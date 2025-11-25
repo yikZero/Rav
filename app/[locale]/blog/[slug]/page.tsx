@@ -103,7 +103,7 @@ export default async function Page({
       animate="visible"
       transition={{ staggerChildren: 0.08 }}
       viewport={{ once: true }}
-      className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-0 sm:pt-36"
+      className="mx-auto w-full max-w-172 px-4 pt-24 pb-12 sm:px-0 sm:pt-36"
     >
       <article className="sm:pt-4">
         <motion.div
@@ -111,7 +111,7 @@ export default async function Page({
           transition={transition}
           className="mb-10 flex flex-col gap-4"
         >
-          <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-pretty text-white outline-none sm:text-[2rem]">
+          <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-white outline-none sm:text-[2rem]">
             {post.metadata.title}
           </h1>
           <div className="flex items-center gap-2 text-sm leading-tight">
