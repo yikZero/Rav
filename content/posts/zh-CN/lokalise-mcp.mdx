@@ -9,7 +9,11 @@ state: 'published'
 
 ## 前言
 
-俗话说得好，「偷懒」是第一生产力。在我们目前的需求设计流程中，会涉及到大量的语言翻译工作。每个需求都需要将稿件中的英文标题、描述翻译为中文、法语、日语、泰语等合计十八种语言，并最终通过翻译键 (Translation keys) 的形式提供给开发。这其实是一项重复率非常高并且非常繁琐的工作。我们需要找到方法能够偷懒，并且保证翻译质量。
+俗话说得好，「偷懒」是第一生产力。
+
+目前的 i18n 国际化流程比较繁琐：英文稿件设计，设计完将每个单词、句子在 Lokalise 平台翻译成至 20 种语言，再将 Translation Key 标注回 Figma 供开发调用。
+
+这种 **「翻译 -> 标注 -> 填码」** 的流程，在 App 需求设计中极其耗费时间。 面对这种高频重复的低效劳动，我结合此前团队的 i18n 实践经验，重新设计了一套自动化方案。
 
 目前我们使用的多语言平台是 [Lokalise](https://lokalise.com/)，所以接下来我讲的方案主要会围绕 Lokalise 展开，其他平台也可以参考。
 
@@ -187,7 +191,7 @@ English (United States), Bengali, Chinese Simplified...
 </i18n_supported_languages>
 
 <technical_terms>
-OneKey, WalletConnect, iCloud, Google Drive, OneKey Lite, OneKey KeyTag, Face ID, Touch ID, Discord, X, GitHub, recovery phrase, QR-based, NFT, Defi, USB, Mint, Meme, GameFi, Lido, Passphrase...
+OneKey, WalletConnect, iCloud, Google Drive, OneKey Lite, OneKey KeyTag, Face ID, Touch ID...
 </technical_terms>
 
 <translation_namespaces>
@@ -204,16 +208,17 @@ Translation Process:
 2. Refined Translation:
    - Create an optimized version that enhances clarity and natural flow in each language
    - Ensure cultural appropriateness while preserving the original meaning
+   - When translating, take cultural factors into account and try to use expressions that fit the cultural habits of the target language, especially when dealing with metaphors, slang, or idioms
+   - Preserve specific professional terminologies within certain industries or fields unchanged, unless there is a widely accepted equivalent expression in the target language
    - The title needs to be used Sentence case
    - A space (half-width space) between a full-width character (Kanji) and a half-width character (letter, number, or symbol)
 
 3. Key Generation:
    - Create a self-explanatory key in snake_case format
    - Structure as namespace::descriptive_key_name
-
-4. **Filtering Logic**:
-   - IGNORE common UI elements that likely already exist in the 'global' namespace, such as: "Close", "Open", "Cancel", "Confirm", "Back", "Next", "Done". Do NOT generate keys for these.
-   - Only focus on the unique, business-specific text in the provided context.
+   - When recognized as a common term, please use global namespace
+   - Key must accurately represent the content's purpose
+   - Avoid hyphens (-) and curly braces ({})
 
 Output Format:
 1. Key: [namespace::descriptive_key_name]
@@ -224,6 +229,7 @@ Items need checked:
 1. If the user provides the Key, use the user-provided Key.
 2. If there is an obvious spelling error, I need your help to correct it and inform you.
 3. After the translation is completed, need to call the tool to create/update the corresponding key.
+4. First, provide the Table, then create or update the Key based on the translations in the Refined Table.
 ```
 
 </details>
@@ -248,22 +254,37 @@ Items need checked:
 }
 ```
 
-## 实际效果
+## 实战案例
 
-最好的场景是配合设计稿使用了。
+### 从设计稿到代码的全自动流程
 
-之前每次设计完稿，我都要对着设计稿把文案一个个敲下来。现在可以直接导出设计稿。
+以我们最近开发的「网络检测功能」为例。这是一个相对复杂的业务场景，涉及到多种网络错误状态提示，每种报错信息都需要进行 i18n，总计超过 50 条需要翻译的文本。如果手动处理，光是翻译、填 key、对齐文案估计就要耗费一整天。
 
-比如我在 Figma 里刚画完一个新的 Onboarding 弹窗，随手截个图扔给 AI，说一句（如果过长推荐让其列个 To-Do List）：
+我是这样解决的：
 
-> "这是一个新的导入钱包弹窗，把里面的文案处理一下。"
+1.  **Claude Code 整理需求**：让 Claude 分析代码逻辑，整理出所有需要翻译的场景，输出一个 Markdown 列表。
+2.  **Gemini 翻译**：将 Markdown 投喂给 Gemini 2.5 Pro (CLI)，让其基于我们内置的 Prompt 进行翻译。它会根据 `<technical_terms>` 里的规则，妥善处理 "VPN"、"Proxy" 等专业词汇，并自动生成规范的 Key (如 `settings::network_error_timeout`)。
+3.  **Claude Code 替换代码**：拿到包含 Key 的翻译稿后，再丢回给 Claude Code，让其一键替换掉代码中的硬编码字符串。
 
-AI 会自动执行以下操作：
+Claude 擅长代码分析，Gemini 擅长多语言翻译，MCP 负责打通数据壁垒。各司其职，效率提升了不止一点点。
 
-1.  **视觉识别**：利用模型自带的视觉能力，直接提取截图中的文案。
-2.  **双重翻译**：这是保证质量的关键。它会严格按照 Prompt 的要求，先生成一份「直译表」以确保变量（如 `{number}`）和术语准确，然后再生成一份「意译表」来润色文案（比如处理日语的全角半角空格、标题的 Sentence case）。
-3.  **自动入库**：确认意译结果无误后，它会自动生成 `onboarding::import_phrase_title` 这种规范的 Key，通过 MCP 将 18 种语言的翻译一次性写入 Lokalise。
+### 日常零碎翻译
 
-## 写在最后
+对于日常的小需求，配合设计稿使用也很香。
+
+比如我在 Figma 里刚画完一个新的 Onboarding 弹窗，随手截个图扔给 AI，说一句：
+
+> "这是一个新的导入钱包弹窗，把里面的文案处理一下，Key 放在 onboarding 下。"
+
+AI 会自动执行：**视觉识别** (提取文案) -> **双重翻译** (直译+意译) -> **自动入库** (通过 MCP 写入)。
+
+你只需要喝杯咖啡，等着 Review 就好了。
+
+## 总结
 
 用 Claude 写一个 MCP Server，再供给 Gemini CLI 调用，让他们更好的干活。也不知道谁才是资本家（误。
+
+文中提到的相关代码都已开源，感兴趣的朋友可以自取：
+
+- MCP Server: [lokalise-mcp](https://github.com/yikZero/lokalise-mcp)
+- 整合配置案例: [onekey-translate](https://github.com/yikZero/onekey-translate)
