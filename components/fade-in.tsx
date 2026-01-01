@@ -8,11 +8,11 @@ interface FadeInProps {
 export default function FadeIn({ children, className }: FadeInProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 24 }}
       transition={{ duration: 0.5 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className={className}
+      className={`will-change-transform ${className}`}
     >
       {children}
     </motion.div>

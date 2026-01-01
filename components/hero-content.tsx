@@ -10,7 +10,7 @@ import Trusted from '@/components/trusted';
 
 const transition = { duration: 1, ease: [0.25, 0.1, 0.25, 1] as const };
 const variants = {
-  hidden: { filter: 'blur(10px)', transform: 'translateY(20%)', opacity: 0 },
+  hidden: { filter: 'blur(7px)', transform: 'translateY(20%)', opacity: 0 },
   visible: { filter: 'blur(0)', transform: 'translateY(0)', opacity: 1 },
 };
 
@@ -37,7 +37,7 @@ export default function HeroContent() {
       <motion.div
         transition={transition}
         variants={variants}
-        className="group relative rotate-2 hover:rotate-3"
+        className="group relative rotate-2 will-change-transform hover:rotate-3"
       >
         <Image
           src="https://cdn.yikzero.com/common/avatar.jpg!/fw/96"
@@ -58,7 +58,7 @@ export default function HeroContent() {
           {words.map((word, index) => (
             <Fragment key={index}>
               <motion.span
-                className="inline-block"
+                className="inline-block will-change-[filter,transform]"
                 transition={transition}
                 variants={variants}
               >
@@ -78,7 +78,7 @@ export default function HeroContent() {
         <motion.div
           transition={transition}
           variants={variants}
-          className="mt-8"
+          className="mt-8 will-change-[filter,transform]"
         >
           <Link
             href="mailto:yiikzero@gmail.com"
@@ -94,7 +94,7 @@ export default function HeroContent() {
       <motion.div
         transition={transition}
         variants={variants}
-        className="mb-32 max-w-full sm:mb-40"
+        className="mb-32 max-w-full will-change-[filter,transform] sm:mb-40"
       >
         <Trusted />
       </motion.div>

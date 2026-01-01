@@ -8,7 +8,7 @@ export default function BlogTranslateNotice() {
         rel="noopener noreferrer"
         target="_blank"
       >
-        Gemini 2.5 Pro
+        Gemini 3 Pro
       </a>
       . If there are any discrepancies, please refer to the Chinese version.
     </div>
