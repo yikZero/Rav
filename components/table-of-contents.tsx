@@ -140,7 +140,7 @@ export default function TableOfContents({ post }: TableOfContentsProps) {
             {activeId === heading.id && (
               <motion.div
                 layoutId="toc-indicator"
-                className="absolute inset-y-0 -left-[0.05rem] w-0.75 rounded-full bg-strong"
+                className="absolute inset-y-0 -left-[0.05rem] w-0.75 rounded-full bg-strong will-change-transform"
                 aria-hidden
               />
             )}

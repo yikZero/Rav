@@ -71,9 +71,9 @@ export async function generateMetadata({
   };
 }
 
-const transition = { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const };
+const transition = { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const };
 const variants = {
-  hidden: { y: 50, opacity: 0 },
+  hidden: { y: 20, opacity: 0 },
   visible: { y: 0, opacity: 1 },
 };
 
@@ -101,7 +101,7 @@ export default async function Page({
     <motion.main
       initial="hidden"
       animate="visible"
-      transition={{ staggerChildren: 0.08 }}
+      transition={{ staggerChildren: 0.05 }}
       viewport={{ once: true }}
       className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-0 sm:pt-36"
     >
@@ -109,7 +109,7 @@ export default async function Page({
         <motion.div
           variants={variants}
           transition={transition}
-          className="mb-10 flex flex-col gap-4"
+          className="mb-10 flex flex-col gap-4 will-change-[transform,opacity]"
         >
           <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-pretty text-white outline-none sm:text-[2rem]">
             {post.metadata.title}
@@ -129,7 +129,7 @@ export default async function Page({
         <motion.div
           variants={variants}
           transition={transition}
-          className="sm:grid sm:gap-12"
+          className="sm:grid sm:gap-12 will-change-[transform,opacity]"
         >
           <div className="rypo max-w-172">
             {locale === 'en' && <BlogTranslateNotice />}

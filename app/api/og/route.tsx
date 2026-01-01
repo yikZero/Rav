@@ -14,20 +14,34 @@ const OG_CONFIG = {
   defaultLocale: defaultLocale,
   defaultTitle: ravConfig.title,
   defaultDescription: ravConfig.description,
+  defaultImage: 'https://cdn.yikzero.com/markdown/images/post-background.jpg',
 };
 
+// 缓存字体和 logo 数据
+let cachedAssets: {
+  regularFont: Buffer;
+  semiboldFont: Buffer;
+  logoBase64: string;
+} | null = null;
+
 async function loadAssets() {
+  if (cachedAssets) {
+    return cachedAssets;
+  }
+
   const [regularFont, semiboldFont, logo] = await Promise.all([
     fs.readFile(path.join(process.cwd(), 'fonts', 'MiSans-Regular.otf')),
     fs.readFile(path.join(process.cwd(), 'fonts', 'MiSans-Semibold.otf')),
     fs.readFile(path.join(process.cwd(), 'public', 'logo.svg')),
   ]);
 
-  return {
+  cachedAssets = {
     regularFont,
     semiboldFont,
     logoBase64: `data:image/svg+xml;base64,${Buffer.from(logo).toString('base64')}`,
   };
+
+  return cachedAssets;
 }
 
 function parseParams(url: string) {
@@ -42,7 +56,7 @@ function parseParams(url: string) {
       OG_CONFIG.defaultDescription,
     pubDate: searchParams.get('pubDate'),
     locale: searchParams.get('locale') || OG_CONFIG.defaultLocale,
-    imageUrl: searchParams.get('imageUrl'),
+    imageUrl: searchParams.get('imageUrl') || OG_CONFIG.defaultImage,
   };
 }
 
@@ -60,7 +74,7 @@ function OGImage({
   title: string;
   description: string;
   formattedDate: string;
-  imageUrl: string | null;
+  imageUrl: string;
   logoBase64: string;
 }) {
   return (
@@ -150,15 +164,13 @@ export async function GET(request: Request) {
     const { regularFont, semiboldFont, logoBase64 } = await loadAssets();
 
     return new ImageResponse(
-      (
-        <OGImage
-          title={params.title}
-          description={params.description}
-          formattedDate={formattedDate}
-          imageUrl={params.imageUrl}
-          logoBase64={logoBase64}
-        />
-      ),
+      <OGImage
+        title={params.title}
+        description={params.description}
+        formattedDate={formattedDate}
+        imageUrl={params.imageUrl}
+        logoBase64={logoBase64}
+      />,
       {
         width: OG_CONFIG.width,
         height: OG_CONFIG.height,
@@ -178,9 +190,10 @@ export async function GET(request: Request) {
         ],
       },
     );
-  } catch (e: any) {
+  } catch (e) {
     console.error('Failed to generate OG image:', e);
-    return new Response(`Failed to generate the image: ${e.message}`, {
+    const message = e instanceof Error ? e.message : 'Unknown error';
+    return new Response(`Failed to generate the image: ${message}`, {
       status: 500,
     });
   }
