@@ -22,7 +22,7 @@ async function translateFrontmatter(frontmatter: string): Promise<string> {
     if (metadata[field]) {
       console.log(`  Translating ${field}...`);
       const { text } = await generateText({
-        model: google('gemini-2.5-pro'),
+        model: google('gemini-pro-latest'),
         prompt: `You are a professional English native translator who needs to fluently translate text into English. 
         1. Output only the translated content, without explanations or additional content (such as "Here's the translation:" or "Translation as follows:")
       2. The returned translation must maintain exactly the same number of paragraphs and format as the original text
@@ -48,7 +48,7 @@ async function translateContent(content: string): Promise<string> {
   console.log('  Translating content...');
 
   const { text } = await generateText({
-    model: google('gemini-2.0-flash-exp'),
+    model: google('gemini-pro-latest'),
     prompt: `You are a professional translator. Translate the following MDX/Markdown content from Chinese to English.
 
 IMPORTANT RULES:

@@ -1,49 +1,53 @@
 ---
 title: 'Lokalise MCP Automatic Translation Solution'
 publishedAt: '2025-11-17'
-description: 'There are many scenarios at work that require internationalization, necessitating an automated translation solution to improve efficiency.'
+description: 'Many scenarios at work require internationalization, making an automated translation solution necessary to improve efficiency.'
 image: 'https://cdn.yikzero.com/markdown/images/romain-vignes-ywqa9IZB-dU-unsplash.jpg'
 category: 'Develop'
 state: 'published'
 ---
 
-## Preface
+## Foreword
 
-As the saying goes, "Laziness" is the primary driving force behind productivity. In our current requirement design process, a significant amount of language translation work is involved. Each requirement needs to translate the English titles and descriptions in the manuscript into a total of eighteen languages, including Chinese, French, Japanese, and Thai, and ultimately provide them to developers in the form of translation keys. This is actually a highly repetitive and tedious task. We need to find a way to be lazy and ensure translation quality.
+As the old saying goes, "laziness" is the primary driver of productivity.
 
-Currently, the multilingual platform we use is [Lokalise](https://lokalise.com/), so the solution I will talk about next will mainly focus on Lokalise, but other platforms can also refer to it.
+The current i18n internationalization process is quite cumbersome: designs are made with English copy, and after the design is finalized, every word and sentence is translated into up to 20 languages on the Lokalise platform. Then, the Translation Keys are annotated back into Figma for developers to use.
 
-![Lokalise MCP Automatic Translation Solution](https://cdn.yikzero.com/markdown/images/mcp-success-20251119.png)
+This **"Translate -> Annotate -> Code"** workflow is extremely time-consuming in app requirement design. Faced with this high-frequency, repetitive, and inefficient labor, I combined our team's previous i18n practical experience to redesign an automated solution.
+
+The multilingual platform we currently use is [Lokalise](https://lokalise.com/), so the solution I'll be discussing will primarily revolve around Lokalise, though it can serve as a reference for other platforms as well.
+
+![Lokalise MCP Automated Translation Solution](https://cdn.yikzero.com/markdown/images/mcp-success-20251119.png)
 
 ## Basic Idea
 
-To achieve full automation, it's actually just a two-step process:
+To achieve full automation, it's really a two-step process:
 
-1.  **Find a knowledgeable translator**: AI translation is powerful, but it doesn't understand business terminology (for example, translating "Gas" into "气体" which means "gas" literally), and it may also translate some words that don't need to be translated. Therefore, we need to inject business context and set rules for the AI.
-2.  **Equip the AI with "hands"**: After translating, you still have to copy and paste each item into the Lokalise backend, which is the most tiring part. Through the MCP protocol, let the AI directly call the Lokalise API.
+1.  **Find an expert translator**: AI translation is powerful, but it doesn't understand business-specific terminology (e.g., translating "Gas" as the chemical "gas"). It might also translate words that shouldn't be translated. Therefore, we need to inject business context and set rules for the AI.
+2.  **Give the AI "hands"**: After translating, you still have to copy and paste each entry into the Lokalise backend, which is the most tedious part. By using the MCP protocol, we can let the AI call the Lokalise API directly.
 
-## Final Solution
+## The Final Solution
 
-The technology stack I chose is **Node.js** + **MCP SDK** + **Client Tool**.
+The tech stack I chose is **Node.js** + **MCP SDK** + **a client-side tool**.
 
-The choice of client is very flexible, as long as it supports MCP. Initially, I used **[Claude Desktop](https://www.claude.com/download)**, but for friends who like the command line, you can completely replace it with **[Claude Code](https://www.claude.com/product/claude-code)** or **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**, and the effect is just as smooth.
+The choice of client is flexible, as long as it supports MCP. Initially, I used **[Claude Desktop](https://www.claude.com/download)**, but for those who prefer the command line, it can easily be replaced with **[Claude Code](https://www.claude.com/product/claude-code)** or **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**. The experience is just as smooth.
 
-Gemini may be better at literary tasks such as translation, so I recommend it.
+Gemini might be better suited for humanities-related tasks like translation, so I'd recommend it.
 
 ### 1. Core Code (MCP Server)
 
-Lokalise itself provides a complete [REST API](https://developers.lokalise.com/reference/lokalise-rest-api), which makes it convenient for us to operate it through code.
+Lokalise itself provides a comprehensive [REST API](https://developers.lokalise.com/reference/lokalise-rest-api), which makes it convenient for us to interact with it through code.
 
-In order to write less boilerplate code, I directly used the official Node.js SDK (`@lokalise/node-lokalise-api`). Referring to the [official documentation](https://modelcontextprotocol.io/docs/develop/build-server#node) of MCP, I packaged these APIs into an MCP Server.
+To write less boilerplate code, I directly used the official Node.js SDK (`@lokalise/node-lokalise-api`). Following MCP's [official documentation](https://modelcontextprotocol.io/docs/develop/build-server#node), I wrapped these APIs into an MCP Server.
 
-It mainly exposes two tools to AI:
+It mainly exposes two tools to the AI:
 
-- `search-keys`: Used for deduplication to see if anyone has translated it before.
-- `create-keys`: Used to do the work, write the multilingual copy generated by AI into the backend.
+- `search-keys`: Used to check for duplicates to see if someone has already translated it.
+- `create-keys`: Used to do the actual work, writing the AI-generated multilingual copy to the backend.
 
-![Call Lokalise MCP Server](https://cdn.yikzero.com/markdown/images/mcp-20251119.png)
+![Calling the Lokalise MCP Server](https://cdn.yikzero.com/markdown/images/mcp-20251119.png)
 
-The logic is actually not complicated. In essence, it is an API relay:
+The logic isn't complicated; it's essentially acting as a middleman for the API:
 
 <details>
 
@@ -147,7 +151,7 @@ server.registerTool(
   }
 );
 
-// ... update-keys tool code omitted ...
+// ... update-keys 工具代码略 ...
 
 async function main() {
   const transport = new StdioServerTransport();
@@ -163,17 +167,17 @@ main().catch((error) => {
 
 </details>
 
-### 2. Train the AI (Prompt)
+### 2. Fine-tuning the AI (Prompt)
 
-This is actually similar to the Project function in the web version of Claude. It allows you to pre-set some system prompts and provide some information. These all belong to providing the AI with background knowledge to facilitate its work.
+This is similar to the Project feature in the Claude web interface, where you can preset some system prompts and provide materials. This is all about giving the AI background knowledge to help it work better.
 
-Therefore, in order to make the AI act like an old employee, I wrote all the OneKey terminology (Glossary) and Key naming conventions (Snake Case) into a `GEMINI.md` file. If you are using Claude Code, you can also write a `CLAUDE.md` file.
+So, to make the AI work like a seasoned employee, I put all the OneKey glossaries and key naming conventions (Snake Case) into a `GEMINI.md` file. If you're using Claude Code, you can also create a `CLAUDE.md`.
 
-There is actually a unified [AGENTS.md](https://agents.md/) now, but it has not yet completed the unified cause.
+There's now also a unified [AGENTS.md](https://agents.md/), although it hasn't yet achieved total unification.
 
 <details>
 
-<summary>View GEMINI.md prompt details</summary>
+<summary>View GEMINI.md Prompt Details</summary>
 
 ```markdown
 You are a professional web3 project i18n translation expert specializing in translating word/sentence into multiple languages for software localization.
@@ -187,7 +191,7 @@ English (United States), Bengali, Chinese Simplified...
 </i18n_supported_languages>
 
 <technical_terms>
-OneKey, WalletConnect, iCloud, Google Drive, OneKey Lite, OneKey KeyTag, Face ID, Touch ID, Discord, X, GitHub, recovery phrase, QR-based, NFT, Defi, USB, Mint, Meme, GameFi, Lido, Passphrase...
+OneKey, WalletConnect, iCloud, Google Drive, OneKey Lite, OneKey KeyTag, Face ID, Touch ID...
 </technical_terms>
 
 <translation_namespaces>
@@ -204,16 +208,17 @@ Translation Process:
 2. Refined Translation:
    - Create an optimized version that enhances clarity and natural flow in each language
    - Ensure cultural appropriateness while preserving the original meaning
+   - When translating, take cultural factors into account and try to use expressions that fit the cultural habits of the target language, especially when dealing with metaphors, slang, or idioms
+   - Preserve specific professional terminologies within certain industries or fields unchanged, unless there is a widely accepted equivalent expression in the target language
    - The title needs to be used Sentence case
    - A space (half-width space) between a full-width character (Kanji) and a half-width character (letter, number, or symbol)
 
 3. Key Generation:
    - Create a self-explanatory key in snake_case format
    - Structure as namespace::descriptive_key_name
-
-4. **Filtering Logic**:
-   - IGNORE common UI elements that likely already exist in the 'global' namespace, such as: "Close", "Open", "Cancel", "Confirm", "Back", "Next", "Done". Do NOT generate keys for these.
-   - Only focus on the unique, business-specific text in the provided context.
+   - When recognized as a common term, please use global namespace
+   - Key must accurately represent the content's purpose
+   - Avoid hyphens (-) and curly braces ({})
 
 Output Format:
 1. Key: [namespace::descriptive_key_name]
@@ -224,13 +229,14 @@ Items need checked:
 1. If the user provides the Key, use the user-provided Key.
 2. If there is an obvious spelling error, I need your help to correct it and inform you.
 3. After the translation is completed, need to call the tool to create/update the corresponding key.
+4. First, provide the Table, then create or update the Key based on the translations in the Refined Table.
 ```
 
 </details>
 
 ### 3. Configuration File
 
-Finally, in the MCP configuration file (such as `claude_desktop_config.json` or `.mcp.json`), mount the Server we wrote.
+Finally, in the MCP configuration file (e.g., `claude_desktop_config.json` or `.mcp.json`), we mount the server we've written.
 
 ```json
 {
@@ -248,22 +254,37 @@ Finally, in the MCP configuration file (such as `claude_desktop_config.json` or 
 }
 ```
 
-## Actual Effect
+## Practical Examples
 
-The best scenario is to use it with design drafts.
+### Fully Automated Workflow from Design to Code
 
-Previously, every time a design was completed, I had to type out the copy one by one according to the design draft. Now I can directly export the design draft.
+Let's take the "Network Detection Feature" we recently developed as an example. This is a relatively complex business scenario involving various network error status prompts. Each error message needs to be internationalized, totaling over 50 text strings to be translated. If handled manually, just the translation, key insertion, and copy alignment would likely take a full day.
 
-For example, if I just finished drawing a new Onboarding pop-up window in Figma, I can just take a screenshot and throw it to the AI and say (if it's too long, it's recommended to let it list a To-Do List):
+Here's how I solved it:
 
-> "This is a new import wallet pop-up window, please process the copy inside."
+1.  **Claude Code to Organize Requirements**: Have Claude analyze the code logic, identify all scenarios that need translation, and output a Markdown list.
+2.  **Gemini for Translation**: Feed the Markdown list to Gemini 2.5 Pro (CLI) and have it translate based on our custom prompt. It will properly handle technical terms like "VPN" and "Proxy" according to the rules in `<technical_terms>` and automatically generate standardized keys (e.g., `settings::network_error_timeout`).
+3.  **Claude Code to Replace Code**: After getting the translated copy with the keys, feed it back to Claude Code to replace the hardcoded strings in the code with a single command.
 
-The AI will automatically perform the following operations:
+Claude excels at code analysis, Gemini excels at multilingual translation, and MCP bridges the data silos. With each performing its specific role, the efficiency boost is significant.
 
-1.  **Visual Recognition**: Use the model's built-in visual capabilities to directly extract the copy from the screenshot.
-2.  **Dual Translation**: This is the key to ensuring quality. It will strictly follow the requirements of the Prompt, first generate a "literal translation table" to ensure that variables (such as `{number}`) and terms are accurate, and then generate an "interpretive translation table" to polish the copy (such as processing full-width and half-width spaces in Japanese, and the Sentence case of titles).
-3.  **Automatic Entry**: After confirming that the interpretive translation results are correct, it will automatically generate a standard Key like `onboarding::import_phrase_title`, and use MCP to write the translations of 18 languages into Lokalise at once.
+### Daily Ad-Hoc Translations
 
-## Written at the end
+For daily small tasks, using it with design mockups is also very effective.
 
-Use Claude to write an MCP Server, and then supply it to Gemini CLI for calling, so that they can work better. I don't know who is the capitalist (misunderstanding.
+For example, after I finish designing a new Onboarding pop-up in Figma, I can just take a screenshot, send it to the AI, and say:
+
+> "This is a new import wallet pop-up. Process the copy inside and place the keys under the onboarding namespace."
+
+The AI will automatically execute: **Visual Recognition** (extracting copy) -> **Dual Translation** (literal + refined) -> **Automatic Entry** (writing to the database via MCP).
+
+All you have to do is grab a coffee and wait to review the results.
+
+## Conclusion
+
+Use Claude to write an MCP Server, then provide it for Gemini CLI to call, letting them do the work better. I'm not sure who the real capitalist is here (just kidding).
+
+The related code mentioned in this article is open-source. Interested friends can check it out:
+
+- MCP Server: [lokalise-mcp](https://github.com/yikZero/lokalise-mcp)
+- Integration Configuration Example: [onekey-translate](https://github.com/yikZero/onekey-translate)
