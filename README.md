@@ -133,12 +133,12 @@ rav/
 
 ```yaml
 ---
-title: "Your Post Title"
-publishedAt: "2024-01-01"
-description: "Post description"
-image: "https://cdn.yikzero.com/your-image.jpg"
-category: "Tech"
-state: "published"
+title: 'Your Post Title'
+publishedAt: '2024-01-01'
+description: 'Post description'
+image: 'https://cdn.yikzero.com/your-image.jpg'
+category: 'Tech'
+state: 'published'
 ---
 ```
 
@@ -162,6 +162,7 @@ pnpm translate your-post-name
 **Requirements**: Set `GOOGLE_GENERATIVE_AI_API_KEY` in your `.env` file.
 
 **How it works**:
+
 - Reads posts from `content/posts/zh-CN/`
 - Only processes posts with `state: published` (skips drafts)
 - Uses file hash to detect changes (incremental translation)
@@ -175,7 +176,7 @@ pnpm translate your-post-name
 pnpm svg
 ```
 
-Components will be created in `components/icons/`.
+Components will be created in `components/icons/`
 
 ## License
 
