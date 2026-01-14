@@ -33,14 +33,15 @@ const footerLinks: FooterLink[] = [
   },
 ];
 
+const BLOG_DETAIL_REGEX = /^\/([a-z-]+\/)?blog\/[^/]+\/?$/;
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('Footer');
   const locale = useLocale();
   const pathname = usePathname();
 
-  // Check if we're on a blog detail page (matches pattern like /blog/slug or /en/blog/slug)
-  const isBlogDetail = /^\/([a-z-]+\/)?blog\/[^/]+\/?$/.test(pathname);
+  const isBlogDetail = BLOG_DETAIL_REGEX.test(pathname);
 
   return (
     <footer

@@ -6,6 +6,7 @@ import { type Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
+import { defaultTransition, fadeUpSmallVariants } from '@/lib/animations';
 import { loadLocalizedMDX } from '@/lib/mdx.utils';
 import { getBlogPosts } from '@/lib/post.utils';
 
@@ -71,12 +72,6 @@ export async function generateMetadata({
   };
 }
 
-const transition = { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const };
-const variants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1 },
-};
-
 export default async function Page({
   params,
 }: {
@@ -107,11 +102,11 @@ export default async function Page({
     >
       <article className="sm:pt-4">
         <motion.div
-          variants={variants}
-          transition={transition}
+          variants={fadeUpSmallVariants}
+          transition={defaultTransition}
           className="mb-10 flex flex-col gap-4 will-change-[transform,opacity]"
         >
-          <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-pretty text-white outline-none sm:text-[2rem]">
+          <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-white outline-none sm:text-[2rem]">
             {post.metadata.title}
           </h1>
           <div className="flex items-center gap-2 text-sm leading-tight">
@@ -127,20 +122,17 @@ export default async function Page({
           </div>
         </motion.div>
         <motion.div
-          variants={variants}
-          transition={transition}
-          className="sm:grid sm:gap-12 will-change-[transform,opacity]"
+          variants={fadeUpSmallVariants}
+          transition={defaultTransition}
+          className="will-change-[transform,opacity]"
         >
-          <div className="rypo max-w-172">
+          <div className="rypo">
             {locale === 'en' && <BlogTranslateNotice />}
             <div lang={locale}>
               <Content />
             </div>
             <PostNavigation currentId={post.slug} />
           </div>
-          {/* <div className="hidden sm:col-span-3 sm:block">
-            <TableOfContents post={post} />
-          </div> */}
         </motion.div>
       </article>
     </motion.main>

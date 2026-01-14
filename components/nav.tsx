@@ -17,6 +17,18 @@ type BackgroundStyle = {
   opacity: number;
 };
 
+const LINK_PATTERN_CACHE = new Map<string, RegExp>();
+
+function getLinkPattern(linkId: string): RegExp {
+  if (!LINK_PATTERN_CACHE.has(linkId)) {
+    LINK_PATTERN_CACHE.set(
+      linkId,
+      new RegExp(`^(?:/[^/]+)?/${linkId}(?:/.*)?$`),
+    );
+  }
+  return LINK_PATTERN_CACHE.get(linkId)!;
+}
+
 export default function Nav() {
   const pathname = usePathname();
   const t = useTranslations('Navigation');
@@ -37,7 +49,7 @@ export default function Nav() {
           locales.some((locale) => pathname === `/${locale}`)
         );
       }
-      return new RegExp(`^(?:/[^/]+)?/${linkId}(?:/.*)?$`).test(pathname);
+      return getLinkPattern(linkId).test(pathname);
     },
     [pathname],
   );

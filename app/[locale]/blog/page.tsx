@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { use } from 'react';
 
+import { defaultTransition, fadeUpVariants } from '@/lib/animations';
 import { getBlogPosts } from '@/lib/post.utils';
 
 import BlogPostGrid from '@/components/blog-post-grid';
@@ -20,12 +21,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t('description'),
   };
 }
-
-const transition = { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const };
-const variants = {
-  hidden: { y: 50, opacity: 0 },
-  visible: { y: 0, opacity: 1 },
-};
 
 export default function BlogPage({
   params,
@@ -48,7 +43,7 @@ export default function BlogPage({
       viewport={{ once: true }}
       className="pt-24 sm:pt-32"
     >
-      <motion.div variants={variants} transition={transition}>
+      <motion.div variants={fadeUpVariants} transition={defaultTransition}>
         <Title
           title={t('title')}
           description={t('description')}
@@ -64,10 +59,10 @@ export default function BlogPage({
           }
         />
       </motion.div>
-      <motion.div variants={variants} transition={transition}>
+      <motion.div variants={fadeUpVariants} transition={defaultTransition}>
         <BlogPostGrid posts={cardPosts} />
       </motion.div>
-      <motion.div variants={variants} transition={transition}>
+      <motion.div variants={fadeUpVariants} transition={defaultTransition}>
         <BlogPostLine posts={linePosts} />
       </motion.div>
     </motion.main>
