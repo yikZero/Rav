@@ -1,130 +1,132 @@
 ---
-title: 'A Product Designer's Perspective on Building a Blog'
-publishedAt: '2024-09-21'
-description: 'The website has been redesigned for a while now, and the content modules are relatively complete. So this time, I'd like to talk about my own experience, from design to development.'
-image: 'https://cdn.yikzero.com/markdown/images/202409191743.jpg'
-category: 'Develop'
-state: 'published'
+title: Methods for Building a Blog, From a Product Designer's Perspective
+publishedAt: 2024-09-21
+description: The website has been revamped for a while now, and the content
+  modules are relatively mature. So this time, I want to talk about my
+  experience, spanning from design to development.
+image: https://cdn.yikzero.com/markdown/images/202409191743.jpg
+category: Develop
+state: published
 ---
 
-## Introduction
+## Foreword
 
-The design and development of **Roominess 5.0** is finally complete. To be honest, I feel that this blog project has really put my design and development knowledge to good use, and it's been a good practice. So, from the perspective of a product designer, I'd like to talk to you about how to build your own blog.
+The design and development of the **Roominess 5.0** version have finally come to an end. Honestly, I feel that this blog project truly utilized all the design and development knowledge I've acquired, making it a valuable practice. So, from the perspective of a product designer, I'd like to chat with everyone about how to build your own blog.
 
-This article will cover the following two parts: the complete process from conception to launch of a blog, and recommendations for design/development tools.
+This article will cover the following two parts: the complete process of building a blog from conception to launch, and recommendations for design/development tools.
 
 ## Blog Development Process
 
-Blog development mainly includes the following major processes: planning and design, front-end and back-end development, deployment and launch, and application optimization. In this chapter, we will introduce the first three parts, and website optimization will be introduced later as a supplement.
+Blog development mainly involves the following key processes: Planning and Design, Frontend and Backend Development, Deployment and Launch, and Application Optimization. In this chapter, we will introduce the first three parts; website optimization will be covered later as a supplement.
 
 ![Overall Blog Development Process](https://cdn.yikzero.com/markdown/images/2409212246.png)
 
-Blog development is a simplified project development process, which provides us with an excellent opportunity to improve our understanding and control of the overall project.
+Blog development is a simplified project development process, offering us an excellent opportunity to enhance our understanding and control over the overall project.
 
-Oh, right. One more thing to say in advance, if you just want to have your own website and don't want to do it yourself, then "no-code" tools may be more suitable for you. You don't need to write code yourself, you don't need to maintain the server yourself, you only need to plan, design, and pay. For example, [Framer](https://www.framer.com/), [Webflow](https://webflow.com/), or you can try AI to help you build a website [Wegic](https://wegic.ai/).
+Oh, right. One thing upfront: if you just want to own your own website but don't want to handle the technical complexities yourself, "no-code" tools might be a better fit for you. You don't need to write code or maintain servers yourself; you only need to plan, design, and pay. Examples include [Framer](https://www.framer.com/) and [Webflow](https://webflow.com/), or you could try [Wegic](https://wegic.ai/) for AI-assisted site building.
 
-As for me, I still prefer the traditional development and deployment method. This will give us more room to play, we can achieve a higher degree of customization, and it is more flexible overall.
+As for me, I still prefer traditional development and deployment methods. This gives us greater scope for creativity, allows for a higher degree of customization, and is generally more flexible.
 
 ### Planning and Design
 
-The planning of a blog is mainly about planning what content the blog needs, and whether this content is more static or dynamic. The difference between static and dynamic will mainly affect the subsequent technical selection and development difficulty.
+The planning of a blog primarily involves determining what content the blog needs, and whether that content leans towards static or dynamic. The distinction between static and dynamic content mainly affects subsequent technical selection and development difficulty.
 
-Most of the content, such as personal project display, article list, works or photo collection, personal profile, reading list, website update log, etc., is relatively fixed and can be regarded as static content, which does not need to be updated frequently.
+Most content—such as personal project showcases, article lists, portfolios or photo galleries, personal introductions, reading lists, and website update logs—is relatively fixed, can be considered static content, and does not require frequent updates.
 
-There is also some content that needs to be updated in real time, such as the number of views, likes, and comments of articles, or the music the blogger is currently listening to, the amount of water drunk today, etc. This dynamic content needs to obtain data in real time and can be regarded as dynamic content.
+There is also content that requires real-time updates, such as article views, likes, comments, or perhaps the music the blogger is currently listening to, or today's water intake. This dynamic content requires real-time data retrieval and is considered dynamic content.
 
-I have also listed a table, you can roughly look at the difference between static and dynamic content, and the impact on subsequent development.
+I have also created a table for you to roughly see the distinction between static and dynamic content, as well as its impact on subsequent development.
 
 ![Blog Preliminary Planning](https://cdn.yikzero.com/markdown/images/2409221108.png)
 
-Reading this article may help you understand static and dynamic websites: [Choosing Between Static and Dynamic Websites](https://www.shopify.com/in/blog/static-vs-dynamic-website)
+Reading this article might help you understand static versus dynamic websites: [Choosing Between Static and Dynamic Websites](https://www.shopify.com/in/blog/static-vs-dynamic-website)
 
-In the early planning stage of the project, try to consider everything as comprehensively as possible, and the later development will be easier. However, the technical difficulty of blog development itself is very low, even if you don't think comprehensively enough at the beginning, the impact is very small, don't have too much psychological burden.
+During the early planning phase of the project, the more comprehensive your considerations, the less effort will be needed in later development. However, the technical difficulty of developing a blog is generally low, so even if your initial planning isn't entirely comprehensive, the impact will be minimal; don't stress too much about it.
 
-After the content architecture is determined, you can enter the field to build design specifications. For a blog, basic things like color system, layout, and font are enough, and you don't need a huge design system.
+Once the content architecture is finalized, you can start building design specifications. For a blog, basic elements like color schemes, layout, and typography are sufficient; a massive design system is unnecessary.
 
 ![Tailwind CSS Color Generator](https://cdn.yikzero.com/markdown/images/202409222131610.png)
 
-I recommend that you first learn about the thinking and development methods of the front-end, and then design, so that you will get twice the result with half the effort. How to be more systematic and modular.
+I recommend first understanding frontend thinking and development methods before proceeding with design; this will achieve twice the result with half the effort. How can things be more systematic and modular?
 
-Taking the definition of blog color system as an example:
+Taking blog color system definition as an example:
 
-1. First select your favorite theme color `#0284C7`, and use [Tailwind CSS Color Generator](https://uicolors.app/create) to generate a color palette
-2. Then use the [Huetone](https://huetone.ardov.me/) tool to check whether the generated color palette conforms to WCAG 3.0 specifications
-3. Finally, you can also fine-tune it based on your color sense, just like the theme color of Tailwind CSS.
-4. [Designing accessible color systems](https://stripe.com/blog/accessible-color-systems) This article may give you more systematic color system construction methods.
+1. First, select your preferred primary color `#0284C7`, and use the [Tailwind CSS Color Generator](https://uicolors.app/create) to generate a color palette.
+2. Then, use the [Huetone](https://huetone.ardov.me/) tool to check and adjust whether the generated palette complies with WCAG 3.0 standards.
+3. Finally, just like the Tailwind CSS primary colors, you can fine-tune it yourself based on color sense.
+4. The article [Designing accessible color systems](https://stripe.com/blog/accessible-color-systems) might give you more systematic ways to build a color system.
 
 ![Huetone: A tool for creating accessible color systems](https://cdn.yikzero.com/markdown/images/202409241252664.png)
 
-The design side needs to define font colors and theme colors, and functional colors are not used much. If you also need to adapt to dark mode, you need to consider the display effect of colors in dark mode. The layout framework also needs to be defined in advance. If it is not a particularly personalized website, the positions of several functional modules will not change. After defining the colors and layout, development can also be carried out simultaneously.
+On the design side, you need to define font colors and primary colors; functional colors are less necessary. If dark mode adaptation is required, you need to give extra consideration to how colors display in dark mode. The layout framework also needs to be defined in advance; unless it is a highly personalized website, the positions of the major functional modules will not change. Once these two parts—color and layout—are defined, development can proceed concurrently.
 
-### Front-end and Back-end Development
+### Frontend and Backend Development
 
-I will mainly introduce front-end development in this section, and I don't know much about back-end development.
+In this development section, I will primarily focus on frontend development, as I am less familiar with the backend.
 
-#### Front-end Environment Configuration
+#### Frontend Environment Setup
 
-Taking Mac as an example, the following tools are required for front-end development:
+Taking Mac as an example, the following tools are required for frontend development:
 
-- Code editor: Visual Studio Code (VS Code): Software for writing and managing code
-- Running environment: Node.js: A platform that allows JavaScript to run on computers
-- Version control system: Git: A tool for tracking and managing code changes
-- Package manager: Homebrew (optional): A tool to simplify the software installation process on Mac
+- Code Editor: Visual Studio Code (VS Code): Software used for writing and managing code
+- Runtime Environment: Node.js: A platform that allows JavaScript to run on your computer
+- Version Control System: Git: A tool used to track and manage code changes
+- Package Manager: Homebrew (Optional): A tool that simplifies the software installation process on Mac
 
-The basic process is to first install the software market, and then install development-related software such as Node.js, Git, and VS Code in the software market. After the installation is complete, you can write code in VS Code and build your blog with Node.js. Then use Git to record your code modification logs for easy management.
+The basic process is to first install a package manager (like Homebrew), and then use it to install development-related software such as Node.js, Git, and VS Code. Once installed, you can write code in VS Code and build your blog using Node.js. Then, you use Git to record your code modification history for easy management.
 
-Running the following commands in the macOS terminal can configure the front-end environment you need:
+Run the following commands in the macOS terminal to set up your required frontend environment:
 
 ```zsh
-# Install macOS package management: brew
+# 安装 macOS 软件包管理：brew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# Install VS Code and git through brew
+# 通过 brew 安装 VS Code、git
 brew install --cask visual-studio-code
 brew install git
-# Install node management tool: nvm
+# 安装 node 管理工具：nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-# Install the long-term supported node version through nvm
+# 通过 nvm 安装长期支持的 node 版本
 nvm install --lts
-# (Optional) Install pnpm package manager
+# （可选）安装 pnpm 软件包管理器
 npm install -g pnpm
 ```
 
-The front-end environment required is now configured. If you need to install anything else, you can install it through the `brew` software market. You need to solve network problems yourself.
+The required frontend environment setup is complete. If you need any additional installations, you can install them via the `brew` package manager. Network issues need to be resolved independently.
 
-#### Front-end Technology Selection
+#### Frontend Technology Stack Selection
 
-The front-end environment is the basis for developing all front-end projects. Now we need to consider the technology selection for this project.
+The frontend environment is the foundation for developing all frontend projects. Now we need to consider the technology stack selection for this project.
 
-As we discussed earlier, the "content framework" has an important impact on technology selection. To help you make a better choice, I have compiled a "technology selection" recommendation table based on content characteristics (static/dynamic).
+As we discussed earlier, the "content framework" significantly influences technology selection. To help you make a better choice, I have compiled a "Technology Stack Selection" recommendation table based on content characteristics (Static/Dynamic).
 
-![Blog Technology Selection Recommendation](https://cdn.yikzero.com/markdown/images/202409301502160.png)
+![Blog Technology Stack Recommendations](https://cdn.yikzero.com/markdown/images/202409301502160.png)
 
-I have used [Hugo](https://gohugo.io/), [Next.js](https://nextjs.org/), [Astro](https://astro.build/) in the table, and [Nuxt](https://nuxt.com/) is a stronger Vue-based competitor to Next.js. My blog has also undergone changes from Hugo -> Next.js -> Astro, which is also a bit convincing. To understand the history of changes and the reasons, you can check the blog [update log](https://ro.yikzero.com/changelog).
+I have used [Hugo](https://gohugo.io/), [Next.js](https://nextjs.org/), and [Astro](https://astro.build/) from the table, and [Nuxt](https://nuxt.com/) is a strong Vue-based competitor to Next.js. My blog has also evolved from Hugo -> Next.js -> Astro, which gives me some credibility. To understand the transition process and reasons, you can check the blog's [Changelog](https://ro.yikzero.com/changelog).
 
-Among these frameworks, [Astro](https://astro.build/) is what I currently recommend. The specific reasons are as follows:
+Among these frameworks, [Astro](https://astro.build/) is the one I currently recommend, for the following reasons:
 
-1. Websites built with Astro have excellent performance and load fast enough
-2. Astro natively supports Markdown, which is very suitable as a framework for blogs
-3. The Astro learning curve is relatively gentle, you only need to be familiar with HTML, CSS and JavaScript
-4. Static building is convenient for me to quickly deploy on different platforms in the future
-5. The server I purchased has weak performance, and pure static has low requirements for the server
-6. Static content is also very suitable for configuring CDN acceleration
+1. Websites built with Astro have excellent performance and load quickly enough.
+2. Astro natively supports Markdown, making it very suitable as a framework for a blog.
+3. Astro has a relatively gentle learning curve, requiring only familiarity with HTML, CSS, and JavaScript.
+4. Static build makes it easy for me to deploy quickly across different platforms later on.
+5. The server I purchased has weak performance, and pure static sites require less server power.
+6. Static content is also highly suitable for CDN acceleration.
 
-You can also check the [2023 Web Framework Performance Report](https://astro.build/blog/2023-web-framework-performance-report/). The report compares the performance of web frameworks such as Astro and Next.js, which may help you make a choice.
+You can also check out the [2023 Web Framework Performance Report](https://astro.build/blog/2023-web-framework-performance-report/), which compares the performance of web frameworks like Astro and Next.js, perhaps helping you make a selection.
 
-After the environment configuration is complete, taking the Astro project as an example, we can refer to the [Astro documentation](https://docs.astro.build/en/install-and-setup/) to create a new project based on Astro:
+Once the environment is configured, taking an Astro project as an example, we can create a new Astro-based project as described in the [Astro documentation](https://docs.astro.build/en/install-and-setup/):
 
 ```zsh
-# If you don't have pnpm installed, please use npm create astro@latest
+# 如果没有安装 pnpm，npm 请使用 npm create astro@latest
 pnpm create astro@latest
 ```
 
-Next, you can find some tutorials to learn how to write code based on Astro step by step. It's not difficult to get started.
+Next, you can find some tutorials to learn step-by-step how to write code based on Astro; the barrier to entry is not high.
 
-After the project is initialized, you may be wondering how I can link it with the design specifications. I am using [Tailwindcss - Utility-First CSS Framework for Rapid UI Development](https://github.com/tailwindlabs/tailwindcss). This is like a plugin for the project, which can help you better carry out front-end development. In Tailwindcss, you can predefine fonts, theme colors, functional colors, and even spacing, rounded corners, etc. At this time, isn't it in line with the color and other specifications you defined during design? Once configured, it is very convenient to use and adjust uniformly.
+Once the project is initialized, you might wonder how to connect it with the design specifications. I use [Tailwindcss - A utility-first CSS framework for rapidly building custom user interfaces](https://github.com/tailwindlabs/tailwindcss). This acts like a plugin for the project, helping you with frontend development. In Tailwindcss, you can predefine fonts, primary colors, functional colors, and even spacing, rounded corners, etc. At this point, wouldn't this align perfectly with the color and other specifications you defined during design? Configuring it once makes it very convenient to use and adjust uniformly.
 
 ```zsh
-# If you don't have pnpm installed, please use npx astro add tailwind
+# 如果没安装 pnpm，npm 请使用 npx astro add tailwind
 pnpm astro add tailwind
 ```
 
@@ -136,10 +138,10 @@ module.exports = {
   darkMode: ['selector'], // Dark mode support
   theme: {
     colors: {
-      white: '#ffffff', // Define color name Call method: text-white bg-white
+      white: '#ffffff', // Define color name. Usage: text-white bg-white
       black: '#000000',
       brand: {
-        500: '#0ea5e9', // Define brand color The call method is the same: text-brand-500
+        500: '#0ea5e9', // Define brand color. Usage: text-brand-500
         600: '#0284c7',
       },
     },
@@ -147,104 +149,104 @@ module.exports = {
 };
 ```
 
-#### Back-end Development
+#### Backend Development
 
-We chose Astro as the technology stack before, which is more suitable for the development of static content. If your blog needs a lot of dynamic data and you need a simple back-end, then I recommend you use [Next.js](https://nextjs.org/) or [Nuxt](https://nuxt.com/).
+Previously, we chose Astro as the technology stack, which is more suitable for static content development. If your blog requires a lot of dynamic data and needs a simple backend, I recommend using [Next.js](https://nextjs.org/) or [Nuxt](https://nuxt.com/).
 
 Basic process:
 
-1. Have a database (recommended Supabase free or a database from a domestic cloud vendor) to store your data
-2. Link to your Next.js project through the [Prisma](https://www.prisma.io/) plugin
-3. Write logic code in the project to operate the data in the database
+1. Have a database (I recommend Supabase free tier or a database from a domestic cloud provider) to store your data.
+2. Link to your Next.js project via the [Prisma](https://www.prisma.io/) plugin.
+3. Write logic code within the project to operate on the data in the database.
 
-Take an API that queries my "status" as an example:
+Taking an API query for my "Recent Status" as an example:
 
 ```ts title="api/route.ts"
 export async function GET(req: NextRequest) {
-  // Get Method
-  const number = Number(req.nextUrl.searchParams.get('number')); // Let the program know how many pieces of data you want
+  // GET method
+  const number = Number(req.nextUrl.searchParams.get('number')); // Let the program know how many records you want
 
   const records = await prisma.recent_states.findMany({
-    take: number, // After the program knows, go to the database to get the corresponding amount of data
-    orderBy: { created_at: 'desc' }, // Sorting method Sort in descending order by time
+    take: number, // Once the program knows, fetch the corresponding number of records from the database
+    orderBy: { created_at: 'desc' }, // Sorting method: descending by time
   });
 
-  return Response.json(records); // Return data in json format, which is convenient for returning to the page
+  return Response.json(records); // Returns data in JSON format for easy display on the page
 }
 ```
 
-By calling this API through the `Get` method, I can query my recent status and then display it on the blog so that you can see and understand what has happened to me recently.
+By calling this API using the `Get` method, I can query my recent status and display it on the blog for you to see and understand what I've been up to lately.
 
-Compared with static content, more operations are required. This adds the process of querying and processing the database. If the database access speed or the performance of your cloud server is not good, this will also directly affect the access speed of your website. Moreover, dynamic content is not suitable for deployment in traditional CDN distribution. If the website access speed is not good, you should give up dynamic content.
+Compared to static content, more operations are required. This adds the process of querying and processing the database. If the database access speed or the performance of your cloud server is poor, this will directly affect your website's loading speed. Furthermore, dynamic content is not suitable for deployment via traditional CDN distribution. If website speed is an issue, you should abandon dynamic content.
 
 ### Deployment and Launch
 
-After the blog is developed and tested locally, it is recommended to upload it to [Github](https://github.com/). Github is used to host online projects using Git. This platform is similar to a file version management tool, which can manage your project's code.
+After the blog has been developed and tested locally, it is recommended to upload it to [Github](https://github.com/). Github uses Git for online project hosting. This platform is similar to a file version control tool and can manage your project code.
 
-![Github Repository Code Submission Record](https://cdn.yikzero.com/markdown/images/202410010911982.png)
+![Github Repository Code Submission History](https://cdn.yikzero.com/markdown/images/202410010911982.png)
 
-Each time you modify a code problem, you can submit it to Github. If there is a problem with the project code construction, you can roll back very conveniently.
+Every time you fix an issue in the code, you can commit it to Github. If the project code ever fails to build, it is very convenient to roll back.
 
-After the blog is developed, we mainly want it to be seen by others. Then, we need a place to host the website, and this place also needs to be accessible to everyone. For example: family equipment with an external network IP, cloud server, lightweight application server, Paas platform, etc.
+Once the blog development is complete, our main goal is for others to see it. Therefore, we need a location to host the website, and this location must be accessible to everyone. Examples include: home devices with external IP addresses, cloud servers, lightweight application servers, PaaS platforms, etc.
 
-Your home laptop can actually be used as a device to host the website, provided that you need to have an external network IP so that others can access you on the Internet. Currently, external network IPs need to be applied for with customer service. If you use your laptop as a server, your device cannot be turned off, etc. There are still some limitations.
+Your home laptop can actually serve as a website hosting device, provided you have an external IP address that others can use to access you over the internet. Currently, external IP addresses usually need to be requested from a service provider. If you use a laptop as a server, your device cannot be turned off, etc. So, there are still some limitations.
 
 ![Tencent Cloud Lightweight Application Server Product Page](https://cdn.yikzero.com/markdown/images/202410010918138.png)
 
-So currently most people will mainly deploy their websites on cloud servers and lightweight application servers. These have external network IPs and are turned on 24 hours a day, which is very suitable as a website server. If you don't need very good performance, a device that costs 99 yuan a year is enough. It's still very affordable. If you are still a student, you can get a free server on Alibaba Cloud.
+Therefore, most people currently deploy their websites primarily on cloud servers or lightweight application servers. These have external IP addresses and are powered on 24 hours a day, making them very suitable as website servers. If high performance isn't necessary, a server costing around 99 RMB per year is sufficient. This is quite affordable. If you are a student, you can get a free server from Alibaba Cloud.
 
-Taking a cloud server as an example, let's briefly introduce the process:
+Taking a cloud server as an example, here is a brief introduction to the process:
 
-1. The Linux server needs to install and configure the front-end environment like the macOS system, and then build
-2. If the file is not very large, you can also build it locally and then upload the `dist` package to the server
-3. Configure nginx forwarding, and you can access your website through the cloud server IP address
-4. If you don't want to access it directly through the IP address, you can also purchase your own exclusive domain name. Several larger domestic cloud service platforms can purchase domain names
-5. After purchasing the domain name, you need to perform DNS resolution. You can handle this step on the platform where you purchased the domain name or on a dedicated DNS resolution platform, such as [Dnspod](https://www.dnspod.cn/)
-6. Bind the IP address of the A record to the domain name, so that you can access your website through the domain name
+1. A Linux server, just like a macOS system, requires the installation and configuration of the frontend environment before building.
+2. If the files are not too large, you can also build the project locally and then upload the `dist` package to the server.
+3. Configure Nginx forwarding, and you can then access your website via the cloud server's IP address.
+4. If you don't want to access it directly via the IP address, you can purchase your own dedicated domain name. Several large domestic cloud platforms offer domain purchasing.
+5. After purchasing the domain name, you need to perform DNS resolution. This step can be handled on the platform where you bought the domain or on a specialized DNS resolution platform, such as [Dnspod](https://www.dnspod.cn/).
+6. Bind the A record's IP address to the domain name; this way, you can access your website using the domain name.
 
-The above introduces a simple process. If you need a detailed deployment and launch process, you can also refer to Zuo Zizhen's article: [Personal Website Construction Guide for Designers (1): From Domain Name to Website](https://zuozizhen.com/blog/website-for-designer-1/)
+The above introduced a simple process. If you need a detailed deployment and launch process, you can refer to Mr. Zuo Zizhen's article: [Personal Website Setup Guide for Designers (Part 1): From Domain Name to Website](https://zuozizhen.com/blog/website-for-designer-1/)
 
-If you don't want to use your own server, you just want to design and write code, then there are actually many platforms to make up for the two steps of server and domain name. These platforms pull the code of your project from your Github repository after authorization, and then build and publish it on their cloud platform.
+Alternatively, if you don't want to use your own server and just want to focus on designing and coding, there are many platforms that can handle the server and domain steps for you. After authorization, these platforms pull your project code from your Github repository, build it on their cloud platform, and publish it online.
 
-Similar platforms include [Vercel](https://vercel.com/), [Zeabur](https://zeabur.com/), [Cloudflare Page](https://pages.cloudflare.com/), etc. If you don't want to maintain your own cloud server, this is also a good way.
+Similar platforms include [Vercel](https://vercel.com/), [Zeabur](https://zeabur.com/), and [Cloudflare Page](https://pages.cloudflare.com/). This is also a great option if you prefer not to maintain your own cloud server.
 
 ![Vercel Project Deployment - Rosure](https://cdn.yikzero.com/markdown/images/202410010013326.png)
 
-Taking Vercel as an example, let's briefly introduce the process:
+Taking Vercel as an example, here is a brief introduction to the process:
 
-1. Create a Github repository and upload the local project code to the Github private repository through Git.
-2. Register and log in to the Vercel platform, give the platform permission to read the Github repository, and select the corresponding project repository.
-3. Automatically identify the project framework, click the button to build, the platform will display the build log, and you can troubleshoot in time if there is a problem.
-4. After the build is complete, the platform will provide a free secondary domain name for you to use. You can directly access the domain name to see that your website has been published on the Internet.
-5. You can also choose to purchase a domain name, and then bind the project to the domain name you own according to the platform prompts.
+1. Create a Github repository and upload the local project code to the private Github repository via Git.
+2. Register and log in to the Vercel platform, grant the platform permission to read the Github repository, and select the corresponding project repository.
+3. The platform automatically identifies the project framework, starts the build process when you click the button, and displays the build log, allowing for timely troubleshooting if issues arise.
+4. Once the build is complete, the platform provides a free subdomain for you to use. By directly accessing this domain, you can see that your website has been published online.
+5. You can also choose to purchase a domain name and then follow the platform's prompts to bind the project to your owned domain.
 
-The above provides two ways to deploy the website to the external network, you can choose according to your preferences and difficulty. These two methods can also be combined.
+The above provides two ways to deploy your website to the public internet. You can choose based on your preference and the level of difficulty. These two methods can also be combined.
 
 ### Summary
 
-Due to space limitations, each process has been mentioned, but it has not been explained in very detail. You still need to search for other materials yourself. This article can only provide general direction guidance. I hope this introduction to the development process can help you.
+Due to space constraints, every step of the process was covered, but not in great detail. You will still need to consult other resources for more specifics. This article only provides a general directional overview, and I hope this introduction to the development process is helpful to you.
 
 ## Design & Development Tool Recommendations
 
-As everyone knows, I really like to hoard things, so in the website development area, I have also collected a lot of useful tools, etc. I will take this opportunity to share them with you, which may help your development.
+It's not widely known, but I really like collecting things. In website development, I've gathered quite a few useful tools, and I'm taking this opportunity to share them with you; perhaps they can aid your development.
 
 ### Design
 
-| Name                                                                      | Description                                         | Category | Recommendation Level |
-| ------------------------------------------------------------------------- | --------------------------------------------------- | -------- | -------------------- |
-| [**Figma** ](https://figma.com/)                                          | Collaborative interface design tool                 | General  | ⭐⭐⭐               |
-| [**Rosure** ](https://rosure.yikzero.com/)                                | My design collection, including icons, fonts, website inspiration, etc. | Inspiration | ⭐⭐⭐               |
-| [**Toolfolio** ](https://toolfolio.io/)                                   | Design tools, inspiration aggregation               | Inspiration | ⭐⭐⭐⭐             |
-| [**Tailwind CSS Gradient Color Generation** ](https://uicolors.app/create) | Generate color gradients based on the colors you provide | Colors   | ⭐⭐⭐               |
-| [**Palettte** ](https://palettte.app/)                                    | Clear color palette editing and remapping tools     | Colors   | ⭐⭐⭐               |
-| [**Radix Colors Custom Color Palette** ](https://www.radix-ui.com/colors/custom) | Generate color palettes and preview effects, supports dark mode | Colors   | ⭐⭐⭐               |
-| [**Huetone** ](https://toolfolio.io/)                                     | A tool for creating accessible color systems       | Colors   | ⭐⭐⭐               |
+| Name | Description | Category | Recommendation Level |
+| :--- | :--- | :--- | :--- |
+| [**Figma** ](https://figma.com/) | Collaborative interface design tool | General | ⭐⭐⭐ |
+| [**Rosure** ](https://rosure.yikzero.com/) | My design favorites, including icons, fonts, website inspiration, etc. | Inspiration | ⭐⭐⭐ |
+| [**Toolfolio** ](https://toolfolio.io/) | Aggregation of design tools and inspiration | Inspiration | ⭐⭐⭐⭐ |
+| [**Tailwind CSS Gradient Color Generator** ](https://uicolors.app/create) | Generates a color scale based on the color you provide | Color | ⭐⭐⭐ |
+| [**Palettte** ](https://palettte.app/) | Explicit palette editing and remapping tool | Color | ⭐⭐⭐ |
+| [**Radix Colors Custom Palette** ](https://www.radix-ui.com/colors/custom) | Generates a color palette, supports previewing results, and supports dark mode | Color | ⭐⭐⭐ |
+| [**Huetone** ](https://toolfolio.io/) | A tool for creating accessible color systems | Color | ⭐⭐⭐ |
 
 ### Development
 
-| Name                                                          | Description                       | Category | Recommendation Level |
-| ------------------------------------------------------------- | --------------------------------- | -------- | -------------------- |
-| [**Homebrew** ](https://brew.sh/)                             | macOS (or Linux) package manager  | General  | ⭐⭐⭐               |
-| [**pnpm** ](https://pnpm.io/)                                 | Project package manager           | General  | ⭐⭐⭐               |
-| [**nvm** ](https://github.com/nvm-sh/nvm)                     | Node version manager              | General  | ⭐⭐⭐               |
-| [**Tailwindcss** ](https://tailwindcss.com/docs/installation) | Utility-First CSS Framework       | CSS      | ⭐⭐⭐⭐             |
+| Name | Description | Category | Recommendation Level |
+| :--- | :--- | :--- | :--- |
+| [**Homebrew** ](https://brew.sh/) | macOS (or Linux) package manager | General | ⭐⭐⭐ |
+| [**pnpm** ](https://pnpm.io/) | Project package manager | General | ⭐⭐⭐ |
+| [**nvm** ](https://github.com/nvm-sh/nvm) | Node Version Manager | General | ⭐⭐⭐ |
+| [**Tailwindcss** ](https://tailwindcss.com/docs/installation) | Utility-first CSS framework | CSS | ⭐⭐⭐⭐ |

@@ -1,5 +1,7 @@
 import fs from 'fs';
 
+import yaml from 'yaml';
+
 export interface MDXContent {
   frontmatter: string;
   content: string;
@@ -26,23 +28,19 @@ export function parseMDX(filePath: string): MDXContent {
 }
 
 /**
- * Parse frontmatter into key-value pairs
+ * Parse frontmatter string into key-value pairs using yaml library
  */
-export function parseFrontmatter(frontmatter: string): Record<string, string> {
-  const metadata: Record<string, string> = {};
-  const lines = frontmatter.trim().split('\n');
+export function parseFrontmatter(
+  frontmatter: string,
+): Record<string, unknown> {
+  return yaml.parse(frontmatter) || {};
+}
 
-  lines.forEach((line) => {
-    const [key, ...valueArr] = line.split(': ');
-    if (!key) return;
-
-    let value = valueArr.join(': ').trim();
-    // Remove quotes
-    value = value.replace(/^['"](.*)['"]$/, '$1');
-    metadata[key.trim()] = value;
-  });
-
-  return metadata;
+/**
+ * Serialize metadata object back to frontmatter string
+ */
+export function serializeFrontmatter(metadata: Record<string, unknown>): string {
+  return yaml.stringify(metadata, { singleQuote: true }).trim();
 }
 
 /**

@@ -1,29 +1,30 @@
 ---
-title: 'PN532 Campus Card Emulation'
-publishedAt: '2021-10-03'
-description: 'Using PN532 to Simulate a Campus Card for Functions like Access Control and Payments'
-image: 'https://cdn.yikzero.com/markdown/images/post-background.jpg'
-category: 'Develop'
-state: 'published'
+title: PN532 <a href="https://example.com/tag/simulation">Simulation</a> Campus Card
+publishedAt: 2021-10-03
+description: Using the PN532 to simulate a campus card, implementing features
+  such as door access and payment
+image: https://cdn.yikzero.com/markdown/images/post-background.jpg
+category: Develop
+state: published
 ---
 
 ## Foreword
 
-Some time ago, I posted a tutorial on simulating campus cards, but that tutorial was the most basic and simplest. At the same time, it also brought some problems. To ensure security, mobile phone manufacturers do not support simulating encrypted cards with phone NFC, and even if encrypted cards can be simulated, the encrypted part of the function is also unavailable (unless you ROOT). In short, the consumption function in the campus card cannot be directly implemented through the previous tutorial. How can that be! It was originally for convenience, but the consumption function cannot be realized? That's not acceptable. Therefore, I also consulted a lot of information, stepped on some pitfalls, and successfully simulated the encrypted card with the support of a large number of tutorials.
+Some time ago, I published a tutorial on simulating a campus ID card, but that tutorial was the most basic and simple. However, it also brought some problems. To ensure safety, mobile phone manufacturers prevent phone NFC from supporting the simulation of encrypted cards. Even if an encrypted card could be simulated, the functions of the encrypted part would be unusable (unless you ROOT the device). In short, the consumption function of the campus card cannot be directly realized through the simulation method described in the previous tutorial. How can this be acceptable! The whole point was convenience, but the consumption function isn't realized? This is unacceptable. Therefore, I consulted a large amount of information, encountered several pitfalls, and, with the support of numerous tutorials, successfully simulated the encrypted card.
 
-**I went to the supermarket at noon today to buy water, and it worked pretty well.**
+**I went to the supermarket and bought water this afternoon; it worked quite well.**
 
-## Screenshot
+## Screenshots
 
 ![](https://cdn.yikzero.com/markdown/images/202311081211243.jpg)
 
-## Initial Preparation
+## Preparation
 
 - **[MifareOneTool Software](https://github.com/xcicode/MifareOneTool/releases/latest)**
 - **PN532**
 - **NFC-enabled phone**
 - **CUID blank card**
-- **Campus card**
+- **Campus Card**
 
 ## Decrypting the Original Card
 
@@ -33,7 +34,7 @@ Some time ago, I posted a tutorial on simulating campus cards, but that tutorial
 Follow the steps:
 
 1. Detect connection
-2. Scanning the card SAK as 28 etc. cannot decrypt the card. Our school's campus card SAK is 08, which supports decryption.
+2. Scan the card. Cards with SAK 28 or similar cannot be decrypted. The SAK of my school's campus card is 08, which supports decryption.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081211470.png)
 
@@ -42,23 +43,23 @@ Follow the steps:
 
 ![](https://cdn.yikzero.com/markdown/images/202311081212853.png)
 
-I failed this step many, many times, and it took me a whole morning to successfully decrypt the original card data. You can try a few more times, I might be too unlucky. After the original card data is decrypted, a pop-up window will appear automatically, specifying the file name and saving the original card decryption data. The suffix name is .dump
+I failed this step many, many times. It took me a whole morning to successfully decrypt the original card data. You can try a few more times; I might just be too unlucky. After successfully extracting the original card data, a window will automatically pop up, asking you to specify the file name and save the decrypted data. The file extension is .dump
 
-**At this time, the card is temporarily unusable, so you can take it down first.**
+**At this point, the card is not needed temporarily, so you can remove it.**
 
-## Data written into CUID blank card
+## Writing Data to the CUID Blank Card
 
 ![](https://cdn.yikzero.com/markdown/images/202311081213335.png)
 
-MifareOne Fool selects the Hex editor in the advanced operation mode
+In MifareOne Tool, select the Hex Editor in Advanced Operations mode.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081215534.png)
 
-Open the .dump suffix file you just saved.
+Open the file with the .dump extension you just saved.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081216191.png)
 
-Copy the first eight digits in block 0 of sector 0. These digits are the card ID. You can also open the .dump file in Notepad and copy the first eight digits in the first line, without spaces.
+Copy the first eight digits in Sector 0, Block 0. These digits are the Card ID. Alternatively, you can open the .dump file with Notepad and copy the first eight digits of the first line, without spaces.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081217856.png)
 
@@ -66,30 +67,30 @@ Select New,
 
 ![](https://cdn.yikzero.com/markdown/images/202311081218941.png)
 
-After creating a new one, select Modify UID in the tool, enter the eight-digit card ID you just copied, then save it and save it as a .mfd suffix file.
+After creating a new file, select Modify UID in the tool, enter the eight-digit Card ID you just copied, then save and "Save As" a file with the .mfd extension.
 
-Place the CUID blank card on the PN532, and follow the steps of scanning the card and detecting encryption.
+Place the CUID blank card on the PN532, and go through the steps of scanning the card and detecting encryption.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081219805.png)
 
-After completing the above steps, select Write C/FUID card, and the file selection suffix is ​​.mfd! Please pay attention.
+After completing the steps above, select Write C/FUID Card, and choose the file with the .mfd extension! Pay attention to this.
 
-The prompt box below will indicate that writing 64/64 is complete. If it is 63/64, write the CUID card again. Generally there is no problem.
+The prompt box below will indicate completion upon writing 64/64. If it shows 63/64, write the CUID card again. This usually works fine.
 
-Then you can use your NFC mobile phone to simulate the access card function to simulate this blank CUID card. At this time, you should know that you only simulated the card ID, and the encrypted part has not been simulated yet. It's not over here.
+Then you can use the door card simulation function on your NFC phone to simulate this blank CUID card. You must know that at this point, you have only simulated the Card ID; the encrypted part has not been simulated yet. It is not finished here.
 
-## Encrypted Write to Phone
+## Writing Encryption to the Phone
 
-💡 This part of the tools are mobile phone, PN532, MifareOne Tool, which has nothing to do with the blank card. The mission of the blank card has been completed.
+💡 The tools for this section are the phone, PN532, and MifareOne Tool. The blank card is no longer involved. The mission of the blank card is complete.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081220132.jpg)
 
-Turn on the NF function of the mobile phone, and then place it on the PN532. At this time, the mobile phone is recognized as a CUID card.
+Turn on the NFC function on your phone, then place it on the PN532. At this time, the phone will be recognized as a CUID card.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081220482.png)
 
-Select Write C/FUID card again, this time the file selection suffix is ​​.dump, this file contains the encrypted card part of the data. The prompt box shows that writing 63/64 is successful, the card ID will not be read again, so this 1/64 will not succeed.
+Select Write C/FUID Card again. This time, choose the file with the .dump extension, as this file contains the encrypted card data. The prompt box showing 63/64 written indicates success. The Card ID will not be read again, so this 1/64 will not be successful.
 
-Congratulations, here we are. Your mobile phone can now realize all the functions of the campus card. Similarly, the same operation can be performed by replacing the mobile phone in the third part of the tutorial with a wristband.
+Congratulations, you are finished here. Your phone can now achieve all the functions of the campus card. Similarly, replacing the phone with a wristband in the third part of the tutorial involves the same operation.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081221822.jpg)

@@ -1,50 +1,50 @@
 ---
-title: 'Hugo Tinkering Record: From 0 to 1'
-publishedAt: '2022-03-23'
-description: 'Notes on Learning Hugo'
-image: 'https://cdn.yikzero.com/markdown/images/post-background.jpg'
-category: 'Develop'
-state: 'published'
+title: 'Hugo Tinkering Log: From 0 to 1'
+publishedAt: 2022-03-23
+description: Notes on learning Hugo
+image: https://cdn.yikzero.com/markdown/images/post-background.jpg
+category: Develop
+state: published
 ---
 
 ## Hugo Installation
 
 ### Official Documentation Tutorial
 
-The official website has detailed installation tutorials for different systems: https://gohugo.io/installation/
+The official website provides detailed installation tutorials for different systems: https://gohugo.io/installation/
 
 ### Brew
 
-If you are a Mac user, you can use the `brew` command to install it.
+If you are a Mac user, you can use the `brew` command to install.
 
 ```bash
 brew install hugo
 ```
 
-**Note:** This installation method may not install the latest version of Hugo. If you want to use the latest version of Hugo, please use other installation methods.
+**Note:** This installation method may not install the latest version of hugo. If you want to use the latest version of hugo, please use other methods.
 
 ## Configuration File Format
 
-As a newbie, choosing between yaml, toml, and json for the configuration file format was my first question.
+As a novice, deciding whether to choose yaml, toml, or json for the configuration file format was my first question.
 
 **TOML**
 
-1. Case-sensitive
-2. Files can only contain UTF-8 encoded Unicode characters
-3. Insensitive to indentation
+1. Case sensitive
+2. Files must contain only UTF-8 encoded Unicode characters
+3. Indentation insensitive
 
 **YAML**
 
-1. Files start with ' - ', marking the beginning of the document
+1. Files start with ' - ' to mark the beginning of the document
 2. Key-value pairs are separated by colons
-3. Lists start with hyphens
-4. Use indentation with one or more spaces to describe nested collections
+3. Lists start with a hyphen
+4. Nested collections are described using indentation with one or more spaces
 
 **JSON**
 
 1. Data is stored in name/value pairs
-2. Records are separated by commas. Trailing commas without the following attributes are not allowed
-3. Double quotes wrap property names and strings
+2. Records are separated by commas. Trailing commas without the following properties are not allowed
+3. Double quotes enclose property names and strings
 4. Single quotes are not allowed
 
 ### String Differences
@@ -82,24 +82,24 @@ multilineReplaceLinebreaksWithWhitespace:
 }
 ```
 
-Due to the troublesome comment form of `JSON` and the strict indentation form of `YAML`, I finally chose `TOML` as the configuration file format. I can also indent freely, which is convenient for me to view.
+Because of the troublesome comment format in `JSON` and the strict indentation format in `YAML`, I ultimately chose `TOML` as the configuration file format, which also allows me to indent freely, making it easier for me to view.
 
-## Scattered Knowledge Points
+## Miscellaneous Knowledge Points
 
-1. The symbol `:=` is an assignment operator in the Python language (mainly called the walrus operator). The walrus operator compresses our code to make it shorter.
+1. This symbol `:=` is the assignment operator in the Python language (primarily called the Walrus Operator), and the Walrus Operator compacts our code to make it shorter.
 
 ```jsx
-var a; //Definition
-a = 1; //Assignment
+var a; // Definition
+a = 1; // Assignment
 ```
 
-2. `layout/baseof.html` is the base of all pages
-3. You can divide `header`, `footer`, etc. into parts in the `layout/partials` folder
-4. Steps to add a new page:
-5. You need to add a `.md` file in `content`
+2. `layout/baseof.html` is the foundation for all pages
+3. The `layout/partials` folder can separate sections like `header`, `footer`, etc.
+4. Steps for adding a new page:
+5. You need to add an `.md` file in `content`
 6. Add a page with the same name in `layouts/_default`
-7. Menu activation `active` state code:
-8. The method described in the official website [instructions](https://gohugo.io/templates/menu-templates/#readout) does not successfully add the `active` state, so I looked for other ways to determine `active`
+7. Menu activation `active` status code:
+8. The method described in the official [documentation](https://gohugo.io/templates/menu-templates/#readout) did not successfully add the `active` status, so I looked for other ways to determine `active`
 
 ```jsx
 {{ range .Site.Menus.main }}
@@ -114,7 +114,7 @@ a = 1; //Assignment
       {{ end }}
 ```
 
-6. Small knowledge point of `position` function in css!
+6. A minor knowledge point about the `position` feature in CSS!
 
 ```css
 .outer {
@@ -128,9 +128,9 @@ a = 1; //Assignment
 }
 ```
 
-7. `Shortcode` can shorten the code and write some methods. Similar to `function`, please refer to the writing method: [Hugo-basic](https://www.letswrite.tw/hugo-basic/)
+7. `Shortcode` can shorten code and write methods. Similar to a `function`, refer to the following for specific usage: [Hugo-basic](https://www.letswrite.tw/hugo-basic/)
 
 ## References
 
 - [JSON vs. YAML vs. TOML](https://martin-ueding.de/posts/json-vs-yaml-vs-toml/)
-- [In-depth comparison of TOML, JSON and YAML](https://www.cnblogs.com/sunsky303/p/9208848.html)
+- [In-depth Comparison of TOML, JSON, and YAML](https://www.cnblogs.com/sunsky303/p/9208848.html)
