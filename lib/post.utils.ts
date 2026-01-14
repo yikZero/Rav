@@ -1,6 +1,8 @@
 import { defaultLocale } from '@/i18n/routing';
 import fs from 'fs';
 import path from 'path';
+import { cache } from 'react';
+import { parse as parseYaml } from 'yaml';
 
 export type PostMetadata = {
   title: string;
@@ -18,8 +20,28 @@ export type Post = {
   content: string;
 };
 
+function parseFrontmatterFallback(frontMatterBlock: string): PostMetadata {
+  const metadata: Partial<PostMetadata> = {};
+  const lines = frontMatterBlock.trim().split('\n');
+
+  for (const line of lines) {
+    const colonIndex = line.indexOf(':');
+    if (colonIndex === -1) continue;
+
+    const key = line.slice(0, colonIndex).trim();
+    let value = line.slice(colonIndex + 1).trim();
+    value = value.replace(/^['"](.*)['"]$/, '$1');
+
+    if (key && value) {
+      (metadata as Record<string, string>)[key] = value;
+    }
+  }
+
+  return metadata as PostMetadata;
+}
+
 function parseFrontmatter(fileContent: string) {
-  const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
+  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---/;
   const match = frontmatterRegex.exec(fileContent);
 
   if (!match) {
@@ -27,24 +49,17 @@ function parseFrontmatter(fileContent: string) {
   }
 
   const frontMatterBlock = match[1];
-  const content = fileContent.replace(frontmatterRegex, '').trim();
-  const frontMatterLines = frontMatterBlock.trim().split('\n');
-  const metadata: Partial<PostMetadata> = {};
+  const content = fileContent.slice(match[0].length).trim();
 
-  frontMatterLines.forEach((line) => {
-    const [key, ...valueArr] = line.split(': ');
-    if (!key) return;
+  let metadata: PostMetadata;
+  try {
+    metadata = parseYaml(frontMatterBlock) as PostMetadata;
+  } catch {
+    // Fallback to simple line-based parsing for malformed YAML
+    metadata = parseFrontmatterFallback(frontMatterBlock);
+  }
 
-    let value = valueArr.join(': ').trim();
-    value = value.replace(/^['"](.*)['"]$/, '$1'); // Remove quotes
-    // @ts-expect-error Type 'string' is not assignable to type 'never' due to dynamic key access
-    metadata[key.trim() as keyof PostMetadata] = value;
-  });
-
-  return {
-    metadata: metadata as PostMetadata,
-    content,
-  };
+  return { metadata, content };
 }
 
 function getMDXFiles(dir: string) {
@@ -87,7 +102,7 @@ function getMDXData(dir: string) {
     .filter((post): post is Post => post !== null);
 }
 
-export function getBlogPosts({
+export const getBlogPosts = cache(function getBlogPosts({
   filterPublished = true,
   language = defaultLocale,
 } = {}) {
@@ -109,4 +124,4 @@ export function getBlogPosts({
     const dateB = new Date(b.metadata.publishedAt);
     return dateB.getTime() - dateA.getTime();
   });
-}
+});

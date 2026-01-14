@@ -1,7 +1,7 @@
 import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
 
-import { parseFrontmatter } from './mdx-parser';
+import { parseFrontmatter, serializeFrontmatter } from './mdx-parser';
 
 export interface TranslationResult {
   frontmatter: string;
@@ -13,32 +13,29 @@ export interface TranslationResult {
  */
 async function translateFrontmatter(frontmatter: string): Promise<string> {
   const metadata = parseFrontmatter(frontmatter);
-  const translatedMetadata: Record<string, string> = { ...metadata };
+  const translatedMetadata: Record<string, unknown> = { ...metadata };
 
   // Translate title and description
   const fieldsToTranslate = ['title', 'description'];
 
   for (const field of fieldsToTranslate) {
-    if (metadata[field]) {
+    const value = metadata[field];
+    if (typeof value === 'string') {
       console.log(`  Translating ${field}...`);
       const { text } = await generateText({
-        model: google('gemini-pro-latest'),
-        prompt: `You are a professional English native translator who needs to fluently translate text into English. 
+        model: google('gemini-flash-latest'),
+        prompt: `You are a professional English native translator who needs to fluently translate text into English.
         1. Output only the translated content, without explanations or additional content (such as "Here's the translation:" or "Translation as follows:")
       2. The returned translation must maintain exactly the same number of paragraphs and format as the original text
       3. If the text contains HTML tags, consider where the tags should be placed in the translation while maintaining fluency
       4. For content that should not be translated (such as proper nouns, code, etc.), keep the original text
-      5. You need to output it to me in the original format. What I provide is Markdown text, and you also need to provide Markdown text:\n\n${metadata[field]}`,
+      5. You need to output it to me in the original format. What I provide is Markdown text, and you also need to provide Markdown text:\n\n${value}`,
       });
       translatedMetadata[field] = text.trim();
     }
   }
 
-  // Reconstruct frontmatter
-  const lines = Object.entries(translatedMetadata).map(
-    ([key, value]) => `${key}: '${value}'`,
-  );
-  return lines.join('\n');
+  return serializeFrontmatter(translatedMetadata);
 }
 
 /**
@@ -48,7 +45,7 @@ async function translateContent(content: string): Promise<string> {
   console.log('  Translating content...');
 
   const { text } = await generateText({
-    model: google('gemini-pro-latest'),
+    model: google('gemini-flash-latest'),
     prompt: `You are a professional translator. Translate the following MDX/Markdown content from Chinese to English.
 
 IMPORTANT RULES:

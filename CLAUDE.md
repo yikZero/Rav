@@ -25,7 +25,7 @@ This is a Next.js 16 blog application with MDX content, internationalization, an
   - Locale prefix strategy: `as-needed` (default locale has no prefix)
   - i18n messages in `messages/[locale].json`
 - **Content Management**: MDX files in `content/` with localized versions
-- **Static Site Generation**: Uses `generateStaticParams()` with `dynamicParams: false` for full static export
+- **Static Site Generation**: Uses `generateStaticParams()` with `dynamicParams = false` for full static export
 - **Component Structure**: Organized by function in `components/` with icon components in `components/icons/`
 
 ### Content Loading Architecture
@@ -131,11 +131,11 @@ Enhanced with remark/rehype plugins (configured in `next.config.ts`):
 - `rehype-slug` - Add IDs to headings
 - `rehype-autolink-headings` - Add anchor links to headings
 - `rehype-accessible-emojis` - Make emojis accessible
-- `@shikijs/rehype` - Syntax highlighting with 'houston' theme
+- `@shikijs/rehype` - Syntax highlighting with 'catppuccin-mocha' theme
 
 ### Styling System
 
-- **Tailwind CSS 4** with custom configuration
+- **Tailwind CSS 4** with CSS-first configuration (use `@theme` directive, not tailwind.config.js)
 - **Motion library** (`motion/react-client`) for animations
   - Common pattern: `initial="hidden"` → `animate="visible"` with staggerChildren
   - Transition easing: `[0.25, 0.1, 0.25, 1]`
@@ -144,20 +144,20 @@ Enhanced with remark/rehype plugins (configured in `next.config.ts`):
   - Text colors: `text-strong`, `text-sub`, `text-soft`
   - Border colors: `border-strong`
   - Responsive breakpoint: `sm:` prefix for larger screens
-- **Max width pattern**: `max-w-172` (custom Tailwind width, likely 43rem or 688px)
+- **Max width pattern**: `max-w-172` (custom Tailwind width)
 
 ### API Routes
 
 - `/api/og` - Dynamic Open Graph image generation with Vercel's ImageResponse
   - Query params: title, description, pubDate, imageUrl, locale
-- `/api/chat` - AI chat integration (likely using @ai-sdk/xai or @ai-sdk/google)
+- `/api/chat` - AI chat integration (using @ai-sdk/xai or @ai-sdk/google)
 - `/rss.xml` - RSS feed generation for blog posts
 
 ### Static Generation
 
 The application is fully statically generated:
 - `generateStaticParams()` generates all locale/slug combinations at build time
-- `dynamicParams: false` ensures no dynamic routes at runtime
+- `dynamicParams = false` ensures no dynamic routes at runtime
 - Post filtering: only includes posts with `state: 'published'`
 
 ### Component Patterns
@@ -167,6 +167,13 @@ The application is fully statically generated:
 - **Async metadata**: `generateMetadata()` is always async and receives `Promise<{ params }>`
 - **i18n hooks**: `setRequestLocale(locale)` must be called at the top of every page component
 - **Icon components**: Auto-generated from SVG files in `assets/` using `@svgr/cli`
+
+### React 19 / Next.js 16 Patterns
+
+- Use async versions of runtime APIs: `await cookies()`, `await headers()`, `await draftMode()`
+- Handle async params: `const { slug, locale } = await params`
+- Use `useActionState` instead of deprecated `useFormState`
+- Favor React Server Components (RSC) where possible
 
 ## Docker Support
 

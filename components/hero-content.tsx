@@ -5,14 +5,10 @@ import { Instrument_Serif } from 'next/font/google';
 import Image from 'next/image';
 import { Fragment } from 'react';
 
+import { blurFadeVariants, heroTransition } from '@/lib/animations';
+
 import { ArrowRight } from '@/components/icons';
 import Trusted from '@/components/trusted';
-
-const transition = { duration: 1, ease: [0.25, 0.1, 0.25, 1] as const };
-const variants = {
-  hidden: { filter: 'blur(7px)', transform: 'translateY(20%)', opacity: 0 },
-  visible: { filter: 'blur(0)', transform: 'translateY(0)', opacity: 1 },
-};
 
 const instrumentSerif = Instrument_Serif({
   weight: '400',
@@ -35,8 +31,8 @@ export default function HeroContent() {
       className="mx-auto flex w-full flex-col items-center gap-12 px-4 pt-32 sm:px-0 sm:pt-40"
     >
       <motion.div
-        transition={transition}
-        variants={variants}
+        transition={heroTransition}
+        variants={blurFadeVariants}
         className="group relative rotate-2 will-change-transform hover:rotate-3"
       >
         <Image
@@ -59,8 +55,8 @@ export default function HeroContent() {
             <Fragment key={index}>
               <motion.span
                 className="inline-block will-change-[filter,transform]"
-                transition={transition}
-                variants={variants}
+                transition={heroTransition}
+                variants={blurFadeVariants}
               >
                 {word}
               </motion.span>
@@ -70,14 +66,14 @@ export default function HeroContent() {
         </h1>
         <motion.span
           className="max-w-108 px-6 text-center text-sm text-soft text-shadow-sm sm:text-base"
-          transition={transition}
-          variants={variants}
+          transition={heroTransition}
+          variants={blurFadeVariants}
         >
           {t('description')}
         </motion.span>
         <motion.div
-          transition={transition}
-          variants={variants}
+          transition={heroTransition}
+          variants={blurFadeVariants}
           className="mt-8 will-change-[filter,transform]"
         >
           <Link
@@ -92,8 +88,8 @@ export default function HeroContent() {
         </motion.div>
       </div>
       <motion.div
-        transition={transition}
-        variants={variants}
+        transition={heroTransition}
+        variants={blurFadeVariants}
         className="mb-32 max-w-full will-change-[filter,transform] sm:mb-40"
       >
         <Trusted />

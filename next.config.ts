@@ -53,7 +53,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  compress: false,
   output: 'standalone',
   pageExtensions: ['mdx', 'ts', 'tsx'],
 };

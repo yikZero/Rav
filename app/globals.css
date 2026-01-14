@@ -58,7 +58,7 @@ body {
  * -------------------------------------------------------------------------- */
 
 .rypo {
-  @apply text-[0.9375rem] leading-6.5 text-pretty text-sub;
+  @apply text-[0.9375rem] leading-6.5 text-sub;
 }
 
 .rypo h1,
@@ -96,7 +96,7 @@ body {
 }
 
 .rypo p {
-  @apply text-base leading-6.5 text-pretty sm:text-[0.9375rem];
+  @apply text-base leading-6.5 sm:text-[0.9375rem];
 }
 
 .rypo figure {
