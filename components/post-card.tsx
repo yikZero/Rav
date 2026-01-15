@@ -22,36 +22,44 @@ export default function PostCard({
   return (
     <article
       className={cn(
-        'group relative isolate flex cursor-pointer flex-col justify-end overflow-hidden rounded-xl border border-[#EFF6FF]/6 sm:h-full',
+        'group relative flex cursor-pointer flex-col justify-end rounded-xl sm:h-full',
         className,
       )}
     >
+      {/* 图片容器 */}
+      <div className="absolute inset-0 overflow-hidden rounded-xl">
+        <Image
+          className="size-full object-cover"
+          src={`${metadata.image}!/fw/944`}
+          alt=""
+          fill
+          draggable="false"
+        />
+      </div>
+      {/* 蒙层 - 稍微扩大覆盖边缘 */}
+      <div
+        className={cn(
+          'absolute -inset-px rounded-xl bg-linear-to-t from-[#01040E]/97 to-[#01040E]/82',
+          isFirst && 'from-[#01040E]/95 from-10% to-[#01040E]/50',
+        )}
+        aria-hidden="true"
+      />
+      {/* 内描边 */}
+      <div
+        className="absolute inset-0 z-1 rounded-xl ring-1 ring-white/4 ring-inset"
+        aria-hidden="true"
+      />
+
       <Link
         prefetch={true}
         href={`/blog/${slug}`}
-        className="absolute inset-0 z-10"
+        className="absolute inset-0 z-10 rounded-xl"
         aria-label={`阅读文章: ${metadata.title}`}
       >
         <span className="sr-only">阅读文章: {metadata.title}</span>
       </Link>
 
-      <div
-        className={cn(
-          'absolute inset-0 -z-1 bg-linear-to-t from-[#01040E]/97 to-[#01040E]/90',
-          isFirst && 'from-[#01040E]/95 from-10% to-[#01040E]/50',
-        )}
-        aria-hidden="true"
-      />
-
-      <Image
-        className="-z-2 rounded-xl object-cover"
-        src={`${metadata.image}!/fw/944`}
-        alt=""
-        fill
-        draggable="false"
-      />
-
-      <div className="relative flex flex-col gap-3 p-5">
+      <div className="relative z-1 flex flex-col gap-3 p-5">
         {isFirst && (
           <span className="text-xs font-medium text-brand-500 uppercase">
             {metadata.category}
