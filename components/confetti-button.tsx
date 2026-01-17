@@ -32,6 +32,7 @@ export default function ConfettiButton() {
   };
   return (
     <button
+      aria-label="Trigger confetti animation"
       data-confetti-button
       className="group w-fit cursor-pointer"
       onClick={handleClick}

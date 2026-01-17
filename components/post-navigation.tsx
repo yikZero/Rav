@@ -1,20 +1,21 @@
 import { Link } from '@/i18n/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useLocale } from 'next-intl';
 
-import { getBlogPosts } from '@/lib/post.utils';
+import type { Post } from '@/lib/post.utils';
 
 interface PostNavigationProps {
-  currentId: string;
+  currentSlug: string;
+  posts: Post[];
 }
 
-export default function PostNavigation({ currentId }: PostNavigationProps) {
-  const locale = useLocale();
-  const allPosts = getBlogPosts({ language: locale });
-  const currentIndex = allPosts.findIndex((post) => post.slug === currentId);
-  const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+export default function PostNavigation({
+  currentSlug,
+  posts,
+}: PostNavigationProps) {
+  const currentIndex = posts.findIndex((post) => post.slug === currentSlug);
+  const prevPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
   const nextPost =
-    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+    currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
 
   return (
     <div className="mt-16 grid grid-cols-1 gap-4 sm:mt-28 sm:grid-cols-2">

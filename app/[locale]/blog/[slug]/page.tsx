@@ -80,9 +80,8 @@ export default async function Page({
   const { slug, locale } = await params;
   setRequestLocale(locale);
 
-  const post = getBlogPosts({ language: locale }).find(
-    (post) => post.slug === slug,
-  );
+  const posts = getBlogPosts({ language: locale });
+  const post = posts.find((p) => p.slug === slug);
   if (!post) {
     notFound();
   }
@@ -131,7 +130,7 @@ export default async function Page({
             <div lang={locale}>
               <Content />
             </div>
-            <PostNavigation currentId={post.slug} />
+            <PostNavigation currentSlug={post.slug} posts={posts} />
           </div>
         </motion.div>
       </article>
