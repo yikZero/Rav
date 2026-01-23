@@ -1,0 +1,93 @@
+---
+title: 借助 Claude 实现 AI 翻译功能的工程化验证
+publishedAt: 2026-01-23
+description: Rapidly build an AI Translation Demo to validate optimization
+  strategies such as concurrent requests and JSON streaming output, thereby
+  reducing translation latency
+image: https://cdn.yikzero.com/markdown/images/aerps-com-s-1JFSUqg6A-unsplash.jpg
+category: Develop
+state: published
+---
+
+Rapid validation through a demo during the requirements phase helps clarify functional outcomes and guides subsequent optimization.
+
+Recently, while working on AI translation requirements, I wanted to know: what are the limitations of AI translation? Which model offers the best results and fastest speed? Previously, one might only have been able to test competitors' products, but now we can use Claude to quickly set up a demo and validate our ideas.
+
+Concurrently, I used this demo to optimize the speed and quality of AI translation, providing preliminary experience and practical insights for development, which is beneficial for later planning.
+
+<Video src="https://cdn.yikzero.com/markdown/images/Demo.mp4" />
+
+In this demo, the translation architecture went through a complete iteration, evolving from serial processing, to concurrent requests, then to stable multi-segment JSON output, and finally to JSON streaming output.
+
+This change significantly reduced the overall time consumption for long-text translation from an initial 26s to approximately 2.7s. Although there is still a gap in absolute speed compared to traditional engines, when combined with multi-key rotation and caching mechanisms, the user experience now has ample room for further improvement.
+
+Furthermore, through repeated testing, I have identified a set of parameter combinations that balance both quality and stability.
+
+To understand the specific problems and solutions, please continue reading below:
+
+## Core Engineering Optimization
+
+To address the inherent issues of AI translation being "slow" and prone to "hallucinations," I validated strategies in three areas within the demo code:
+
+### 1. Response Experience: Concurrency Limit Optimization
+
+Currently, selecting a faster model can boost speed somewhat, but there is definitely a gap compared to traditional translation. Therefore, I attempted to optimize the request logic, balancing model speed and concurrency limits, to provide a better translation experience:
+
+Concurrent requests—this is certainly the first step everyone considers. Indeed, this significantly boosts translation speed.
+
+After optimization, the time consumed for the same text dropped from 24s to 6s, a visibly noticeable improvement. However, compared to the 1s required by traditional translation, the difference remains significant.
+
+![AI 翻译串行、并发对比](https://cdn.yikzero.com/markdown/images/RoShot%202026-01-23%20at%2017.09.49@2x.png)
+
+Can it be even faster? The answer is yes.
+
+The previous strategy was simple concurrency: "one text segment = one request." Since the model supports long contexts, we can fully upgrade to batch sending: combining multiple text segments into the same request within the Token limit. This fully utilizes the context space and allows for greater throughput of content at once, significantly increasing efficiency.
+
+A new challenge arises: if multiple segments are batched and sent, how does the returned translation accurately map back to each original segment?
+
+To solve this alignment problem, I adopted a strategy of **paragraph numbering + JSON structured output**. By adding an index to each text segment and forcing the AI to return structured JSON data, simultaneous translation of multiple segments can be achieved while maintaining stable order.
+
+![流程介绍](https://cdn.yikzero.com/markdown/images/image-20260123-093122.png)
+
+Once converted to JSON, streaming output was lost, which was unacceptable. I then researched concepts related to NDJSON, which enables JSON data streaming.
+
+Following this round of optimization, AI translation time decreased from 6.08s to 2.88s
+
+<Video src="https://cdn.yikzero.com/markdown/images/Speed_Comparison_h264.mp4" />
+
+These are the optimizations for AI translation speed. Combined with multi-key rotation and translation caching, which can be implemented later on the server side, the experience will be further enhanced.
+
+### 2. Translation Quality: Prompt Tuning and Terminology Protection
+
+Referencing the Web3 domain translation prompts from Immersive Translate, I clarified the output specification. It requires preserving professional terminology (e.g., ETH, Gas fee, etc.) and also uses an indexed input format (`[1] text... [2] text...`) to ensure consistent output order during batch translation, preventing multi-segment disorder issues.
+
+```javascript
+You are a professional ${targetLang} native translator specialized in Web3 and blockchain content.
+
+## Translation Rules
+1. Output only the translated content, without explanations or additional text
+2. Maintain all blockchain terminology, cryptocurrency names, and token symbols 
+   in their original form (e.g., ETH, BTC, USDT, Solana, Ethereum)
+3. Preserve technical Web3 concepts with commonly accepted translations: 
+   DeFi, NFT, DAO, DEX, CEX, AMM, TVL, APY, APR, gas fee, smart contract, 
+   wallet, staking, yield farming, liquidity pool
+4. Keep all addresses, transaction hashes, and code snippets exactly as in the original
+5. Translate from ${sourceLang} to ${targetLang} while preserving technical meaning
+6. Ensure fluent, natural expression in ${targetLang} while maintaining technical accuracy
+```
+
+### 3. Parameter Control
+
+Although formal development has not yet begun during the requirements phase, I pre-tested the future control logic at the demo level, mainly covering two dimensions:
+
+#### Token Limits and Smart Chunking
+
+Based on the debugging results, I implemented certain controls over the number of segments and character length in a single request:
+
+- **Temperature = 0** - Deterministic output, results are more stable
+- **Control the number of paragraphs (4 segments)** - To prevent a single request from being too large and causing timeouts
+- **Maximum request text characters (3,000)** - Balancing output speed and content length
+
+#### Thinking Mode Restriction
+
+For models with thinking capabilities, such as Gemini 3.0 Flash, adjusting the `thinkingLevel` can also improve translation speed in defined tasks like translation.

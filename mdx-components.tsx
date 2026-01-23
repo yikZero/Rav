@@ -1,7 +1,8 @@
 import { Link } from '@/i18n/navigation';
 import type { MDXComponents } from 'mdx/types';
 
-import customImage from '@/components/custom-image';
+import Image from '@/components/custom-image';
+import Video from '@/components/custom-video';
 
 function CustomLink({
   href,
@@ -34,7 +35,8 @@ function CustomLink({
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     a: CustomLink,
-    img: customImage,
+    img: Image,
+    Video,
     ...components,
   };
 }

@@ -1,0 +1,91 @@
+---
+title: '借助 Claude 实现 AI 翻译功能的工程化验证'
+publishedAt: 2026-01-23
+description: '快速搭建 AI 翻译 Demo，验证并发请求、JSON 流式输出等优化策略，降低翻译耗时'
+image: 'https://cdn.yikzero.com/markdown/images/aerps-com-s-1JFSUqg6A-unsplash.jpg'
+category: 'Develop'
+state: 'published'
+---
+
+在需求阶段通过 Demo 快速验证，有助于明确功能实现效果并指导后续优化。
+
+最近在做 AI 翻译的需求，想知道 AI 翻译有哪些限制？哪家模型效果最好、速度最快？以往或许只能体验竞品，但现在我们可以借助 Claude 来快速起一个 Demo 来验证想法。
+
+同时，我也借助这个 Demo 对 AI 翻译的速度、效果进行了优化，为开发提供了初步的经验和实践，更有利于后期规划。
+
+<Video src="https://cdn.yikzero.com/markdown/images/Demo.mp4" />
+
+在这个 Demo 中，翻译架构经历了从串行，到并发请求，再到多段 JSON 稳定输出，最终演进为 JSON 流式输出 的完整迭代。
+
+这一改动将长文翻译的整体耗时从最初的 26s 大幅缩减至 2.7s 左右。尽管在绝对速度上与传统引擎仍有差距，但配合多 Key 轮询及缓存机制，体验已完全具备进一步提升的空间。
+
+此外，经过反复测试，我也摸索出了一套兼顾效果与稳定性的参数组合。
+
+想要了解具体的问题和解决方案，请继续往下看：
+
+## 核心工程化优化
+
+为了解决 AI 翻译天生「慢」和容易「幻觉」的问题，我在 Demo 代码中进行了三个方向的策略验证：
+
+### 1. 响应体验：并发限制优化
+
+目前而言，选用快速模型可以提升一定的速度，但相较于传统翻译，肯定是有差距的。所以我尝试优化了请求逻辑，兼顾模型速度与并发限制的情况下，给大家带来一个比较好的翻译体验：
+
+并发请求，这是大家肯定能够想到的第一步行动，没错，这对于翻译速度的提升还是挺大的。
+
+经过优化，相同文本的耗时从 24s 降到了 6s，提升确实肉眼可见。但这相比传统翻译的 1s，差距依然无法忽视。
+
+![AI 翻译串行、并发对比](https://cdn.yikzero.com/markdown/images/RoShot%202026-01-23%20at%2017.09.49@2x.png)
+
+还能不能更快？答案是肯定的。
+
+之前的策略是简单的并发，即「一段文本 = 一个请求」。既然模型支持长上下文，我们完全可以升级为打包发送：在 Token 限制的范围内，将多段文本合并进同一个请求里。这样既充分利用了上下文空间，又能一次性吞吐更多内容，效率会高很多。
+
+新的挑战随之而来：多段内容打包发过去，回来的翻译怎么精准对应回每一段原文？
+
+为了解决这个对齐难题，我采用了 **段落标号 + JSON 结构化输出** 的策略。通过给每段文本加上索引，并强制 AI 返回结构化的 JSON 数据，就能实现多段同时翻译，且顺序保持稳定。
+
+![流程介绍](https://cdn.yikzero.com/markdown/images/image-20260123-093122.png)
+
+变成 Json 之后，流式输出没有了，这也不行。这又搜索到 NDJSON 相关概念，能够实现 Json 数据的流式输出。
+
+经过这一轮优化之后，AI 翻译耗时从 6.08s 降低至 2.88s
+
+<Video src="https://cdn.yikzero.com/markdown/images/Speed_Comparison_h264.mp4" />
+
+对于 AI 翻译速度的优化就是这些，配合服务端后期可以做的多 Key 轮询以及翻译缓存，体验会进一步提升。
+
+### 2. 翻译质量：Prompt 调优与术语保护
+
+参考了沉浸式翻译的 Web3 领域翻译提示词，明确了输出规范。要求保留专业术语（如 ETH, Gas fee 等），还通过带索引的输入格式（`[1] text... [2] text...`）确保了批量翻译时的输出顺序一致，避免了多段乱序的问题。
+
+```javascript
+You are a professional ${targetLang} native translator specialized in Web3 and blockchain content.
+
+## Translation Rules
+1. Output only the translated content, without explanations or additional text
+2. Maintain all blockchain terminology, cryptocurrency names, and token symbols 
+   in their original form (e.g., ETH, BTC, USDT, Solana, Ethereum)
+3. Preserve technical Web3 concepts with commonly accepted translations: 
+   DeFi, NFT, DAO, DEX, CEX, AMM, TVL, APY, APR, gas fee, smart contract, 
+   wallet, staking, yield farming, liquidity pool
+4. Keep all addresses, transaction hashes, and code snippets exactly as in the original
+5. Translate from ${sourceLang} to ${targetLang} while preserving technical meaning
+6. Ensure fluent, natural expression in ${targetLang} while maintaining technical accuracy
+```
+
+### 3. 参数控制
+
+虽然需求阶段尚未正式开发，但我在 Demo 层面预演了未来的控制逻辑，主要包含两个维度：
+
+#### Token 限制与智能分块
+
+根据调试的效果，对同一请求的段数以及字数长度进行了一定的控制：
+
+- **Temperature = 0** - 确定性输出，结果更稳定
+- **控制段落数（4 段）** - 避免单次请求过大导致超时
+- **请求最大文本字符（3,000）** - 兼顾输出速度与内容长度
+
+#### 思考模式限制
+
+针对 Gemini 3.0 Flash 等具备思考能力的模型，在翻译这种明确任务中，调整 `thinkingLevel` 也可以提升翻译速度。

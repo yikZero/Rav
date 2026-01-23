@@ -104,7 +104,7 @@ body {
 }
 
 .rypo img {
-  @apply h-auto w-full rounded-md sm:rounded-lg dark:brightness-95;
+  @apply h-auto w-full rounded-md dark:brightness-95;
 }
 
 .rypo figcaption {
@@ -112,7 +112,7 @@ body {
 }
 
 .rypo video {
-  @apply my-6 h-auto w-full rounded-md shadow-xs sm:rounded-lg;
+  @apply my-6 h-auto w-full rounded-md shadow-xs;
 }
 
 .rypo blockquote {
