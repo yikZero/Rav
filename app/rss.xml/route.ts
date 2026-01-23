@@ -8,6 +8,20 @@ import { getBlogPosts } from '@/lib/post.utils';
 
 const processor = remark().use(html);
 
+// Process MDX/JSX components for RSS compatibility
+function processMdxComponents(content: string): string {
+  // Convert <Video src="..." /> to markdown link
+  let result = content.replace(
+    /<Video\s+src=["']([^"']+)["']\s*\/>/g,
+    '[查看视频]($1)'
+  );
+  // Remove other self-closing JSX components: <Component ... />
+  result = result.replace(/<[A-Z][a-zA-Z]*\s*[^>]*\/>/g, '');
+  // Remove paired JSX components: <Component>...</Component>
+  result = result.replace(/<([A-Z][a-zA-Z]*)[^>]*>[\s\S]*?<\/\1>/g, '');
+  return result;
+}
+
 export async function GET() {
   const posts = getBlogPosts();
 
@@ -27,7 +41,8 @@ export async function GET() {
 
   for (const post of posts) {
     try {
-      const result = await processor.process(post.content || '');
+      const cleanContent = processMdxComponents(post.content || '');
+      const result = await processor.process(cleanContent);
       const renderedContent = String(result);
       const sanitizedContent = sanitizeHtml(renderedContent, {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
