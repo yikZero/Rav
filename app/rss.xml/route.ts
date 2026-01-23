@@ -52,7 +52,7 @@ export async function GET() {
 
   return new Response(rss.xml({ indent: true }), {
     headers: {
-      'content-type': 'application/xml',
+      'content-type': 'application/xml; charset=utf-8',
     },
   });
 }
