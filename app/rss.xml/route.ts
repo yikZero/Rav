@@ -1,42 +1,43 @@
-import ravConfig from '@/rav.config';
+import { Feed } from 'feed';
 import { remark } from 'remark';
 import html from 'remark-html';
-import RSS from 'rss';
-import sanitizeHtml from 'sanitize-html';
 
+import ravConfig from '@/rav.config';
 import { getBlogPosts } from '@/lib/post.utils';
 
 const processor = remark().use(html);
 
-// Process MDX/JSX components for RSS compatibility
 function processMdxComponents(content: string): string {
-  // Convert <Video src="..." /> to markdown link
   let result = content.replace(
     /<Video\s+src=["']([^"']+)["']\s*\/>/g,
     '[查看视频]($1)'
   );
-  // Remove other self-closing JSX components: <Component ... />
   result = result.replace(/<[A-Z][a-zA-Z]*\s*[^>]*\/>/g, '');
-  // Remove paired JSX components: <Component>...</Component>
   result = result.replace(/<([A-Z][a-zA-Z]*)[^>]*>[\s\S]*?<\/\1>/g, '');
   return result;
 }
 
 export async function GET() {
   const posts = getBlogPosts();
-
   const siteUrl = ravConfig.siteUrl.replace(/\/$/, '');
-  const rss = new RSS({
+
+  const feed = new Feed({
     title: ravConfig.title,
     description: ravConfig.description,
-    generator: 'Next.js',
-    site_url: ravConfig.siteUrl,
-    feed_url: `${siteUrl}/rss.xml`,
-    managingEditor: ravConfig.email + ' (' + ravConfig.author + ')',
-    webMaster: ravConfig.email + ' (' + ravConfig.author + ')',
-    copyright: 'All rights reserved ' + new Date().getFullYear(),
+    id: siteUrl,
+    link: siteUrl,
     language: 'zh-CN',
-    ttl: 60,
+    favicon: `${siteUrl}/favicon.ico`,
+    copyright: `All rights reserved ${new Date().getFullYear()}`,
+    generator: 'Next.js',
+    feedLinks: {
+      rss2: `${siteUrl}/rss.xml`,
+    },
+    author: {
+      name: ravConfig.author,
+      email: ravConfig.email,
+      link: siteUrl,
+    },
   });
 
   for (const post of posts) {
@@ -44,30 +45,29 @@ export async function GET() {
       const cleanContent = processMdxComponents(post.content || '');
       const result = await processor.process(cleanContent);
       const renderedContent = String(result);
-      const sanitizedContent = sanitizeHtml(renderedContent, {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-      });
 
-      rss.item({
+      feed.addItem({
         title: post.metadata.title,
-        guid: `${ravConfig.siteUrl}/blog/${post.slug}/`,
-        url: `${ravConfig.siteUrl}/blog/${post.slug}`,
+        id: `${siteUrl}/blog/${post.slug}`,
+        link: `${siteUrl}/blog/${post.slug}`,
         description: post.metadata.description,
-        custom_elements: [
+        content: renderedContent,
+        date: new Date(post.metadata.updatedAt || post.metadata.publishedAt),
+        author: [
           {
-            'content:encoded': sanitizedContent,
+            name: ravConfig.author,
+            email: ravConfig.email,
           },
         ],
-        date: new Date(post.metadata.updatedAt || post.metadata.publishedAt),
       });
     } catch (error) {
       console.error(`Error processing post ${post.slug}:`, error);
     }
   }
 
-  return new Response(rss.xml({ indent: true }), {
+  return new Response(feed.rss2(), {
     headers: {
-      'content-type': 'application/xml; charset=utf-8',
+      'Content-Type': 'application/xml; charset=utf-8',
     },
   });
 }
