@@ -1,4 +1,5 @@
 import type { Post } from '@/lib/post.utils';
+import { useTranslations } from 'next-intl';
 
 import PostLine from '@/components/post-line';
 
@@ -7,11 +8,12 @@ interface BlogPostLineProps {
 }
 
 export default function BlogPostLine({ posts }: BlogPostLineProps) {
+  const t = useTranslations('Blog');
   return (
     <div className="mx-auto mt-16 flex max-w-240 flex-col justify-center px-4 sm:px-0">
       <div className="mb-2 flex w-full flex-row items-center gap-2 sm:mb-4">
         <h2 className="shrink-0 text-sm font-medium text-soft select-none">
-          More Posts
+          {t('more')}
         </h2>
         <div
           className="h-px w-full bg-linear-to-r from-strong/6 to-strong/2"
