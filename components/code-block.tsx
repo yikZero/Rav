@@ -54,23 +54,29 @@ interface CodeProps {
   className?: string;
 }
 
+function isCodeElement(child: React.ReactNode): child is React.ReactElement<CodeProps> {
+  return isValidElement(child) && child.type === 'code';
+}
+
+function parseLanguage(className: string): string {
+  const match = className.match(/language-(\w+)/);
+  return match?.[1] || 'text';
+}
+
 export default function Pre({ children }: PreProps) {
-  const codeElement = Children.toArray(children).find(
-    (child) => isValidElement(child) && child.type === 'code'
-  ) as React.ReactElement<CodeProps> | undefined;
+  const codeElement = Children.toArray(children).find(isCodeElement);
 
   if (!codeElement) {
     return <pre>{children}</pre>;
   }
 
   const code = codeElement.props.children?.trim() || '';
-  const className = codeElement.props.className || '';
-  const language = className.replace(/language-/, '') || 'text';
+  const language = parseLanguage(codeElement.props.className || '');
 
   return (
     <Highlight theme={customTheme} code={code} language={language}>
       {({ style, tokens, getLineProps, getTokenProps }) => (
-        <pre style={style}>
+        <pre style={style} aria-label={`Code block in ${language}`}>
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line })}>
               {line.map((token, key) => (
