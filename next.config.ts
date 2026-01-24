@@ -1,5 +1,4 @@
 import createMDX from '@next/mdx';
-import rehypeShiki from '@shikijs/rehype';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
@@ -66,14 +65,6 @@ const withMDX = createMDX({
       rehypeSlug,
       rehypeAutolinkHeadings,
       rehypeAccessibleEmojis,
-      [
-        rehypeShiki,
-        {
-          theme: 'github-dark',
-          inline: 'tailing-curly-colon',
-          overflow: 'scroll',
-        },
-      ],
     ],
   },
 });

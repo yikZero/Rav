@@ -18,7 +18,7 @@ RUN apk add --no-cache libc6-compat python3 make g++ vips-dev
 WORKDIR /app
 
 COPY package.json ./
-COPY bun.lockb ./
+COPY bun.lock ./
 RUN bun install --frozen-lockfile
 
 FROM base AS builder
