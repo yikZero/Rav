@@ -1,6 +1,7 @@
 import { Link } from '@/i18n/navigation';
 import type { MDXComponents } from 'mdx/types';
 
+import Pre from '@/components/code-block';
 import Image from '@/components/custom-image';
 import Video from '@/components/custom-video';
 
@@ -36,6 +37,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     a: CustomLink,
     img: Image,
+    pre: Pre,
     Video,
     ...components,
   };

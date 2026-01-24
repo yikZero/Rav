@@ -221,7 +221,7 @@ body {
   @apply text-[0.9em];
 }
 
-.rypo pre.shiki {
+.rypo pre {
   @apply my-4 overflow-x-auto rounded-md px-4 py-3 text-sm whitespace-pre sm:rounded-lg;
   max-height: min(68vh, 1000px) !important;
   overflow: auto;
