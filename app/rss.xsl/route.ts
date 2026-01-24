@@ -177,6 +177,7 @@ export async function GET() {
   return new Response(xslContent, {
     headers: {
       'Content-Type': 'application/xslt+xml; charset=utf-8',
+      'Cache-Control': 'public, max-age=3600, immutable',
     },
   });
 }

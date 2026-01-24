@@ -68,8 +68,8 @@ export async function GET() {
   const rssXml = feed.rss2();
   // Add XSL stylesheet reference for browser rendering
   const rssWithStylesheet = rssXml.replace(
-    '<?xml version="1.0" encoding="utf-8"?>',
-    '<?xml version="1.0" encoding="utf-8"?>\n<?xml-stylesheet type="text/xsl" href="/rss.xsl"?>'
+    /(<\?xml[^>]+\?>)/,
+    '$1\n<?xml-stylesheet type="text/xsl" href="/rss.xsl"?>'
   );
 
   return new Response(rssWithStylesheet, {
