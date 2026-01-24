@@ -13,7 +13,7 @@ Rav is a modern personal blog built with Next.js 16, featuring MDX content manag
 - **AI Integration**:
   - @ai-sdk/xai for chat
   - @ai-sdk/google for automated translation
-- **Package Manager**: pnpm 10.6.5+
+- **Package Manager**: bun
 - **Code Quality**: ESLint + Prettier
 - **Deployment**: Docker support (standalone mode)
 
@@ -35,7 +35,7 @@ Rav is a modern personal blog built with Next.js 16, featuring MDX content manag
 ### Prerequisites
 
 - Node.js 18+
-- pnpm 10.6.5
+- bun
 - Docker (optional, for containerized deployment)
 
 ### Installation
@@ -45,14 +45,14 @@ Rav is a modern personal blog built with Next.js 16, featuring MDX content manag
 git clone https://github.com/yikZero/Rav.git
 
 # Install dependencies
-pnpm install
+bun install
 ```
 
 ### Development
 
 ```bash
 # Start development server
-pnpm dev
+bun dev
 ```
 
 The development server will start at http://localhost:11300.
@@ -61,10 +61,10 @@ The development server will start at http://localhost:11300.
 
 ```bash
 # Build for production
-pnpm build
+bun run build
 
 # Start production server
-pnpm start
+bun run start
 ```
 
 ### Docker Deployment
@@ -150,13 +150,13 @@ Translate Chinese posts to English automatically using AI:
 
 ```bash
 # Translate only changed files
-pnpm translate
+bun run translate
 
 # Force translate all files (ignore cache)
-pnpm translate:force
+bun run translate:force
 
 # Translate a specific file
-pnpm translate your-post-name
+bun run translate your-post-name
 ```
 
 **Requirements**: Set `GOOGLE_GENERATIVE_AI_API_KEY` in your `.env` file.
@@ -173,7 +173,7 @@ pnpm translate your-post-name
 
 ```bash
 # Generate optimized React components from SVG files in assets/
-pnpm svg
+bun run svg
 ```
 
 Components will be created in `components/icons/`

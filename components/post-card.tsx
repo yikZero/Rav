@@ -18,7 +18,7 @@ export default function PostCard({
   slug,
   isFirst = false,
   className,
-}: PostCardProps) {
+}: PostCardProps): React.ReactElement {
   return (
     <article
       className={cn(
@@ -26,37 +26,36 @@ export default function PostCard({
         className,
       )}
     >
-      {/* 图片容器 */}
       <div className="absolute inset-0 overflow-hidden rounded-xl">
         <Image
           className="size-full object-cover"
-          src={`${metadata.image}!/fw/944`}
-          alt=""
+          src={metadata.image}
+          alt={metadata.title}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          loading={isFirst ? 'eager' : 'lazy'}
           draggable="false"
         />
       </div>
-      {/* 蒙层 - 稍微扩大覆盖边缘 */}
       <div
         className={cn(
           'absolute -inset-px rounded-xl bg-linear-to-t from-[#01040E]/97 to-[#01040E]/82',
           isFirst && 'from-[#01040E]/95 from-10% to-[#01040E]/50',
         )}
-        aria-hidden="true"
+        aria-hidden
       />
-      {/* 内描边 */}
       <div
         className="absolute inset-0 z-1 rounded-xl ring-1 ring-white/4 ring-inset"
-        aria-hidden="true"
+        aria-hidden
       />
 
       <Link
-        prefetch={true}
+        prefetch
         href={`/blog/${slug}`}
         className="absolute inset-0 z-10 rounded-xl"
-        aria-label={`阅读文章: ${metadata.title}`}
+        aria-label={`Read article: ${metadata.title}`}
       >
-        <span className="sr-only">阅读文章: {metadata.title}</span>
+        <span className="sr-only">Read article: {metadata.title}</span>
       </Link>
 
       <div className="relative z-1 flex flex-col gap-3 p-5">
@@ -76,7 +75,7 @@ export default function PostCard({
             </p>
           ) : (
             <DateDisplay
-              date={metadata.updatedAt || metadata.publishedAt}
+              date={metadata.updatedAt ?? metadata.publishedAt}
               className="text-sm text-strong/45"
             />
           )}

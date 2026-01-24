@@ -2,9 +2,8 @@
 
 import mediumZoom from 'medium-zoom';
 import Image, { type ImageProps } from 'next/image';
-import { memo, useEffect, useMemo, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 
-// 定义组件的 props 类型
 interface CustomImageProps
   extends Omit<ImageProps, 'src' | 'width' | 'height'> {
   src?: string;
@@ -12,11 +11,17 @@ interface CustomImageProps
   height?: string | number;
 }
 
-// 定义 zoom 配置
 const ZOOM_OPTIONS = {
   background: 'var(--color-background)',
   margin: 24,
 } as const;
+
+const DEFAULT_WIDTH = 1200;
+
+function parseSize(value: string | number | undefined): number | undefined {
+  if (value === undefined) return undefined;
+  return typeof value === 'string' ? parseInt(value, 10) : value;
+}
 
 function CustomImage({
   alt,
@@ -24,19 +29,13 @@ function CustomImage({
   width,
   height,
   ...props
-}: CustomImageProps) {
+}: CustomImageProps): React.ReactElement {
   const imageRef = useRef<HTMLImageElement>(null);
 
-  // 处理尺寸
-  const dimensions = useMemo(
-    () => ({
-      width: typeof width === 'string' ? parseInt(width) : width || 0,
-      height: typeof height === 'string' ? parseInt(height) : height || 0,
-    }),
-    [width, height],
-  );
+  const parsedWidth = parseSize(width) ?? DEFAULT_WIDTH;
+  const parsedHeight = parseSize(height);
+  const hasAutoHeight = !parsedHeight;
 
-  // 处理 zoom 效果
   useEffect(() => {
     const imageElement = imageRef.current;
     if (!imageElement) return;
@@ -44,7 +43,6 @@ function CustomImage({
     const zoom = mediumZoom(imageElement, ZOOM_OPTIONS);
     return () => {
       zoom.detach();
-      return undefined;
     };
   }, []);
 
@@ -54,9 +52,12 @@ function CustomImage({
         {...props}
         ref={imageRef}
         src={src}
-        alt={alt || ''}
+        alt={alt ?? ''}
         loading="lazy"
-        {...dimensions}
+        width={parsedWidth}
+        height={hasAutoHeight ? 0 : parsedHeight}
+        sizes="(max-width: 768px) 100vw, 800px"
+        style={hasAutoHeight ? { width: '100%', height: 'auto' } : undefined}
       />
       {alt && <figcaption>{alt}</figcaption>}
     </figure>

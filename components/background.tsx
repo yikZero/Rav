@@ -5,7 +5,7 @@ import { locales } from '@/i18n/routing';
 
 import { cn } from '@/lib/utils';
 
-export default function Background() {
+export default function Background(): React.ReactElement {
   const pathname = usePathname();
   const isHomePage =
     pathname === '/' || locales.some((locale) => pathname === `/${locale}`);
@@ -27,6 +27,9 @@ export default function Background() {
         autoPlay
         loop
         playsInline
+        preload="none"
+        disablePictureInPicture
+        disableRemotePlayback
       >
         <source
           src="https://cdn.yikzero.com/rav/background.mp4"
@@ -34,7 +37,7 @@ export default function Background() {
         />
         Your browser does not support the video tag.
       </video>
-      <div className="absolute inset-0 z-3 bg-[url(https://cdn.yikzero.com/rav/noise.png)] bg-center bg-repeat opacity-10"></div>
+      <div className="absolute inset-0 z-3 bg-[url(https://cdn.yikzero.com/rav/noise.png)] bg-center bg-repeat opacity-10" />
     </div>
   );
 }

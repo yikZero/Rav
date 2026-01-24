@@ -23,7 +23,7 @@
   --color-weak: oklch(1 0 0 / 45%);
   --color-disabled: oklch(1 0 0 / 25%);
 
-  --color-background: oklch(0.12 0.0295 259.58);
+  --color-background: oklch(0.12 0.025 259.58);
   --color-background-gradient: oklch(from var(--color-background) l c h / 0.9);
 
   --color-black: #000;

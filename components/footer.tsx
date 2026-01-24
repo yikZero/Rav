@@ -15,27 +15,15 @@ interface FooterLink {
   icon: React.ComponentType<{ className?: string }>;
 }
 
-const footerLinks: FooterLink[] = [
-  {
-    name: 'Github',
-    url: 'https://github.com/yikZero/Rav',
-    icon: Github,
-  },
-  {
-    name: 'Telegram',
-    url: 'https://t.me/yikzero',
-    icon: Telegram,
-  },
-  {
-    name: 'X (Twitter)',
-    url: 'https://x.com/yikZero',
-    icon: Twitter,
-  },
+const FOOTER_LINKS: FooterLink[] = [
+  { name: 'Github', url: 'https://github.com/yikZero/Rav', icon: Github },
+  { name: 'Telegram', url: 'https://t.me/yikzero', icon: Telegram },
+  { name: 'X (Twitter)', url: 'https://x.com/yikZero', icon: Twitter },
 ];
 
 const BLOG_DETAIL_REGEX = /^\/([a-z-]+\/)?blog\/[^/]+\/?$/;
 
-export default function Footer() {
+export default function Footer(): React.ReactElement {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('Footer');
   const locale = useLocale();
@@ -52,13 +40,11 @@ export default function Footer() {
     >
       <div className="flex flex-row items-center gap-4 sm:gap-3">
         <p className="text-center text-sm font-medium text-soft select-none">
-          {t.rich('copyright', {
-            currentYear: currentYear,
-          })}
+          {t.rich('copyright', { currentYear })}
         </p>
         {locale === 'zh-CN' && (
           <>
-            <div className="hidden h-2 w-px bg-disabled sm:block"></div>
+            <div className="hidden h-2 w-px bg-disabled sm:block" />
             <Link
               rel="noopener noreferrer"
               className="flex flex-row items-center gap-1 text-center text-sm font-medium text-soft transition-colors duration-300 hover:text-brand-500"
@@ -68,10 +54,10 @@ export default function Footer() {
               <Image
                 alt="ICP License Icon"
                 className="pointer-events-none size-4"
-                width="16"
-                height="16"
+                width={16}
+                height={16}
                 loading="lazy"
-                src="https://cdn.yikzero.com/roominess5/beian.png!/format/webp"
+                src="https://cdn.yikzero.com/roominess5/beian.png"
               />
               浙ICP备20012359号-1
             </Link>
@@ -79,7 +65,7 @@ export default function Footer() {
         )}
       </div>
       <div className="flex flex-row gap-4">
-        {footerLinks.map((link) => (
+        {FOOTER_LINKS.map((link) => (
           <Link
             key={link.name}
             href={link.url}

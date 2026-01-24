@@ -17,7 +17,8 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.yikzero.com',
       },
     ],
-    unoptimized: true,
+    loader: 'custom',
+    loaderFile: './lib/image-loader.ts',
   },
   async redirects() {
     return [
