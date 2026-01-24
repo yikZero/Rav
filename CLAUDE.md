@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-- **Development server**: `pnpm dev` (runs on port 11300)
-- **Build**: `pnpm build`
-- **Production server**: `pnpm start` (port 11300)
-- **Linting**: `pnpm lint`
-- **SVG optimization**: `pnpm svg` (generates React components from assets/)
-- **Translation**: `pnpm translate` (translates zh-CN posts to English)
-- **Force translation**: `pnpm translate:force` (re-translates all posts)
+- **Development server**: `bun dev` (runs on port 11300)
+- **Build**: `bun run build`
+- **Production server**: `bun run start` (port 11300)
+- **Linting**: `bun run lint`
+- **SVG optimization**: `bun run svg` (generates React components from assets/)
+- **Translation**: `bun run translate` (translates zh-CN posts to English)
+- **Force translation**: `bun run translate:force` (re-translates all posts)
 
 ## Architecture Overview
 

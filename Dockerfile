@@ -9,15 +9,17 @@ ENV TZ=Asia/Hong_Kong
 ENV NODE_ENV=production
 ENV PORT=11300
 
-RUN npm install -g pnpm
+RUN apk add --no-cache curl bash && \
+    curl -fsSL https://bun.sh/install | bash && \
+    ln -s /root/.bun/bin/bun /usr/local/bin/bun
 
 FROM base AS deps
 RUN apk add --no-cache libc6-compat python3 make g++ vips-dev
 WORKDIR /app
 
 COPY package.json ./
-COPY pnpm-lock.yaml ./
-RUN pnpm i --frozen-lockfile --ignore-scripts=false
+COPY bun.lockb ./
+RUN bun install --frozen-lockfile
 
 FROM base AS builder
 WORKDIR /app
@@ -26,7 +28,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN pnpm run build
+RUN bun run build
 
 FROM base AS runner
 WORKDIR /app
