@@ -16,10 +16,10 @@ const instrumentSerif = Instrument_Serif({
   display: 'swap',
 });
 
-export default function HeroContent() {
-  const text = 'yikZero, Web3 Product Designer based in Hangzhou, China';
-  const words = text.split(' ');
+const HERO_TEXT = 'yikZero, Web3 Product Designer based in Hangzhou, China';
+const HERO_WORDS = HERO_TEXT.split(' ');
 
+export default function HeroContent(): React.ReactElement {
   const t = useTranslations('Hero');
 
   return (
@@ -36,7 +36,7 @@ export default function HeroContent() {
         className="group relative rotate-2 will-change-transform hover:rotate-3"
       >
         <Image
-          src="https://cdn.yikzero.com/common/avatar.jpg!/fw/96"
+          src="https://cdn.yikzero.com/common/avatar.jpg"
           width={48}
           height={48}
           alt="yikZero's Avatar"
@@ -51,7 +51,7 @@ export default function HeroContent() {
         <h1
           className={`${instrumentSerif.className} max-w-140 text-center text-4xl tracking-[0.01em] text-white/95 text-shadow-sm sm:text-5xl sm:leading-15.5`}
         >
-          {words.map((word, index) => (
+          {HERO_WORDS.map((word, index) => (
             <Fragment key={index}>
               <motion.span
                 className="inline-block will-change-[filter,transform]"
@@ -60,7 +60,7 @@ export default function HeroContent() {
               >
                 {word}
               </motion.span>
-              {index < words.length - 1 && ' '}
+              {index < HERO_WORDS.length - 1 && ' '}
             </Fragment>
           ))}
         </h1>

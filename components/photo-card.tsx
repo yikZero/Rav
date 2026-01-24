@@ -8,7 +8,11 @@ interface PhotoCardProps {
   className?: string;
 }
 
-export default function PhotoCard({ title, url, className }: PhotoCardProps) {
+export default function PhotoCard({
+  title,
+  url,
+  className,
+}: PhotoCardProps): React.ReactElement {
   return (
     <div
       className={cn(
@@ -18,11 +22,12 @@ export default function PhotoCard({ title, url, className }: PhotoCardProps) {
     >
       <Image
         alt={title}
-        width="429"
-        height="572"
+        width={429}
+        height={572}
         loading="lazy"
         className="size-full rounded-xl object-cover object-bottom select-none"
-        src={`${url}!/fh/572`}
+        src={`${url}!/fh/572/format/webp`}
+        unoptimized
         draggable="false"
       />
     </div>
