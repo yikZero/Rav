@@ -65,7 +65,14 @@ export async function GET() {
     }
   }
 
-  return new Response(feed.rss2(), {
+  const rssXml = feed.rss2();
+  // Add XSL stylesheet reference for browser rendering
+  const rssWithStylesheet = rssXml.replace(
+    /(<\?xml[^>]+\?>)/,
+    '$1\n<?xml-stylesheet type="text/xsl" href="/rss.xsl"?>'
+  );
+
+  return new Response(rssWithStylesheet, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
     },
