@@ -158,12 +158,11 @@ export async function GET(request: NextRequest) {
   const posts = getBlogPosts();
   const siteUrl = ravConfig.siteUrl.replace(/\/$/, '');
 
-  // Check if browser is requesting HTML
   const acceptHeader = request.headers.get('accept') || '';
-  const wantHtml =
-    acceptHeader.includes('text/html') &&
-    !acceptHeader.includes('application/rss+xml') &&
-    !acceptHeader.includes('application/xml');
+  const userAgent = request.headers.get('user-agent') || '';
+  const isBrowser = userAgent.includes('Mozilla') && !userAgent.includes('bot');
+  const isRssReader = acceptHeader.includes('application/rss+xml');
+  const wantHtml = isBrowser && !isRssReader;
 
   const feedItems: Array<{
     title: string;
