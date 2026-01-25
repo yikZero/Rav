@@ -226,12 +226,12 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // Return HTML for browsers, XML for RSS readers
   if (wantHtml) {
     return new Response(generateHtmlPage(feedItems, siteUrl), {
       headers: {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': 'public, max-age=3600',
+        Vary: 'Accept',
       },
     });
   }
@@ -240,6 +240,7 @@ export async function GET(request: NextRequest) {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 'public, max-age=3600',
+      Vary: 'Accept',
     },
   });
 }
