@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
     ],
     loader: 'custom',
     loaderFile: './lib/image-loader.ts',
+    qualities: [75, 85],
+  },
+  reactCompiler: true,
+  experimental: {
+    inlineCss: true,
   },
   async redirects() {
     return [

@@ -1,7 +1,7 @@
 import { Link } from '@/i18n/navigation';
 import * as motion from 'motion/react-client';
 import { useTranslations } from 'next-intl';
-import { Instrument_Serif } from 'next/font/google';
+import localFont from 'next/font/local';
 import Image from 'next/image';
 import { Fragment } from 'react';
 
@@ -10,9 +10,8 @@ import { blurFadeVariants, heroTransition } from '@/lib/animations';
 import { ArrowRight } from '@/components/icons';
 import Trusted from '@/components/trusted';
 
-const instrumentSerif = Instrument_Serif({
-  weight: '400',
-  subsets: ['latin'],
+const instrumentSerif = localFont({
+  src: '../fonts/instrument-serif-subset.woff2',
   display: 'swap',
 });
 
@@ -42,6 +41,7 @@ export default function HeroContent(): React.ReactElement {
           alt="yikZero's Avatar"
           className="size-12 rounded-xl outline outline-[#EFF6FF]/15"
           draggable="false"
+          preload
           placeholder="blur"
           blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMjAgMzIwJz48ZmlsdGVyIGlkPSdiJyBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9J3NSR0InPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249JzIwJy8+PGZlQ29sb3JNYXRyaXggdmFsdWVzPScxIDAgMCAwIDAgMCAxIDAgMCAwIDAgMCAxIDAgMCAwIDAgMCAxMDAgLTEnIHJlc3VsdD0ncycvPjxmZUZsb29kIHg9JzAnIHk9JzAnIHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnLz48ZmVDb21wb3NpdGUgb3BlcmF0b3I9J291dCcgaW49J3MnLz48ZmVDb21wb3NpdGUgaW4yPSdTb3VyY2VHcmFwaGljJy8+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0nMjAnLz48L2ZpbHRlcj48aW1hZ2Ugd2lkdGg9JzEwMCUnIGhlaWdodD0nMTAwJScgeD0nMCcgeT0nMCcgcHJlc2VydmVBc3BlY3RSYXRpbz0nbm9uZScgc3R5bGU9J2ZpbHRlcjogdXJsKCNiKTsnIGhyZWY9J2RhdGE6aW1hZ2Uvd2VicDtiYXNlNjQsVWtsR1Jtb0FBQUJYUlVKUVZsQTRJRjRBQUFEUUFRQ2RBU29JQUFnQUFrQTRKWmdDZEFFTy9kWnFBQUQrOVY0emx3Q28zQTJEcm02UGpUSFFYTlVBaEwrMVJrL3BMekdycWs0K1c0VmFXWUJTVDJuSjBzZWNiVjNEdW9WRlJ0UVhadlhZdzZseEhpdHVqWE03djg5ZlFBQUEnLz48L3N2Zz4="
         />
