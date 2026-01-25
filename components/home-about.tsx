@@ -1,10 +1,12 @@
+import dynamic from 'next/dynamic';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
 
-import ConfettiButton from '@/components/confetti-button';
 import LifeSection from '@/components/life-section';
 import PhotoCard from '@/components/photo-card';
+
+const ConfettiButton = dynamic(() => import('@/components/confetti-button'));
 
 export default function HomeAbout() {
   const t = useTranslations('About');
