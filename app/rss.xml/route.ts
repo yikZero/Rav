@@ -1,19 +1,22 @@
+import ravConfig from '@/rav.config';
 import { Feed } from 'feed';
+import { type NextRequest } from 'next/server';
 import { remark } from 'remark';
 import html from 'remark-html';
-import { type NextRequest } from 'next/server';
 
-import ravConfig from '@/rav.config';
 import { getBlogPosts } from '@/lib/post.utils';
 
 const processor = remark().use(html);
 
 function processMdxComponents(content: string): string {
+  // Handle Video components with any attributes (src, poster, etc.)
   let result = content.replace(
-    /<Video\s+src=["']([^"']+)["']\s*\/>/g,
-    '[查看视频]($1)'
+    /<Video\s+[^>]*src=["']([^"']+)["'][^>]*\/>/g,
+    '[查看视频]($1)',
   );
+  // Remove other self-closing MDX components
   result = result.replace(/<[A-Z][a-zA-Z]*\s*[^>]*\/>/g, '');
+  // Remove MDX components with children
   result = result.replace(/<([A-Z][a-zA-Z]*)[^>]*>[\s\S]*?<\/\1>/g, '');
   return result;
 }
@@ -25,7 +28,7 @@ function generateHtmlPage(
     description: string;
     date: Date;
   }>,
-  siteUrl: string
+  siteUrl: string,
 ) {
   const postItems = posts
     .map(
@@ -36,7 +39,7 @@ function generateHtmlPage(
         </h2>
         <p class="post-meta">${post.date.toLocaleDateString('zh-CN')}</p>
         <p class="post-description">${post.description}</p>
-      </li>`
+      </li>`,
     )
     .join('');
 
@@ -194,7 +197,7 @@ export async function GET(request: NextRequest) {
       const result = await processor.process(cleanContent);
       const renderedContent = String(result);
       const postDate = new Date(
-        post.metadata.updatedAt || post.metadata.publishedAt
+        post.metadata.updatedAt || post.metadata.publishedAt,
       );
 
       feed.addItem({
