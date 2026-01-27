@@ -27,7 +27,8 @@ export default function Background(): React.ReactElement {
         autoPlay
         loop
         playsInline
-        preload="none"
+        preload="auto"
+        poster="https://cdn.yikzero.com/rav/background-poster.jpg"
         disablePictureInPicture
         disableRemotePlayback
       >
