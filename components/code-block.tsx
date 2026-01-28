@@ -7,7 +7,7 @@ import { Children, isValidElement } from 'react';
 const customTheme: PrismTheme = {
   plain: {
     color: 'oklch(0.85 0 0)', // --color-strong
-    backgroundColor: 'oklch(0.16 0.025 259.58)', // slightly lighter than --color-background
+    backgroundColor: 'oklch(0.21 0.025 259.58)', // slightly lighter than --color-background
   },
   styles: [
     {
@@ -20,11 +20,11 @@ const customTheme: PrismTheme = {
     },
     {
       types: ['property', 'tag', 'boolean', 'number', 'constant', 'symbol', 'deleted'],
-      style: { color: 'oklch(0.623 0.214 259.815)' }, // --color-brand-500
+      style: { color: 'oklch(0.68 0.1 259.815)' }, // --color-brand-500 (reduced chroma)
     },
     {
       types: ['selector', 'attr-name', 'string', 'char', 'builtin', 'inserted'],
-      style: { color: 'oklch(0.809 0.105 251.813)' }, // --color-brand-300
+      style: { color: 'oklch(0.81 0.07 251.813)' }, // --color-brand-300 (reduced chroma)
     },
     {
       types: ['operator', 'entity', 'url'],
@@ -32,7 +32,7 @@ const customTheme: PrismTheme = {
     },
     {
       types: ['atrule', 'attr-value', 'keyword'],
-      style: { color: 'oklch(0.707 0.165 254.624)' }, // --color-brand-400
+      style: { color: 'oklch(0.74 0.07 254.624)' }, // --color-brand-400 (reduced chroma)
     },
     {
       types: ['function', 'class-name'],

@@ -204,7 +204,7 @@ body {
 }
 
 .rypo :not(pre) > code {
-  @apply mx-0.5 rounded-md border border-strong/10 bg-strong/10 px-1.5 py-0.75;
+  @apply mx-0.5 rounded-md border border-strong/5 bg-strong/10 px-1.5 py-0.75;
 }
 
 .rypo a > code {
@@ -222,7 +222,7 @@ body {
 }
 
 .rypo pre {
-  @apply my-4 overflow-x-auto rounded-md px-4 py-3 text-sm whitespace-pre;
+  @apply my-4 overflow-x-auto rounded-md border border-strong/5 px-4 py-3 text-sm whitespace-pre;
   max-height: min(68vh, 1000px) !important;
   overflow: auto;
 }
