@@ -1,4 +1,4 @@
-import { routing } from '@/i18n/routing';
+import { defaultLocale, routing } from '@/i18n/routing';
 import ravConfig from '@/rav.config';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
@@ -20,11 +20,24 @@ export function generateStaticParams(): Array<{ locale: string }> {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations('Home');
   return {
     title: {
       absolute: `${t('title')} - ${ravConfig.title}`,
+    },
+    alternates: {
+      canonical: locale === defaultLocale ? ravConfig.siteUrl : `${ravConfig.siteUrl}/${locale}`,
+      languages: {
+        'zh-CN': ravConfig.siteUrl,
+        en: `${ravConfig.siteUrl}/en`,
+        'x-default': ravConfig.siteUrl,
+      },
     },
   };
 }

@@ -1,4 +1,4 @@
-import { routing } from '@/i18n/routing';
+import { defaultLocale, routing } from '@/i18n/routing';
 import ravConfig from '@/rav.config';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
@@ -54,7 +54,12 @@ export async function generateMetadata({
         },
       ],
     },
+    twitter: {
+      site: ravConfig.twitter,
+      creator: ravConfig.twitter,
+    },
     alternates: {
+      canonical: locale === defaultLocale ? ravConfig.siteUrl : `${ravConfig.siteUrl}/${locale}`,
       types: {
         'application/rss+xml': [
           {
@@ -64,8 +69,9 @@ export async function generateMetadata({
         ],
       },
       languages: {
-        'zh-CN': '/',
-        en: '/en',
+        'zh-CN': ravConfig.siteUrl,
+        en: `${ravConfig.siteUrl}/en`,
+        'x-default': ravConfig.siteUrl,
       },
     },
   };

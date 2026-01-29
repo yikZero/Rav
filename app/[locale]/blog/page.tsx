@@ -1,4 +1,5 @@
-import { routing } from '@/i18n/routing';
+import { defaultLocale, routing } from '@/i18n/routing';
+import ravConfig from '@/rav.config';
 import * as motion from 'motion/react-client';
 import type { Metadata } from 'next';
 import { type Locale, useTranslations } from 'next-intl';
@@ -14,11 +15,24 @@ import BlogPostLine from '@/components/blog-post-line';
 import { Rss } from '@/components/icons';
 import Title from '@/components/title';
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations('Blog');
   return {
     title: t('title'),
     description: t('description'),
+    alternates: {
+      canonical: `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog`,
+      languages: {
+        'zh-CN': `${ravConfig.siteUrl}/blog`,
+        en: `${ravConfig.siteUrl}/en/blog`,
+        'x-default': `${ravConfig.siteUrl}/blog`,
+      },
+    },
   };
 }
 
