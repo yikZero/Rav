@@ -42,9 +42,11 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `${ravConfig.siteUrl}/blog/${slug}`,
+      canonical: `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog/${slug}`,
       languages: {
         'zh-CN': `${ravConfig.siteUrl}/blog/${slug}`,
+        en: `${ravConfig.siteUrl}/en/blog/${slug}`,
+        'x-default': `${ravConfig.siteUrl}/blog/${slug}`,
       },
     },
     openGraph: {
@@ -65,6 +67,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
+      site: ravConfig.twitter,
+      creator: ravConfig.twitter,
       title,
       description,
       images: [ogImageUrl],
@@ -91,6 +95,35 @@ export default async function Page({
     notFound();
   }
 
+  const postUrl = `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog/${slug}`;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.metadata.title,
+    description: post.metadata.description,
+    datePublished: post.metadata.publishedAt,
+    dateModified: post.metadata.updatedAt || post.metadata.publishedAt,
+    url: postUrl,
+    inLanguage: locale,
+    author: {
+      '@type': 'Person',
+      name: ravConfig.author,
+      url: ravConfig.siteUrl,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: ravConfig.author,
+      url: ravConfig.siteUrl,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+    ...(post.metadata.image && {
+      image: post.metadata.image,
+    }),
+  };
+
   return (
     <motion.main
       initial="hidden"
@@ -99,6 +132,10 @@ export default async function Page({
       viewport={{ once: true }}
       className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-0 sm:pt-36"
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <article className="sm:pt-4">
         <motion.div
           variants={fadeUpSmallVariants}
