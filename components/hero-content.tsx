@@ -27,7 +27,7 @@ export default function HeroContent(): React.ReactElement {
       whileInView="visible"
       transition={{ staggerChildren: 0.04 }}
       viewport={{ once: true }}
-      className="mx-auto flex w-full flex-col items-center gap-12 px-4 pt-32 sm:px-0 sm:pt-40"
+      className="mx-auto flex w-full flex-col items-center gap-12 px-4 pt-32 sm:px-6 sm:pt-40"
     >
       <motion.div
         transition={heroTransition}

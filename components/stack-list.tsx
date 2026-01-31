@@ -56,7 +56,7 @@ export default function StackList({ locale }: { locale: string }) {
   }));
 
   return (
-    <div className="mx-auto flex max-w-240 flex-col gap-12 px-4 sm:px-0">
+    <div className="mx-auto flex max-w-240 flex-col gap-12 px-4 sm:px-6">
       {grouped.map(({ category, items }) => (
         <section key={category}>
           <h2 className="mb-4 select-none text-[0.8125rem] font-medium tracking-wider text-soft/50 uppercase">

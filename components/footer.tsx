@@ -34,7 +34,7 @@ export default function Footer(): React.ReactElement {
   return (
     <footer
       className={cn(
-        'z-50 mx-auto mt-20 flex translate-z-0 flex-col-reverse items-center justify-between gap-6 px-4 pb-4 sm:mt-32 sm:flex-row sm:gap-0 sm:px-0',
+        'z-50 mx-auto mt-20 flex translate-z-0 flex-col-reverse items-center justify-between gap-6 px-4 pb-4 sm:mt-32 sm:flex-row sm:gap-0 sm:px-6',
         isBlogDetail ? 'max-w-172' : 'max-w-240',
       )}
     >

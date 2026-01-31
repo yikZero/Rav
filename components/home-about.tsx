@@ -27,7 +27,7 @@ export default function HomeAbout() {
             className="-ml-16 translate-y-4 rotate-[5deg] hover:scale-101 hover:rotate-3 sm:-ml-12"
           />
         </div>
-        <div className="mt-6 flex flex-col gap-20 px-4 sm:col-span-2 sm:px-0">
+        <div className="mt-6 flex flex-col gap-20 px-4 sm:col-span-2 sm:px-6">
           <div
             className={cn(
               'flex flex-col gap-2.5 text-base leading-6 text-soft sm:leading-6.5',

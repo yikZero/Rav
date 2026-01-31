@@ -19,7 +19,7 @@ export default function BlogPostGrid({
   const t = useTranslations('Blog');
 
   return (
-    <section className={cn('mx-auto max-w-240 px-4 sm:px-0')}>
+    <section className={cn('mx-auto max-w-240 px-4 sm:px-6')}>
       <div className="grid grid-cols-1 gap-5 sm:h-90 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-2 sm:gap-4">
         {posts.map((post, index) => (
           <PostCard
