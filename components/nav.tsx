@@ -9,7 +9,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AllLinks } from '@/lib/navigation';
 import { cn } from '@/lib/utils';
 
-import { Star } from '@/components/icons';
 
 type BackgroundStyle = {
   left: number;
@@ -89,22 +88,9 @@ export default function Nav() {
               className={cn(
                 'group relative z-10 block cursor-pointer px-3.5 py-2.5 leading-4 font-medium text-soft transition duration-300 hover:text-strong sm:px-3 sm:py-2',
                 { 'font-medium text-strong': isActive },
-                {
-                  'cursor-not-allowed text-disabled select-none hover:text-disabled':
-                    link.id === 'talk',
-                },
               )}
-              onClick={(e) => link.id === 'talk' && e.preventDefault()}
             >
               {t(link.id)}
-              {link.id === 'talk' && (
-                <Star
-                  className={cn(
-                    'absolute top-0.5 right-1 size-2.5 text-disabled transition duration-800 ease-in-out group-hover:scale-105 group-hover:rotate-180 group-hover:text-brand-500',
-                    { 'text-brand-500': isActive },
-                  )}
-                />
-              )}
             </Link>
           </li>
         );

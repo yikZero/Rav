@@ -6,7 +6,7 @@
   "Navigation": {
     "home": "Home",
     "blog": "Blog",
-    "talk": "Talk",
+    "stack": "Stack",
     "about": "About"
   },
   "Home": {
@@ -42,6 +42,10 @@
         "description": "Visual Communication Design"
       }
     }
+  },
+  "Stack": {
+    "title": "Stack",
+    "description": "Tools & software I enjoy using daily"
   },
   "TableOfContents": {
     "onThisPage": "On this page"

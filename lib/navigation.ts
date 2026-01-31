@@ -1,5 +1,5 @@
 export interface NavLink {
-  id: 'home' | 'blog' | 'talk';
+  id: 'home' | 'blog' | 'stack';
   url: string;
 }
 
@@ -13,7 +13,7 @@ export const AllLinks: NavLink[] = [
     url: '/blog',
   },
   {
-    id: 'talk',
-    url: '/talk',
+    id: 'stack',
+    url: '/stack',
   },
 ];
