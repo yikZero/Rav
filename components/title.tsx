@@ -16,7 +16,7 @@ export default function Title({
   return (
     <div
       className={cn(
-        'mx-auto mb-12 flex max-w-240 flex-row gap-8 px-4 sm:px-0',
+        'mx-auto mb-12 flex max-w-240 flex-row gap-8 px-4 sm:px-6',
         className,
       )}
     >

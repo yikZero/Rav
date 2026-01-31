@@ -130,7 +130,7 @@ export default async function Page({
       animate="visible"
       transition={{ staggerChildren: 0.05 }}
       viewport={{ once: true }}
-      className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-0 sm:pt-36"
+      className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-6 sm:pt-36"
     >
       <script
         type="application/ld+json"
