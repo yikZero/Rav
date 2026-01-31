@@ -33,7 +33,7 @@ function StackCard({ item, locale }: { item: StackItem; locale: string }) {
         </p>
       </div>
       {item.link && (
-        <ExternalLink className="mt-1 size-4 shrink-0 text-transparent transition duration-300 group-hover:text-soft/50" />
+        <ExternalLink className="mt-1 hidden size-4 shrink-0 text-transparent transition duration-300 group-hover:text-soft/50 sm:block" />
       )}
     </div>
   );
