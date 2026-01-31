@@ -161,29 +161,36 @@ body {
 * Table
 * -------------------------------------------------------------------------- */
 
+.rypo .table-wrapper {
+  @apply my-5 overflow-x-auto rounded-lg border border-strong/10;
+}
+
 .rypo table {
-  @apply my-5 block border-collapse overflow-x-auto;
+  @apply w-full text-sm;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .rypo thead {
-  @apply font-medium text-strong;
+  @apply text-strong;
 }
 
-.rypo tr {
-  @apply border-t border-strong/5 even:bg-strong/5;
+.rypo tbody tr:nth-child(even) {
+  @apply bg-strong/3;
 }
 
 .rypo th,
 .rypo td {
-  @apply border border-strong/5 px-4 py-2;
+  @apply px-3 py-2.5 text-left;
 }
 
 .rypo th {
-  @apply bg-strong/5 text-left text-sm font-medium text-sub;
+  @apply whitespace-nowrap border-b border-strong/10 bg-strong/5 py-3 font-medium text-sub;
 }
 
-.rypo td {
-  @apply text-sm;
+.rypo tr + tr th,
+.rypo tr + tr td {
+  @apply border-t border-strong/5;
 }
 
 /**

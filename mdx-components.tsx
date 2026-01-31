@@ -33,11 +33,20 @@ function CustomLink({
   );
 }
 
+function TableWrapper(props: React.TableHTMLAttributes<HTMLTableElement>) {
+  return (
+    <div className="table-wrapper">
+      <table {...props} />
+    </div>
+  );
+}
+
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     a: CustomLink,
     img: Image,
     pre: Pre,
+    table: TableWrapper,
     Video,
     ...components,
   };
