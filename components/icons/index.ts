@@ -1,4 +1,5 @@
 export { default as ArrowRight } from './ArrowRight'
+export { default as ExternalLink } from './ExternalLink'
 export { default as Asiainfo } from './Asiainfo'
 export { default as Chagee } from './Chagee'
 export { default as ChinaMobile } from './ChinaMobile'

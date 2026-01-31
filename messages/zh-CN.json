@@ -6,7 +6,7 @@
   "Navigation": {
     "home": "首页",
     "blog": "博客",
-    "talk": "对话",
+    "stack": "装备",
     "about": "关于"
   },
   "Home": {
@@ -42,6 +42,10 @@
         "description": "视觉传达设计"
       }
     }
+  },
+  "Stack": {
+    "title": "装备",
+    "description": "我日常使用的工具与软件"
   },
   "TableOfContents": {
     "onThisPage": "本页内容"
