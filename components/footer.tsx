@@ -1,9 +1,8 @@
 'use client';
 
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 
@@ -21,13 +20,14 @@ const FOOTER_LINKS: FooterLink[] = [
   { name: 'X (Twitter)', url: 'https://x.com/yikZero', icon: Twitter },
 ];
 
-const BLOG_DETAIL_REGEX = /^\/([a-z-]+\/)?blog\/[^/]+\/?$/;
+const BLOG_DETAIL_REGEX = /^\/blog\/[^/]+\/?$/;
 
 export default function Footer(): React.ReactElement {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('Footer');
   const locale = useLocale();
   const pathname = usePathname();
+  const router = useRouter();
 
   const isBlogDetail = BLOG_DETAIL_REGEX.test(pathname);
 
@@ -64,7 +64,7 @@ export default function Footer(): React.ReactElement {
           </>
         )}
       </div>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row items-center gap-4">
         {FOOTER_LINKS.map((link) => (
           <Link
             key={link.name}
@@ -76,6 +76,16 @@ export default function Footer(): React.ReactElement {
             <link.icon className="size-5" />
           </Link>
         ))}
+        <div className="h-3 w-px bg-disabled" />
+        <button
+          type="button"
+          onClick={() => {
+            router.replace(pathname, { locale: locale === 'zh-CN' ? 'en' : 'zh-CN' });
+          }}
+          className="cursor-pointer p-1 text-sm font-medium text-sub transition duration-300 hover:text-strong"
+        >
+          {locale === 'zh-CN' ? 'EN' : '中文'}
+        </button>
       </div>
     </footer>
   );
