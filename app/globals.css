@@ -167,7 +167,7 @@ body {
 
 .rypo table {
   @apply w-full text-sm;
-  border-collapse: separate;
+  border-collapse: separate; /* required for rounded corners on .table-wrapper */
   border-spacing: 0;
 }
 
