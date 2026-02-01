@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   experimental: {
     inlineCss: true,
+    viewTransition: true,
   },
   async redirects() {
     return [

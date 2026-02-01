@@ -77,6 +77,22 @@ body:has([data-home]) .bg-overlay {
   animation: header-fade-in 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.15s both;
 }
 
+::view-transition-group(.nav-slide) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-old(.nav-slide),
+::view-transition-new(.nav-slide) {
+  animation: none !important;
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+::view-transition-old(.nav-slide) {
+  opacity: 0;
+}
+
 /* Hero blur-fade animation — CSS-only, no JS blocking */
 @keyframes hero-blur-fade {
   from {
