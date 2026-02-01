@@ -62,6 +62,7 @@ content/
 ```
 
 MDX frontmatter structure:
+
 ```yaml
 ---
 title: string
@@ -103,6 +104,7 @@ The application includes an automated translation system:
 ```
 
 **Legacy redirects** (in `next.config.ts`):
+
 - `/posts` → `/blog`
 - `/drafts` → `/works`
 
@@ -123,15 +125,17 @@ The application includes an automated translation system:
 Enhanced with remark/rehype plugins (configured in `next.config.ts`):
 
 **Remark plugins** (process Markdown AST):
+
 - `remark-frontmatter` - Parse YAML frontmatter
 - `remark-gfm` - GitHub Flavored Markdown support
 
 **Rehype plugins** (process HTML AST):
+
 - `rehype-unwrap-images` - Remove paragraph wrappers from images
 - `rehype-slug` - Add IDs to headings
 - `rehype-autolink-headings` - Add anchor links to headings
 - `rehype-accessible-emojis` - Make emojis accessible
-- `@shikijs/rehype` - Syntax highlighting with 'catppuccin-mocha' theme
+- `prism-react-renderer` - Client-side syntax highlighting with custom theme (see `components/code-block.tsx`)
 
 ### Styling System
 
@@ -156,6 +160,7 @@ Enhanced with remark/rehype plugins (configured in `next.config.ts`):
 ### Static Generation
 
 The application is fully statically generated:
+
 - `generateStaticParams()` generates all locale/slug combinations at build time
 - `dynamicParams = false` ensures no dynamic routes at runtime
 - Post filtering: only includes posts with `state: 'published'`
@@ -178,6 +183,7 @@ The application is fully statically generated:
 ## Docker Support
 
 Application supports containerized deployment:
+
 - Output mode: `standalone` (Next.js builds a self-contained server)
 - Custom port: 11300
 - Image optimization: `unoptimized: true` (no sharp processing in container)
