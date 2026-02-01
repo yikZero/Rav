@@ -1,4 +1,8 @@
-import BackgroundVideo from '@/components/background-video';
+import dynamic from 'next/dynamic';
+
+const BackgroundVideo = dynamic(() => import('@/components/background-video'), {
+  ssr: false,
+});
 
 export default function Background(): React.ReactElement {
   return (
