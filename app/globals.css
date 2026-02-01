@@ -164,6 +164,19 @@ body:has([data-home]) .bg-overlay {
   animation: fade-in-up 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
+@keyframes progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-progress {
+  animation: progress 1s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+}
+
 body {
   font-family:
     Inter,
