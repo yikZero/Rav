@@ -28,7 +28,6 @@
     "github-slugger": "^2.0.0",
     "lucide-react": "^0.563.0",
     "medium-zoom": "^1.1.0",
-    "motion": "12.29.2",
     "next": "16.1.6",
     "next-intl": "^4.7.0",
     "prism-react-renderer": "^2.4.1",

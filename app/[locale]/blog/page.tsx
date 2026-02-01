@@ -1,13 +1,11 @@
 import { defaultLocale, routing } from '@/i18n/routing';
 import ravConfig from '@/rav.config';
-import * as motion from 'motion/react-client';
 import type { Metadata } from 'next';
 import { type Locale, useTranslations } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { use } from 'react';
 
-import { defaultTransition, fadeUpVariants } from '@/lib/animations';
 import { getBlogPosts } from '@/lib/post.utils';
 
 import BlogPostGrid from '@/components/blog-post-grid';
@@ -50,14 +48,8 @@ export default function BlogPage({
   const linePosts = posts.slice(3);
 
   return (
-    <motion.main
-      initial="hidden"
-      animate="visible"
-      transition={{ staggerChildren: 0.06 }}
-      viewport={{ once: true }}
-      className="pt-24 sm:pt-32"
-    >
-      <motion.div variants={fadeUpVariants} transition={defaultTransition}>
+    <main className="pt-24 sm:pt-32">
+      <div className="stagger-animate" style={{ animationDelay: '0.1s' }}>
         <Title
           title={t('title')}
           description={t('description')}
@@ -72,14 +64,14 @@ export default function BlogPage({
             </Link>
           }
         />
-      </motion.div>
-      <motion.div variants={fadeUpVariants} transition={defaultTransition}>
+      </div>
+      <div className="stagger-animate" style={{ animationDelay: '0.16s' }}>
         <BlogPostGrid posts={cardPosts} />
-      </motion.div>
-      <motion.div variants={fadeUpVariants} transition={defaultTransition}>
+      </div>
+      <div className="stagger-animate" style={{ animationDelay: '0.22s' }}>
         <BlogPostLine posts={linePosts} />
-      </motion.div>
-    </motion.main>
+      </div>
+    </main>
   );
 }
 

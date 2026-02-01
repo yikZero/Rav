@@ -1,12 +1,10 @@
 import { defaultLocale, routing } from '@/i18n/routing';
 import ravConfig from '@/rav.config';
-import * as motion from 'motion/react-client';
 import type { Metadata } from 'next';
 import { type Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-import { defaultTransition, fadeUpSmallVariants } from '@/lib/animations';
 import { loadLocalizedMDX } from '@/lib/mdx.utils';
 import { getBlogPosts } from '@/lib/post.utils';
 
@@ -125,22 +123,15 @@ export default async function Page({
   };
 
   return (
-    <motion.main
-      initial="hidden"
-      animate="visible"
-      transition={{ staggerChildren: 0.05 }}
-      viewport={{ once: true }}
-      className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-6 sm:pt-36"
-    >
+    <main className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-6 sm:pt-36">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <article className="sm:pt-4">
-        <motion.div
-          variants={fadeUpSmallVariants}
-          transition={defaultTransition}
-          className="mb-10 flex flex-col gap-4 will-change-[transform,opacity]"
+        <div
+          className="stagger-animate-sm mb-10 flex flex-col gap-4"
+          style={{ animationDelay: '0.1s' }}
         >
           <h1 className="relative text-[1.75rem] leading-10 font-semibold tracking-tight text-white outline-none sm:text-[2rem]">
             {post.metadata.title}
@@ -156,12 +147,8 @@ export default async function Page({
               updatedAt={post.metadata.updatedAt}
             />
           </div>
-        </motion.div>
-        <motion.div
-          variants={fadeUpSmallVariants}
-          transition={defaultTransition}
-          className="will-change-[transform,opacity]"
-        >
+        </div>
+        <div className="stagger-animate-sm" style={{ animationDelay: '0.15s' }}>
           <div className="rypo">
             {locale === 'en' && <BlogTranslateNotice />}
             <div lang={locale}>
@@ -169,9 +156,9 @@ export default async function Page({
             </div>
             <PostNavigation currentSlug={post.slug} posts={posts} />
           </div>
-        </motion.div>
+        </div>
       </article>
-    </motion.main>
+    </main>
   );
 }
 

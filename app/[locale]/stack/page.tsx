@@ -1,12 +1,9 @@
 import { defaultLocale, routing } from '@/i18n/routing';
 import ravConfig from '@/rav.config';
-import * as motion from 'motion/react-client';
 import type { Metadata } from 'next';
 import { type Locale, useTranslations } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { use } from 'react';
-
-import { defaultTransition, fadeUpVariants } from '@/lib/animations';
 
 import StackList from '@/components/stack-list';
 import Title from '@/components/title';
@@ -42,20 +39,14 @@ export default function StackPage({
   const t = useTranslations('Stack');
 
   return (
-    <motion.main
-      initial="hidden"
-      animate="visible"
-      transition={{ staggerChildren: 0.06 }}
-      viewport={{ once: true }}
-      className="pt-24 sm:pt-32"
-    >
-      <motion.div variants={fadeUpVariants} transition={defaultTransition}>
+    <main className="pt-24 sm:pt-32">
+      <div className="stagger-animate" style={{ animationDelay: '0.1s' }}>
         <Title title={t('title')} description={t('description')} />
-      </motion.div>
-      <motion.div variants={fadeUpVariants} transition={defaultTransition}>
+      </div>
+      <div className="stagger-animate" style={{ animationDelay: '0.16s' }}>
         <StackList locale={locale} />
-      </motion.div>
-    </motion.main>
+      </div>
+    </main>
   );
 }
 

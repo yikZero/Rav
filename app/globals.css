@@ -110,6 +110,44 @@ body:has([data-home]) .bg-overlay {
   }
 }
 
+/* Stagger fade-up animation — CSS-only, no JS hydration needed */
+@keyframes stagger-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stagger-fade-up-sm {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-animate {
+  opacity: 0;
+  animation: stagger-fade-up 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.stagger-animate-sm {
+  opacity: 0;
+  animation: stagger-fade-up-sm 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.section-animate {
+  opacity: 0;
+  animation: fade-in-up 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
 body {
   font-family:
     Inter,

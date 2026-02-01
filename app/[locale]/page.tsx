@@ -8,7 +8,6 @@ import { use } from 'react';
 import { getBlogPosts } from '@/lib/post.utils';
 
 import BlogPostGrid from '@/components/blog-post-grid';
-import FadeIn from '@/components/fade-in';
 import HeroContent from '@/components/hero-content';
 import HomeAbout from '@/components/home-about';
 
@@ -56,12 +55,12 @@ export default function HomePage({
   return (
     <main data-home className="relative">
       <HeroContent />
-      <FadeIn>
+      <div className="section-animate" style={{ animationDelay: '0.9s' }}>
         <BlogPostGrid posts={posts} isHome />
-      </FadeIn>
-      <FadeIn>
+      </div>
+      <div className="section-animate" style={{ animationDelay: '1s' }}>
         <HomeAbout />
-      </FadeIn>
+      </div>
     </main>
   );
 }
