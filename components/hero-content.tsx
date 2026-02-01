@@ -15,7 +15,7 @@ const instrumentSerif = localFont({
   display: 'swap',
 });
 
-const HERO_TEXT = 'yikZero, Web3 Product Designer based in Hangzhou, China';
+const HERO_TEXT = 'yikZero, a Product Designer based in Hangzhou, China';
 const HERO_WORDS = HERO_TEXT.split(' ');
 
 export default function HeroContent(): React.ReactElement {
