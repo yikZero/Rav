@@ -4,11 +4,16 @@ import { Link } from '@/i18n/navigation';
 import { usePathname } from '@/i18n/navigation';
 import { locales } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { AllLinks } from '@/lib/navigation';
 import { cn } from '@/lib/utils';
-
 
 type BackgroundStyle = {
   left: number;
@@ -36,6 +41,7 @@ export default function Nav() {
     width: 0,
     opacity: 0,
   });
+  const [enableTransition, setEnableTransition] = useState(false);
 
   const ulRef = useRef<HTMLUListElement>(null);
   const liRefs = useRef<(HTMLLIElement | null)[]>([]);
@@ -53,7 +59,7 @@ export default function Nav() {
     [pathname],
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const activeIndex = AllLinks.findIndex((link) => isActiveLink(link.id));
     const activeLi = liRefs.current[activeIndex];
 
@@ -67,6 +73,12 @@ export default function Nav() {
       setBackgroundStyle((prev) => ({ ...prev, opacity: 0 }));
     }
   }, [pathname, isActiveLink]);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      setEnableTransition(true);
+    });
+  }, []);
 
   return (
     <ul
@@ -97,8 +109,13 @@ export default function Nav() {
       })}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-0 bottom-0 h-full rounded-lg border border-brand-400/2 bg-linear-to-b from-white/5 to-white/7 to-70% transition-all duration-300 ease-in-out"
-        style={backgroundStyle}
+        className="pointer-events-none absolute top-0 bottom-0 h-full rounded-lg border border-brand-400/2 bg-linear-to-b from-white/5 to-white/7 to-70%"
+        style={{
+          ...backgroundStyle,
+          transition: enableTransition
+            ? 'left 300ms ease-in-out, width 300ms ease-in-out, opacity 300ms ease-in-out'
+            : 'opacity 400ms ease-out',
+        }}
       />
     </ul>
   );
