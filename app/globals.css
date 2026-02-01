@@ -34,6 +34,43 @@ html {
   @apply overflow-y-scroll;
 }
 
+body:has([data-home]) .bg-overlay {
+  opacity: 1;
+}
+
+/* Hero blur-fade animation — CSS-only, no JS blocking */
+@keyframes hero-blur-fade {
+  from {
+    opacity: 0;
+    filter: blur(7px);
+    transform: translateY(20%);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.hero-animate,
+.hero-words > span {
+  opacity: 0;
+  display: inline-block;
+  animation: hero-blur-fade 1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* Fade-in-up for scroll sections */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 body {
   font-family:
     Inter,
@@ -185,7 +222,7 @@ body {
 }
 
 .rypo th {
-  @apply whitespace-nowrap border-b border-strong/10 bg-strong/5 py-3 font-medium text-sub;
+  @apply border-b border-strong/10 bg-strong/5 py-3 font-medium whitespace-nowrap text-sub;
 }
 
 .rypo tr + tr th,

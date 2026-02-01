@@ -33,6 +33,7 @@ export default function PostCard({
           alt={metadata.title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          priority={isFirst}
           loading={isFirst ? 'eager' : 'lazy'}
           draggable="false"
         />

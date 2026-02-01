@@ -32,7 +32,10 @@ export async function generateMetadata({
       absolute: `${t('title')} - ${ravConfig.title}`,
     },
     alternates: {
-      canonical: locale === defaultLocale ? ravConfig.siteUrl : `${ravConfig.siteUrl}/${locale}`,
+      canonical:
+        locale === defaultLocale
+          ? ravConfig.siteUrl
+          : `${ravConfig.siteUrl}/${locale}`,
       languages: {
         'zh-CN': ravConfig.siteUrl,
         en: `${ravConfig.siteUrl}/en`,
@@ -42,14 +45,16 @@ export async function generateMetadata({
   };
 }
 
-export default function HomePage({ params }: HomePageProps): React.ReactElement {
+export default function HomePage({
+  params,
+}: HomePageProps): React.ReactElement {
   const { locale } = use(params);
   setRequestLocale(locale);
 
   const posts = getBlogPosts({ language: locale, limit: 3 });
 
   return (
-    <main className="relative">
+    <main data-home className="relative">
       <HeroContent />
       <FadeIn>
         <BlogPostGrid posts={posts} isHome />
