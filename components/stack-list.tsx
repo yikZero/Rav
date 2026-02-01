@@ -21,14 +21,15 @@ function StackCard({ item, locale }: { item: StackItem; locale: string }) {
           alt={item.name}
           width={48}
           height={48}
+          loading="lazy"
           className="size-full object-cover"
         />
       </div>
       <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5">
-        <span className="text-[0.9375rem] font-medium leading-tight text-strong">
+        <span className="text-[0.9375rem] leading-tight font-medium text-strong">
           {item.name}
         </span>
-        <p className="line-clamp-2 select-none text-[0.8125rem] leading-relaxed text-soft sm:line-clamp-1">
+        <p className="line-clamp-2 text-[0.8125rem] leading-relaxed text-soft select-none sm:line-clamp-1">
           {description}
         </p>
       </div>
@@ -59,8 +60,10 @@ export default function StackList({ locale }: { locale: string }) {
     <div className="mx-auto flex max-w-240 flex-col gap-12 px-4 sm:px-6">
       {grouped.map(({ category, items }) => (
         <section key={category}>
-          <h2 className="mb-4 select-none text-[0.8125rem] font-medium tracking-wider text-soft/50 uppercase">
-            {categoryLabels[category]?.[locale as keyof (typeof categoryLabels)[typeof category]] ?? category}
+          <h2 className="mb-4 text-[0.8125rem] font-medium tracking-wider text-soft/50 uppercase select-none">
+            {categoryLabels[category]?.[
+              locale as keyof (typeof categoryLabels)[typeof category]
+            ] ?? category}
           </h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {items.map((item) => (

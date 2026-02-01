@@ -36,7 +36,6 @@ export default function BlogPostGrid({
           <Link
             href="/blog"
             className="group mt-8 flex w-fit flex-row items-center gap-1 text-sm font-medium text-soft transition duration-300 hover:text-brand-500 sm:mt-4"
-            prefetch={true}
           >
             {t('more')}
             <ArrowRight className="size-4 text-disabled transition duration-500 ease-in-out group-hover:translate-x-0.5 group-hover:text-brand-500" />

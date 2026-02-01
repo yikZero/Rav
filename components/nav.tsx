@@ -95,7 +95,6 @@ export default function Nav() {
             }}
           >
             <Link
-              prefetch
               href={link.url}
               className={cn(
                 'group relative z-10 block cursor-pointer px-3.5 py-2.5 leading-4 font-medium text-soft transition duration-300 hover:text-strong sm:px-3 sm:py-2',
@@ -114,7 +113,7 @@ export default function Nav() {
           ...backgroundStyle,
           transition: enableTransition
             ? 'left 300ms ease-in-out, width 300ms ease-in-out, opacity 300ms ease-in-out'
-            : 'opacity 400ms ease-out',
+            : 'opacity 200ms ease-out',
         }}
       />
     </ul>
