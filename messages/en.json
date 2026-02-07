@@ -50,8 +50,13 @@
   "TableOfContents": {
     "onThisPage": "On this page"
   },
-"Footer": {
+  "Footer": {
     "copyright": "© {currentYear} YIKZERO"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "description": "An error occurred while loading the page. Please try again.",
+    "retry": "Retry"
   },
   "NotFound": {
     "title": "Ah, the page has disappeared",

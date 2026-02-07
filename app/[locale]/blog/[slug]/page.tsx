@@ -94,6 +94,7 @@ export default async function Page({
   }
 
   const postUrl = `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog/${slug}`;
+  const blogUrl = `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -117,9 +118,38 @@ export default async function Page({
       '@type': 'WebPage',
       '@id': postUrl,
     },
+    isPartOf: {
+      '@type': 'Blog',
+      '@id': `${blogUrl}#blog`,
+    },
     ...(post.metadata.image && {
       image: post.metadata.image,
     }),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: ravConfig.siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: blogUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.metadata.title,
+        item: postUrl,
+      },
+    ],
   };
 
   return (
@@ -127,6 +157,12 @@ export default async function Page({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
+        }}
       />
       <article className="sm:pt-4">
         <div

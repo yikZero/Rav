@@ -52,8 +52,27 @@ export default function HomePage({
 
   const posts = getBlogPosts({ language: locale, limit: 3 });
 
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${ravConfig.siteUrl}/#website`,
+    name: ravConfig.title,
+    url: ravConfig.siteUrl,
+    description: ravConfig.description,
+    inLanguage: locale,
+    author: {
+      '@type': 'Person',
+      name: ravConfig.author,
+      url: ravConfig.siteUrl,
+    },
+  };
+
   return (
     <main data-home className="relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       <HeroContent />
       <div className="section-animate" style={{ animationDelay: '0.9s' }}>
         <BlogPostGrid posts={posts} isHome />

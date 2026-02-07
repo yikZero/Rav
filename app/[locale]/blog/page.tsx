@@ -47,8 +47,35 @@ export default function BlogPage({
   const cardPosts = posts.slice(0, 3);
   const linePosts = posts.slice(3);
 
+  const blogUrl = `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog`;
+  const blogJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${blogUrl}#blog`,
+    name: t('title'),
+    description: t('description'),
+    url: blogUrl,
+    inLanguage: locale,
+    author: {
+      '@type': 'Person',
+      name: ravConfig.author,
+      url: ravConfig.siteUrl,
+    },
+    blogPost: posts.slice(0, 10).map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.metadata.title,
+      description: post.metadata.description,
+      datePublished: post.metadata.publishedAt,
+      url: `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog/${post.slug}`,
+    })),
+  };
+
   return (
     <main className="pt-24 sm:pt-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }}
+      />
       <div className="stagger-animate" style={{ animationDelay: '0.1s' }}>
         <Title
           title={t('title')}

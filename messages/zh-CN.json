@@ -50,8 +50,13 @@
   "TableOfContents": {
     "onThisPage": "本页内容"
   },
-"Footer": {
+  "Footer": {
     "copyright": "© {currentYear} YIKZERO"
+  },
+  "Error": {
+    "title": "出了点问题",
+    "description": "页面加载时发生了错误，请稍后再试",
+    "retry": "重试"
   },
   "NotFound": {
     "title": "啊哦，页面走丢了",

@@ -50,7 +50,7 @@ export async function generateMetadata({
     openGraph: {
       images: [
         {
-          url: `${ravConfig.siteUrl}/${locale === 'en' ? 'opengraph-image-en.png' : 'opengraph-image.png'}`,
+          url: `${ravConfig.siteUrl}/${locale === 'en' ? 'opengraph-image-en.webp' : 'opengraph-image.webp'}`,
         },
       ],
     },
@@ -59,7 +59,10 @@ export async function generateMetadata({
       creator: ravConfig.twitter,
     },
     alternates: {
-      canonical: locale === defaultLocale ? ravConfig.siteUrl : `${ravConfig.siteUrl}/${locale}`,
+      canonical:
+        locale === defaultLocale
+          ? ravConfig.siteUrl
+          : `${ravConfig.siteUrl}/${locale}`,
       types: {
         'application/rss+xml': [
           {

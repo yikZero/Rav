@@ -80,7 +80,9 @@ export default function Footer(): React.ReactElement {
         <button
           type="button"
           onClick={() => {
-            router.replace(pathname, { locale: locale === 'zh-CN' ? 'en' : 'zh-CN' });
+            router.replace(pathname, {
+              locale: locale === 'zh-CN' ? 'en' : 'zh-CN',
+            });
           }}
           className="cursor-pointer p-1 text-sm font-medium text-sub transition duration-300 hover:text-strong"
         >
