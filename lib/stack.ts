@@ -172,6 +172,16 @@ export const stackItems: StackItem[] = [
     category: 'Productivity',
   },
   {
+    name: 'Dropover',
+    description: {
+      'zh-CN': '拖拽增强工具，文件收集、整理与分享一步到位',
+      en: 'Drag-and-drop utility for effortless file collecting, organizing, and sharing',
+    },
+    icon: 'https://cdn.yikzero.com/rav/stack/dropover.png',
+    link: 'https://dropoverapp.com/',
+    category: 'Productivity',
+  },
+  {
     name: 'Tiny Image',
     description: {
       'zh-CN': '基于 TinyPNG 的 PNG/JPEG 图片压缩工具',
