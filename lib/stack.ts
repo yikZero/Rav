@@ -101,13 +101,13 @@ export const stackItems: StackItem[] = [
     category: 'Development',
   },
   {
-    name: 'Ghostty',
+    name: 'Kaku',
     description: {
-      'zh-CN': '微调 UI 后，堪称颜值最高的终端模拟器',
-      en: 'With some UI tweaks, arguably the best-looking terminal available',
+      'zh-CN': '开箱即用的终端，为 AI 编程而生，快速轻量',
+      en: 'An out-of-the-box terminal built for AI coding—fast and lightweight',
     },
-    icon: 'https://cdn.yikzero.com/rav/stack/ghostty.png',
-    link: 'https://ghostty.org',
+    icon: 'https://cdn.yikzero.com/rav/stack/kaku.png',
+    link: 'https://github.com/tw93/Kaku',
     category: 'Development',
   },
   {
