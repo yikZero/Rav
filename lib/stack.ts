@@ -20,7 +20,7 @@ export const stackCategories = [
 export type StackCategory = (typeof stackCategories)[number];
 
 export const categoryLabels: Record<StackCategory, Record<Locale, string>> = {
-Design: { 'zh-CN': '设计', en: 'Design' },
+  Design: { 'zh-CN': '设计', en: 'Design' },
   AI: { 'zh-CN': 'AI', en: 'AI' },
   Development: { 'zh-CN': '开发', en: 'Development' },
   Productivity: { 'zh-CN': '效率', en: 'Productivity' },
@@ -52,8 +52,8 @@ export const stackItems: StackItem[] = [
   {
     name: 'Claude Max',
     description: {
-      'zh-CN': '主力编码核心，省心省力，同时驱动 Conductor 与 Craft Agents',
-      en: 'My core coding engine—effortless and reliable; powers both Conductor and Craft Agents',
+      'zh-CN': '主力编码模型，省心省力，编码体验最佳',
+      en: 'My primary coding model—effortless, reliable, and the best coding experience',
     },
     icon: 'https://cdn.yikzero.com/rav/stack/claude-code.png',
     link: 'https://claude.ai/',
@@ -70,23 +70,13 @@ export const stackItems: StackItem[] = [
     category: 'AI',
   },
   {
-    name: 'Conductor',
+    name: 'OpenCode',
     description: {
-      'zh-CN': '与 Git 深度集成，擅长并行处理多个开发任务',
-      en: 'Seamless Git integration; handles multiple development tasks in parallel',
+      'zh-CN': '多 Provider 协作，同时调用多种 Agents 及 Subagents',
+      en: 'Multi-provider collaboration with multiple Agents and Subagents working in parallel',
     },
-    icon: 'https://cdn.yikzero.com/rav/stack/conductor.png',
-    link: 'https://www.conductor.build/',
-    category: 'AI',
-  },
-  {
-    name: 'Craft Agents',
-    description: {
-      'zh-CN': '非代码类任务的首选，专用于处理本地文件与自动化工作流',
-      en: 'My go-to for non-coding tasks, specialized in handling local files and automation workflows',
-    },
-    icon: 'https://cdn.yikzero.com/rav/stack/craft-agents.png',
-    link: 'https://github.com/lukilabs/craft-agents-oss',
+    icon: 'https://cdn.yikzero.com/rav/stack/opencode.png',
+    link: 'https://opencode.ai/',
     category: 'AI',
   },
   {
