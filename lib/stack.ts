@@ -80,6 +80,16 @@ export const stackItems: StackItem[] = [
     category: 'AI',
   },
   {
+    name: 'OpenCode',
+    description: {
+      'zh-CN': '多 Provider 协作，同时调用多种 Agents 及 Subagents',
+      en: 'Multi-provider collaboration with multiple Agents and Subagents working in parallel',
+    },
+    icon: 'https://cdn.yikzero.com/rav/stack/opencode.png',
+    link: 'https://opencode.ai/',
+    category: 'AI',
+  },
+  {
     name: 'Typeless',
     description: {
       'zh-CN': '语音编程利器，识别精准且足够聪明',
