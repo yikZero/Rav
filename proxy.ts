@@ -1,10 +1,13 @@
-import { defaultLocale, routing } from '@/i18n/routing';
+import { defaultLocale, locales, routing } from '@/i18n/routing';
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 
 const intlMiddleware = createMiddleware(routing);
 
-const BLOG_ROUTE_PATTERN = /^\/(?:(en)\/)?blog\/([^/]+)\/?$/;
+const localePrefix = locales.filter((l) => l !== defaultLocale).join('|');
+const BLOG_ROUTE_PATTERN = new RegExp(
+  `^/(?:(${localePrefix})/)?blog/([^/]+)/?$`,
+);
 
 export default function proxy(request: NextRequest) {
   const accept = request.headers.get('accept') || '';
