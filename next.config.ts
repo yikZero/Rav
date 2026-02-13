@@ -90,5 +90,14 @@ const withMDX = createMDX({
   },
 });
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin({
+  experimental: {
+    messages: {
+      path: './messages',
+      locales: 'infer',
+      format: 'json',
+      precompile: true,
+    },
+  },
+});
 export default withNextIntl(withMDX(nextConfig));
