@@ -57,6 +57,21 @@ const nextConfig: NextConfig = {
         destination: '/:locale/works',
         permanent: true,
       },
+      {
+        source: '/llm.txt',
+        destination: '/llms.txt',
+        permanent: true,
+      },
+      {
+        source: '/:locale/llms.txt',
+        destination: '/llms.txt',
+        permanent: true,
+      },
+      {
+        source: '/:locale/llm.txt',
+        destination: '/llms.txt',
+        permanent: true,
+      },
     ];
   },
   output: 'standalone',
