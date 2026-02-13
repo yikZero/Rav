@@ -70,13 +70,13 @@ export const stackItems: StackItem[] = [
     category: 'AI',
   },
   {
-    name: 'OpenCode',
+    name: 'Conductor',
     description: {
-      'zh-CN': '多 Provider 协作，同时调用多种 Agents 及 Subagents',
-      en: 'Multi-provider collaboration with multiple Agents and Subagents working in parallel',
+      'zh-CN': '与 Git 深度集成，擅长并行处理多个开发任务',
+      en: 'Seamless Git integration; handles multiple development tasks in parallel',
     },
-    icon: 'https://cdn.yikzero.com/rav/stack/opencode.png',
-    link: 'https://opencode.ai/',
+    icon: 'https://cdn.yikzero.com/rav/stack/conductor.png',
+    link: 'https://www.conductor.build/',
     category: 'AI',
   },
   {
