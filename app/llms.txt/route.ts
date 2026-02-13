@@ -5,7 +5,12 @@ import { getBlogPosts } from '@/lib/post.utils';
 import { categoryLabels, stackCategories, stackItems } from '@/lib/stack';
 
 export async function GET() {
-  const posts = getBlogPosts({ language: 'en' });
+  let posts: ReturnType<typeof getBlogPosts> = [];
+  try {
+    posts = getBlogPosts({ language: 'en' });
+  } catch (error) {
+    console.error('Failed to load blog posts for llms.txt:', error);
+  }
   const siteUrl = ravConfig.siteUrl.replace(/\/$/, '');
 
   const about = messages.About;
