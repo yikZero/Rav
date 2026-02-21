@@ -12,6 +12,7 @@ const instrumentSerif = localFont({
   display: 'swap',
 });
 
+// Intentionally hardcoded in English — this is the stylized hero headline, not translatable content
 const HERO_TEXT = 'yikZero, a Product Designer based in Hangzhou, China';
 const HERO_WORDS = HERO_TEXT.split(' ');
 const BASE_DELAY = 0.16;
