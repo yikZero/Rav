@@ -83,7 +83,7 @@ function OGImage({
         tw="absolute inset-0"
         style={{
           filter: 'blur(4px)',
-          backgroundImage: `url(${imageUrl}!/fw/1200)`,
+          backgroundImage: `url(${imageUrl})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           transform: 'scale(1.05)',

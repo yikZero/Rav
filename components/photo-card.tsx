@@ -26,7 +26,7 @@ export default function PhotoCard({
         height={572}
         loading="lazy"
         className="size-full rounded-xl object-cover object-bottom select-none"
-        src={`${url}!/fh/572/format/webp`}
+        src={url}
         unoptimized
         draggable="false"
       />
