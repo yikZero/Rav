@@ -141,7 +141,7 @@ function OGImage({
         <div tw="flex items-center">
           <img
             alt="Avatar"
-            src="https://cdn.yikzero.com/roominess5/designwork/avatar.jpg!/fw/96"
+            src="https://cdn.yikzero.com/roominess5/designwork/avatar.jpg"
             tw="w-15 h-15 rounded-full"
           />
           <div tw="flex flex-col ml-4">
