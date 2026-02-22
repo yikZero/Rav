@@ -16,9 +16,7 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.yikzero.com',
       },
     ],
-    loader: 'custom',
-    loaderFile: './lib/image-loader.ts',
-    qualities: [75, 85],
+    unoptimized: true,
   },
   reactCompiler: true,
   experimental: {
