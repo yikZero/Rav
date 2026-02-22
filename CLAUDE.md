@@ -128,11 +128,12 @@ Configured in `next.config.ts`:
 - **Animation classes**: CSS-only animations (`stagger-animate`, `stagger-animate-sm`, `section-animate`, `hero-animate`, `header-animate`) — no JS hydration needed
 - **View transitions**: Enabled experimentally, used for nav slides (`.nav-slide`)
 
-### Image Optimization
+### Image Hosting
 
-- Custom CDN loader (`lib/image-loader.ts`) for `cdn.yikzero.com`
-- Appends `!/fw/{width}/format/webp/quality/{quality}` to image URLs
-- Docker builds use `unoptimized: true`
+- Static assets hosted on **Cloudflare R2** (`yikzero-cdn` bucket), served via `cdn.yikzero.com`
+- Images are pre-compressed before upload (no runtime image processing)
+- `images.unoptimized: true` in next.config.ts — Next.js does not process images
+- New images should be compressed before uploading to R2 (e.g., TinyPNG, sharp, pngquant)
 
 ### Component Patterns
 
