@@ -133,7 +133,21 @@ Configured in `next.config.ts`:
 - Static assets hosted on **Cloudflare R2** (`yikzero-cdn` bucket), served via `cdn.yikzero.com`
 - Images are pre-compressed before upload (no runtime image processing)
 - `images.unoptimized: true` in next.config.ts — Next.js does not process images
-- New images should be compressed before uploading to R2 (e.g., TinyPNG, sharp, pngquant)
+- **rclone remote** configured as `r2:` — use `rclone` for all R2 uploads
+
+**Upload workflow** (always follow these steps):
+
+1. Resize to appropriate display size (2x for retina): `sips -z <height> <width> --setProperty format jpeg --setProperty formatOptions 85 <input> --out <output>`
+2. Compress via TinyPNG API: `curl -s --user api:Y5jhJpp7Rfx1GFRn3mZT36kQqDZfsgLV --data-binary @<file> https://api.tinify.com/shrink`, then download from response `output.url`
+3. Upload to R2: `rclone copyto <local-file> r2:yikzero-cdn/<remote-path>`
+4. CDN URL: `https://cdn.yikzero.com/<remote-path>`
+
+**Common paths in R2 bucket**:
+
+- `common/` — site-wide assets (avatar, etc.)
+- `roominess5/about/` — about page photos
+- `roominess5/designwork/` — OG image assets
+- `markdown/images/` — blog post images (MDX content)
 
 ### Component Patterns
 
