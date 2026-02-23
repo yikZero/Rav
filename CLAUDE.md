@@ -130,19 +130,20 @@ Configured in `next.config.ts`:
 
 ### Image Hosting
 
-- Static assets hosted on **Cloudflare R2** (`yikzero-cdn` bucket), served via `cdn.yikzero.com`
+- Static assets hosted on **VPS** (OpenResty), served via `cdn.yikzero.com`
+- VPS: `8.211.164.241`, site root: `/opt/1panel/apps/openresty/openresty/www/sites/cdn.yikzero.com/index/`
 - Images are pre-compressed before upload (no runtime image processing)
 - `images.unoptimized: true` in next.config.ts — Next.js does not process images
-- **rclone remote** configured as `r2:` — use `rclone` for all R2 uploads
+- **rclone remote** configured as `vps:` (SFTP) — use `rclone` for uploads
 
 **Upload workflow** (always follow these steps):
 
 1. Resize to appropriate display size (2x for retina): `sips -z <height> <width> --setProperty format jpeg --setProperty formatOptions 85 <input> --out <output>`
 2. Compress via TinyPNG API: `curl -s --user api:Y5jhJpp7Rfx1GFRn3mZT36kQqDZfsgLV --data-binary @<file> https://api.tinify.com/shrink`, then download from response `output.url`
-3. Upload to R2: `rclone copyto <local-file> r2:yikzero-cdn/<remote-path>`
+3. Upload to VPS: `rclone copyto <local-file> vps:/opt/1panel/apps/openresty/openresty/www/sites/cdn.yikzero.com/index/<remote-path>`
 4. CDN URL: `https://cdn.yikzero.com/<remote-path>`
 
-**Common paths in R2 bucket**:
+**Common paths on CDN**:
 
 - `common/` — site-wide assets (avatar, etc.)
 - `roominess5/about/` — about page photos
