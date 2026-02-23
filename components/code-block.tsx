@@ -1,49 +1,100 @@
-'use client';
-
-import { Highlight, type PrismTheme } from 'prism-react-renderer';
+import { type BundledLanguage, type ThemeRegistration, codeToHtml } from 'shiki';
 import { Children, isValidElement } from 'react';
 
-// Custom theme matching blog's brand colors (hue ~259)
-const customTheme: PrismTheme = {
-  plain: {
-    color: 'oklch(0.85 0 0)', // --color-strong
-    backgroundColor: 'oklch(0.21 0.025 259.58)', // slightly lighter than --color-background
+const customTheme: ThemeRegistration = {
+  name: 'rav-dark',
+  type: 'dark',
+  colors: {
+    'editor.background': '#1a1c2b',
+    'editor.foreground': '#d4d4d4',
   },
-  styles: [
+  tokenColors: [
     {
-      types: ['comment', 'prolog', 'doctype', 'cdata'],
-      style: { color: 'oklch(0.45 0 0)' }, // --color-weak
+      scope: ['comment', 'punctuation.definition.comment', 'string.comment'],
+      settings: { foreground: '#737373' },
     },
     {
-      types: ['punctuation'],
-      style: { color: 'oklch(0.65 0 0)' }, // --color-soft
+      scope: ['punctuation', 'meta.brace', 'meta.delimiter'],
+      settings: { foreground: '#a6a6a6' },
     },
     {
-      types: ['property', 'tag', 'boolean', 'number', 'constant', 'symbol', 'deleted'],
-      style: { color: 'oklch(0.68 0.1 259.815)' }, // --color-brand-500 (reduced chroma)
+      scope: [
+        'entity.name.tag',
+        'constant',
+        'constant.numeric',
+        'constant.language',
+        'variable.language',
+        'support.constant',
+        'keyword.other.unit',
+        'constant.character.escape',
+      ],
+      settings: { foreground: '#7b82c7' },
     },
     {
-      types: ['selector', 'attr-name', 'string', 'char', 'builtin', 'inserted'],
-      style: { color: 'oklch(0.81 0.07 251.813)' }, // --color-brand-300 (reduced chroma)
+      scope: [
+        'string',
+        'entity.other.attribute-name',
+        'markup.inserted',
+        'support.type.property-name',
+        'meta.object-literal.key',
+      ],
+      settings: { foreground: '#b3c0e8' },
     },
     {
-      types: ['operator', 'entity', 'url'],
-      style: { color: 'oklch(0.85 0.15 60)' }, // orange accent
+      scope: [
+        'keyword.operator',
+        'punctuation.definition.template-expression',
+        'constant.other.color',
+        'string.other.link',
+      ],
+      settings: { foreground: '#d9a66c' },
     },
     {
-      types: ['atrule', 'attr-value', 'keyword'],
-      style: { color: 'oklch(0.74 0.07 254.624)' }, // --color-brand-400 (reduced chroma)
+      scope: [
+        'keyword',
+        'storage',
+        'storage.type',
+        'support.type',
+        'entity.other.inherited-class',
+      ],
+      settings: { foreground: '#9ba3d0' },
     },
     {
-      types: ['function', 'class-name'],
-      style: { color: 'oklch(0.85 0.12 340)' }, // pink accent
+      scope: [
+        'entity.name.function',
+        'support.function',
+        'entity.name.type',
+        'entity.name.class',
+        'meta.function-call',
+      ],
+      settings: { foreground: '#d9a0c0' },
     },
     {
-      types: ['regex', 'important', 'variable'],
-      style: { color: 'oklch(0.85 0.15 60)' }, // orange accent
+      scope: ['string.regexp', 'keyword.other.important'],
+      settings: { foreground: '#d9a66c' },
+    },
+    {
+      scope: ['markup.deleted'],
+      settings: { foreground: '#e06c75' },
+    },
+    {
+      scope: ['markup.heading', 'markup.bold'],
+      settings: { foreground: '#d4d4d4', fontStyle: 'bold' },
+    },
+    {
+      scope: ['markup.italic'],
+      settings: { fontStyle: 'italic' },
     },
   ],
 };
+
+const SUPPORTED_LANGS = new Set([
+  'javascript', 'typescript', 'jsx', 'tsx', 'css', 'html', 'json',
+  'bash', 'shell', 'sh', 'zsh', 'markdown', 'md', 'yaml', 'yml',
+  'python', 'go', 'rust', 'sql', 'graphql', 'xml', 'swift', 'kotlin',
+  'java', 'c', 'cpp', 'diff', 'toml', 'ini', 'dockerfile', 'ruby',
+  'php', 'lua', 'makefile', 'plaintext', 'text',
+]);
 
 interface PreProps {
   children: React.ReactNode;
@@ -63,7 +114,7 @@ function parseLanguage(className: string): string {
   return match?.[1] || 'text';
 }
 
-export default function Pre({ children }: PreProps) {
+export default async function Pre({ children }: PreProps) {
   const codeElement = Children.toArray(children).find(isCodeElement);
 
   if (!codeElement) {
@@ -71,21 +122,18 @@ export default function Pre({ children }: PreProps) {
   }
 
   const code = codeElement.props.children?.trim() || '';
-  const language = parseLanguage(codeElement.props.className || '');
+  const rawLang = parseLanguage(codeElement.props.className || '');
+  const lang = SUPPORTED_LANGS.has(rawLang) ? rawLang : 'text';
+
+  const html = await codeToHtml(code, {
+    lang: lang as BundledLanguage,
+    theme: customTheme,
+  });
 
   return (
-    <Highlight theme={customTheme} code={code} language={language}>
-      {({ style, tokens, getLineProps, getTokenProps }) => (
-        <pre style={style} aria-label={`Code block in ${language}`}>
-          {tokens.map((line, i) => (
-            <div key={i} {...getLineProps({ line })}>
-              {line.map((token, key) => (
-                <span key={key} {...getTokenProps({ token })} />
-              ))}
-            </div>
-          ))}
-        </pre>
-      )}
-    </Highlight>
+    <div
+      dangerouslySetInnerHTML={{ __html: html }}
+      aria-label={`Code block in ${rawLang}`}
+    />
   );
 }

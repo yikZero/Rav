@@ -1,12 +1,9 @@
-'use client';
-
-import { Link, usePathname, useRouter } from '@/i18n/navigation';
-import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import { getLocale, getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 
-import { cn } from '@/lib/utils';
-
 import { Github, Telegram, Twitter } from '@/components/icons';
+import LocaleSwitcher from '@/components/locale-switcher';
 
 interface FooterLink {
   name: string;
@@ -20,24 +17,13 @@ const FOOTER_LINKS: FooterLink[] = [
   { name: 'X (Twitter)', url: 'https://x.com/yikZero', icon: Twitter },
 ];
 
-const BLOG_DETAIL_REGEX = /^\/blog\/[^/]+\/?$/;
-
-export default function Footer(): React.ReactElement {
+export default async function Footer(): Promise<React.ReactElement> {
   const currentYear = new Date().getFullYear();
-  const t = useTranslations('Footer');
-  const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const isBlogDetail = BLOG_DETAIL_REGEX.test(pathname);
+  const t = await getTranslations('Footer');
+  const locale = await getLocale();
 
   return (
-    <footer
-      className={cn(
-        'z-50 mx-auto mt-20 flex translate-z-0 flex-col-reverse items-center justify-between gap-6 px-4 pb-4 sm:mt-32 sm:flex-row sm:gap-0 sm:px-6',
-        isBlogDetail ? 'max-w-172' : 'max-w-240',
-      )}
-    >
+    <footer className="site-footer z-50 mx-auto mt-20 flex translate-z-0 flex-col-reverse items-center justify-between gap-6 px-4 pb-4 sm:mt-32 sm:flex-row sm:gap-0 sm:px-6">
       <div className="flex flex-row items-center gap-4 sm:gap-3">
         <p className="text-center text-sm font-medium text-soft select-none">
           {t.rich('copyright', { currentYear })}
@@ -77,17 +63,7 @@ export default function Footer(): React.ReactElement {
           </Link>
         ))}
         <div className="h-3 w-px bg-disabled" />
-        <button
-          type="button"
-          onClick={() => {
-            router.replace(pathname, {
-              locale: locale === 'zh-CN' ? 'en' : 'zh-CN',
-            });
-          }}
-          className="cursor-pointer p-1 text-sm font-medium text-sub transition duration-300 hover:text-strong"
-        >
-          {locale === 'zh-CN' ? 'EN' : '中文'}
-        </button>
+        <LocaleSwitcher />
       </div>
     </footer>
   );

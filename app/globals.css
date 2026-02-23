@@ -17,10 +17,10 @@
   --color-brand-900: oklch(0.379 0.146 265.522);
   --color-brand-950: oklch(0.282 0.091 267.935);
 
-  --color-strong: oklch(1 0 0 / 85%);
-  --color-sub: oklch(1 0 0 / 85%);
-  --color-soft: oklch(1 0 0 / 65%);
-  --color-weak: oklch(1 0 0 / 45%);
+  --color-strong: oklch(1 0 0 / 95%);
+  --color-sub: oklch(1 0 0 / 78%);
+  --color-soft: oklch(1 0 0 / 55%);
+  --color-weak: oklch(1 0 0 / 38%);
   --color-disabled: oklch(1 0 0 / 25%);
 
   --color-background: oklch(0.12 0.025 259.58);
@@ -162,6 +162,20 @@ body:has([data-home]) .bg-overlay {
 .section-animate {
   opacity: 0;
   animation: fade-in-up 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-animate,
+  .hero-animate,
+  .hero-words > span,
+  .stagger-animate,
+  .stagger-animate-sm,
+  .section-animate {
+    opacity: 1;
+    animation: none;
+    transform: none;
+    filter: none;
+  }
 }
 
 @keyframes progress {
@@ -379,6 +393,14 @@ body {
 
 .rypo pre::-webkit-scrollbar-corner {
   display: none;
+}
+
+.site-footer {
+  max-width: 60rem;
+}
+
+body:has([data-page='blog-detail']) .site-footer {
+  max-width: 43rem;
 }
 
 .medium-zoom-overlay,

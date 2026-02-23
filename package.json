@@ -30,7 +30,6 @@
     "medium-zoom": "^1.1.0",
     "next": "16.1.6",
     "next-intl": "^4.8.2",
-    "prism-react-renderer": "^2.4.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "rehype-autolink-headings": "^7.1.0",
@@ -40,6 +39,7 @@
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",
+    "shiki": "^3.22.0",
     "tailwind-merge": "^3.4.0",
     "yaml": "^2.8.2",
     "zod": "^4.1.13"

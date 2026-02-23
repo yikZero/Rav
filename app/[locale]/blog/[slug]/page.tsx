@@ -153,7 +153,7 @@ export default async function Page({
   };
 
   return (
-    <main className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-6 sm:pt-36">
+    <main data-page="blog-detail" className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-6 sm:pt-36">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

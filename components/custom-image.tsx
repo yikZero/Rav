@@ -1,8 +1,6 @@
-'use client';
-
-import mediumZoom from 'medium-zoom';
 import Image, { type ImageProps } from 'next/image';
-import { memo, useEffect, useRef } from 'react';
+
+import ImageZoom from '@/components/image-zoom';
 
 interface CustomImageProps
   extends Omit<ImageProps, 'src' | 'width' | 'height'> {
@@ -11,11 +9,6 @@ interface CustomImageProps
   height?: string | number;
 }
 
-const ZOOM_OPTIONS = {
-  background: 'var(--color-background)',
-  margin: 24,
-} as const;
-
 const DEFAULT_WIDTH = 1200;
 
 function parseSize(value: string | number | undefined): number | undefined {
@@ -23,45 +16,32 @@ function parseSize(value: string | number | undefined): number | undefined {
   return typeof value === 'string' ? parseInt(value, 10) : value;
 }
 
-function CustomImage({
+export default function CustomImage({
   alt,
   src = '',
   width,
   height,
   ...props
 }: CustomImageProps): React.ReactElement {
-  const imageRef = useRef<HTMLImageElement>(null);
-
   const parsedWidth = parseSize(width) ?? DEFAULT_WIDTH;
   const parsedHeight = parseSize(height);
   const hasAutoHeight = !parsedHeight;
 
-  useEffect(() => {
-    const imageElement = imageRef.current;
-    if (!imageElement) return;
-
-    const zoom = mediumZoom(imageElement, ZOOM_OPTIONS);
-    return () => {
-      zoom.detach();
-    };
-  }, []);
-
   return (
     <figure>
-      <Image
-        {...props}
-        ref={imageRef}
-        src={src}
-        alt={alt ?? ''}
-        loading="lazy"
-        width={parsedWidth}
-        height={hasAutoHeight ? 0 : parsedHeight}
-        sizes="(max-width: 768px) 100vw, 800px"
-        style={hasAutoHeight ? { width: '100%', height: 'auto' } : undefined}
-      />
+      <ImageZoom>
+        <Image
+          {...props}
+          src={src}
+          alt={alt ?? ''}
+          loading="lazy"
+          width={parsedWidth}
+          height={hasAutoHeight ? 0 : parsedHeight}
+          sizes="(max-width: 768px) 100vw, 800px"
+          style={hasAutoHeight ? { width: '100%', height: 'auto' } : undefined}
+        />
+      </ImageZoom>
       {alt && <figcaption>{alt}</figcaption>}
     </figure>
   );
 }
-
-export default memo(CustomImage);
