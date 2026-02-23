@@ -130,18 +130,18 @@ Configured in `next.config.ts`:
 
 ### Image Hosting
 
-- Static assets hosted on **VPS** (OpenResty), served via `cdn.yikzero.com`
-- VPS: `8.211.164.241`, site root: `/opt/1panel/apps/openresty/openresty/www/sites/cdn.yikzero.com/index/`
-- Images are pre-compressed before upload (no runtime image processing)
-- `images.unoptimized: true` in next.config.ts — Next.js does not process images
-- **rclone remote** configured as `vps:` (SFTP) — use `rclone` for uploads
+- Static assets hosted on **Upyun** (又拍云 CDN), served via `cdn.yikzero.com`
+- Custom image loader (`lib/image-loader.ts`) auto-appends Upyun processing params (`!/fw/{width}/format/webp`)
+- For images with manual processing params (e.g. `!/fh/572/format/webp`), the loader skips auto-processing
+- `next.config.ts` uses `loader: 'custom'` with `loaderFile: './lib/image-loader.ts'`
 
-**Upload workflow** (always follow these steps):
+**Upyun image processing params**:
 
-1. Resize to appropriate display size (2x for retina): `sips -z <height> <width> --setProperty format jpeg --setProperty formatOptions 85 <input> --out <output>`
-2. Compress via TinyPNG API: `curl -s --user api:Y5jhJpp7Rfx1GFRn3mZT36kQqDZfsgLV --data-binary @<file> https://api.tinify.com/shrink`, then download from response `output.url`
-3. Upload to VPS: `rclone copyto <local-file> vps:/opt/1panel/apps/openresty/openresty/www/sites/cdn.yikzero.com/index/<remote-path>`
-4. CDN URL: `https://cdn.yikzero.com/<remote-path>`
+- `!/fw/{width}` — resize by width
+- `!/fh/{height}` — resize by height
+- `format/webp` — convert to WebP format
+- `quality/{q}` — set quality (0-100)
+- Example: `https://cdn.yikzero.com/image.jpg!/fw/1920/format/webp`
 
 **Common paths on CDN**:
 

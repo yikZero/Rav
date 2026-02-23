@@ -83,7 +83,7 @@ function OGImage({
         tw="absolute inset-0"
         style={{
           filter: 'blur(4px)',
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: `url(${imageUrl}!/fw/1200)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           transform: 'scale(1.05)',
@@ -141,7 +141,7 @@ function OGImage({
         <div tw="flex items-center">
           <img
             alt="Avatar"
-            src="https://cdn.yikzero.com/roominess5/designwork/avatar.jpg"
+            src="https://cdn.yikzero.com/roominess5/designwork/avatar.jpg!/fw/96"
             tw="w-15 h-15 rounded-full"
           />
           <div tw="flex flex-col ml-4">
