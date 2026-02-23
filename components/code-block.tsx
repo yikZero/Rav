@@ -1,5 +1,6 @@
 import { type BundledLanguage, type ThemeRegistration, codeToHtml } from 'shiki';
 import { Children, isValidElement } from 'react';
+import CopyButton from '@/components/copy-button';
 
 const customTheme: ThemeRegistration = {
   name: 'rav-dark',
@@ -131,9 +132,12 @@ export default async function Pre({ children }: PreProps) {
   });
 
   return (
-    <div
-      dangerouslySetInnerHTML={{ __html: html }}
-      aria-label={`Code block in ${rawLang}`}
-    />
+    <div className="relative group">
+      <div
+        dangerouslySetInnerHTML={{ __html: html }}
+        aria-label={`Code block in ${rawLang}`}
+      />
+      <CopyButton code={code} />
+    </div>
   );
 }
