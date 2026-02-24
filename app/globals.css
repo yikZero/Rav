@@ -176,6 +176,14 @@ body:has([data-home]) .bg-overlay {
     transform: none;
     filter: none;
   }
+
+  .bg-overlay {
+    animation: none;
+  }
+
+  ::view-transition-group(.nav-slide) {
+    animation-duration: 0s;
+  }
 }
 
 @keyframes progress {

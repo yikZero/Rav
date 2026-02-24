@@ -7,6 +7,9 @@ export default function BackgroundVideo(): React.ReactElement {
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
     if ('requestIdleCallback' in window) {
       const id = window.requestIdleCallback(() => setShouldLoad(true));
       return () => window.cancelIdleCallback(id);
