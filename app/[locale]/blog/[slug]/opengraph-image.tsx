@@ -1,23 +1,23 @@
-import { defaultLocale } from '@/i18n/routing';
-import ravConfig from '@/rav.config';
-import fs from 'fs/promises';
 import { ImageResponse } from 'next/og';
+import fs from 'fs/promises';
 import path from 'path';
+import type { Locale } from 'next-intl';
 
+import { routing } from '@/i18n/routing';
+import { getBlogPosts } from '@/lib/post.utils';
 import { formatDate } from '@/lib/utils';
+import ravConfig from '@/rav.config';
+
+export const size = { width: 1200, height: 630 };
+export const contentType = 'image/png';
+export const alt = 'Blog post cover';
 
 const OG_CONFIG = {
-  width: 1200,
-  height: 630,
   maxTitleLength: 100,
   maxDescLength: 200,
-  defaultLocale: defaultLocale,
-  defaultTitle: ravConfig.title,
-  defaultDescription: ravConfig.description,
   defaultImage: 'https://cdn.yikzero.com/markdown/images/post-background.jpg',
 };
 
-// 缓存字体和 logo 数据
 let cachedAssets: {
   regularFont: Buffer;
   semiboldFont: Buffer;
@@ -25,9 +25,7 @@ let cachedAssets: {
 } | null = null;
 
 async function loadAssets() {
-  if (cachedAssets) {
-    return cachedAssets;
-  }
+  if (cachedAssets) return cachedAssets;
 
   const [regularFont, semiboldFont, logo] = await Promise.all([
     fs.readFile(path.join(process.cwd(), 'fonts', 'MiSans-Regular.otf')),
@@ -42,22 +40,6 @@ async function loadAssets() {
   };
 
   return cachedAssets;
-}
-
-function parseParams(url: string) {
-  const { searchParams } = new URL(url);
-
-  return {
-    title:
-      searchParams.get('title')?.slice(0, OG_CONFIG.maxTitleLength) ||
-      OG_CONFIG.defaultTitle,
-    description:
-      searchParams.get('description')?.slice(0, OG_CONFIG.maxDescLength) ||
-      OG_CONFIG.defaultDescription,
-    pubDate: searchParams.get('pubDate'),
-    locale: searchParams.get('locale') || OG_CONFIG.defaultLocale,
-    imageUrl: searchParams.get('imageUrl') || OG_CONFIG.defaultImage,
-  };
 }
 
 function removeProtocol(url: string) {
@@ -154,47 +136,58 @@ function OGImage({
   );
 }
 
-export async function GET(request: Request) {
-  try {
-    const params = parseParams(request.url);
-    const formattedDate = params.pubDate
-      ? formatDate(params.pubDate, params.locale)
-      : '';
+export default async function Image({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: Locale }>;
+}) {
+  const { slug, locale } = await params;
+  const post = getBlogPosts({ language: locale }).find((p) => p.slug === slug);
 
-    const { regularFont, semiboldFont, logoBase64 } = await loadAssets();
+  const title =
+    post?.metadata.title?.slice(0, OG_CONFIG.maxTitleLength) || ravConfig.title;
+  const description =
+    post?.metadata.description?.slice(0, OG_CONFIG.maxDescLength) ||
+    ravConfig.description;
+  const pubDate = post?.metadata.updatedAt || post?.metadata.publishedAt || '';
+  const imageUrl = post?.metadata.image || OG_CONFIG.defaultImage;
+  const formattedDate = pubDate ? formatDate(pubDate, locale) : '';
 
-    return new ImageResponse(
-      <OGImage
-        title={params.title}
-        description={params.description}
-        formattedDate={formattedDate}
-        imageUrl={params.imageUrl}
-        logoBase64={logoBase64}
-      />,
-      {
-        width: OG_CONFIG.width,
-        height: OG_CONFIG.height,
-        fonts: [
-          {
-            name: 'Mi Sans',
-            data: regularFont,
-            weight: 400,
-            style: 'normal',
-          },
-          {
-            name: 'Mi Sans',
-            data: semiboldFont,
-            weight: 600,
-            style: 'normal',
-          },
-        ],
-      },
-    );
-  } catch (e) {
-    console.error('Failed to generate OG image:', e);
-    const message = e instanceof Error ? e.message : 'Unknown error';
-    return new Response(`Failed to generate the image: ${message}`, {
-      status: 500,
-    });
-  }
+  const { regularFont, semiboldFont, logoBase64 } = await loadAssets();
+
+  return new ImageResponse(
+    <OGImage
+      title={title}
+      description={description}
+      formattedDate={formattedDate}
+      imageUrl={imageUrl}
+      logoBase64={logoBase64}
+    />,
+    {
+      ...size,
+      fonts: [
+        {
+          name: 'Mi Sans',
+          data: regularFont,
+          weight: 400 as const,
+          style: 'normal' as const,
+        },
+        {
+          name: 'Mi Sans',
+          data: semiboldFont,
+          weight: 600 as const,
+          style: 'normal' as const,
+        },
+      ],
+    },
+  );
+}
+
+export function generateStaticParams() {
+  return routing.locales.flatMap((locale) =>
+    getBlogPosts({ language: locale }).map((post) => ({
+      locale,
+      slug: post.slug,
+    })),
+  );
 }

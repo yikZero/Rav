@@ -5,6 +5,8 @@ import html from 'remark-html';
 
 import { getBlogPosts } from '@/lib/post.utils';
 
+export const dynamic = 'force-static';
+
 const processor = remark().use(html);
 
 function processMdxComponents(content: string): string {
@@ -40,31 +42,40 @@ export async function GET() {
     },
   });
 
-  for (const post of posts) {
-    try {
-      const cleanContent = processMdxComponents(post.content || '');
-      const result = await processor.process(cleanContent);
-      const renderedContent = String(result);
-      const postDate = new Date(
-        post.metadata.updatedAt || post.metadata.publishedAt,
-      );
+  const feedItems = await Promise.allSettled(
+    posts.map(async (post) => {
+      try {
+        const cleanContent = processMdxComponents(post.content || '');
+        const result = await processor.process(cleanContent);
+        const renderedContent = String(result);
+        const postDate = new Date(
+          post.metadata.updatedAt || post.metadata.publishedAt,
+        );
 
-      feed.addItem({
-        title: post.metadata.title,
-        id: `${siteUrl}/blog/${post.slug}`,
-        link: `${siteUrl}/blog/${post.slug}`,
-        description: post.metadata.description,
-        content: renderedContent,
-        date: postDate,
-        author: [
-          {
-            name: ravConfig.author,
-            email: ravConfig.email,
-          },
-        ],
-      });
-    } catch (error) {
-      console.error(`Error processing post ${post.slug}:`, error);
+        return {
+          title: post.metadata.title,
+          id: `${siteUrl}/blog/${post.slug}`,
+          link: `${siteUrl}/blog/${post.slug}`,
+          description: post.metadata.description,
+          content: renderedContent,
+          date: postDate,
+          author: [
+            {
+              name: ravConfig.author,
+              email: ravConfig.email,
+            },
+          ],
+        };
+      } catch (error) {
+        console.error(`Error processing post ${post.slug}:`, error);
+        throw error;
+      }
+    }),
+  );
+
+  for (const item of feedItems) {
+    if (item.status === 'fulfilled') {
+      feed.addItem(item.value);
     }
   }
 
