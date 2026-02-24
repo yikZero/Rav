@@ -26,16 +26,6 @@ export async function generateMetadata({
   const title = post?.metadata.title;
   const description = post?.metadata.description;
 
-  const ogImageUrl =
-    `${ravConfig.siteUrl}/api/og?` +
-    new URLSearchParams({
-      title: title || '',
-      description: description || '',
-      pubDate: post?.metadata.updatedAt || post?.metadata.publishedAt || '',
-      imageUrl: post?.metadata.image || '',
-      locale: locale,
-    }).toString();
-
   return {
     title,
     description,
@@ -54,14 +44,6 @@ export async function generateMetadata({
       publishedTime: post?.metadata.publishedAt,
       modifiedTime: post?.metadata.updatedAt,
       url: `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog/${slug}`,
-      images: [
-        {
-          url: ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: title || '',
-        },
-      ],
     },
     twitter: {
       card: 'summary_large_image',
@@ -69,7 +51,6 @@ export async function generateMetadata({
       creator: ravConfig.twitter,
       title,
       description,
-      images: [ogImageUrl],
     },
   };
 }
