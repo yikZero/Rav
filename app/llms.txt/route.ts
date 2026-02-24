@@ -4,6 +4,8 @@ import messages from '@/messages/en.json';
 import { getBlogPosts } from '@/lib/post.utils';
 import { categoryLabels, stackCategories, stackItems } from '@/lib/stack';
 
+export const dynamic = 'force-static';
+
 export async function GET() {
   let posts: ReturnType<typeof getBlogPosts> = [];
   try {
