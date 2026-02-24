@@ -1,12 +1,6 @@
 import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeSlug from 'rehype-slug';
-import rehypeUnwrapImages from 'rehype-unwrap-images';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkGfm from 'remark-gfm';
 
 const nextConfig: NextConfig = {
   images: {
@@ -80,12 +74,11 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkGfm],
+    remarkPlugins: ['remark-frontmatter', 'remark-gfm'],
     rehypePlugins: [
-      rehypeUnwrapImages,
-      rehypeSlug,
-      rehypeAutolinkHeadings,
-      rehypeAccessibleEmojis,
+      'rehype-unwrap-images',
+      'rehype-slug',
+      'rehype-autolink-headings',
     ],
   },
 });

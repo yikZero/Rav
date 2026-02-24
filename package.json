@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 11300 --webpack",
-    "build": "next build --webpack",
+    "dev": "next dev -p 11300",
+    "build": "next build",
     "start": "next start -p 11300",
     "lint": "eslint .",
     "svg": "bunx @svgr/cli assets",
@@ -58,7 +58,6 @@
     "eslint-config-next": "16.1.6",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "rehype-accessible-emojis": "^0.3.2",
     "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
