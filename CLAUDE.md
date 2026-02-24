@@ -4,8 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-- **Development server**: `bun dev` (runs on port 11300, uses `--webpack` flag)
-- **Build**: `bun run build` (uses `--webpack` flag)
+- **Development server**: `bun dev` (runs on port 11300, Turbopack by default)
+- **Build**: `bun run build` (Turbopack by default)
 - **Production server**: `bun run start` (port 11300)
 - **Linting**: `bun run lint`
 - **SVG optimization**: `bun run svg` (generates React components from `assets/` into `components/icons/`)
@@ -46,7 +46,7 @@ This is a Next.js 16 blog/portfolio application with MDX content, internationali
    - Returns React component (not raw content), falls back to `null`
    - Used for: actual page rendering
 
-**Important**: Metadata comes from filesystem parsing, content comes from webpack-compiled MDX modules. These are independent.
+**Important**: Metadata comes from filesystem parsing, content comes from Turbopack-compiled MDX modules. These are independent.
 
 ### Content Structure
 
@@ -94,7 +94,6 @@ state: 'draft' | 'published' | 'archived'
 /[locale]/blog/[slug]          # Blog post detail
 /[locale]/stack                # Tech stack page
 /[locale]/[...rest]            # Catch-all → notFound()
-/api/og                        # OG image generation
 /rss.xml                       # RSS feed
 /sitemap.xml                   # Auto-generated sitemap
 /robots.txt                    # Auto-generated robots
@@ -113,7 +112,7 @@ Legacy redirects in `next.config.ts`: `/posts` → `/blog`, `/drafts` → `/work
 Configured in `next.config.ts`:
 
 - **Remark**: `remark-frontmatter`, `remark-gfm`
-- **Rehype**: `rehype-unwrap-images`, `rehype-slug`, `rehype-autolink-headings`, `rehype-accessible-emojis`
+- **Rehype**: `rehype-unwrap-images`, `rehype-slug`, `rehype-autolink-headings`
 - **Syntax highlighting**: `prism-react-renderer` (client-side, custom theme in `components/code-block.tsx`)
 
 ### Styling System

@@ -18,18 +18,28 @@ const OG_CONFIG = {
   defaultImage: 'https://cdn.yikzero.com/markdown/images/post-background.jpg',
 };
 
+let cachedAssets: {
+  regularFont: Buffer;
+  semiboldFont: Buffer;
+  logoBase64: string;
+} | null = null;
+
 async function loadAssets() {
+  if (cachedAssets) return cachedAssets;
+
   const [regularFont, semiboldFont, logo] = await Promise.all([
     fs.readFile(path.join(process.cwd(), 'fonts', 'MiSans-Regular.otf')),
     fs.readFile(path.join(process.cwd(), 'fonts', 'MiSans-Semibold.otf')),
     fs.readFile(path.join(process.cwd(), 'public', 'logo.svg')),
   ]);
 
-  return {
+  cachedAssets = {
     regularFont,
     semiboldFont,
     logoBase64: `data:image/svg+xml;base64,${Buffer.from(logo).toString('base64')}`,
   };
+
+  return cachedAssets;
 }
 
 function removeProtocol(url: string) {
