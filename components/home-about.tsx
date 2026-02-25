@@ -14,6 +14,7 @@ export default function HomeAbout() {
 
   return (
     <section className="mt-32 flex flex-col items-center gap-28 sm:mt-40">
+      <h2 className="sr-only">{t('title')}</h2>
       <div className="mx-auto grid max-w-240 grid-cols-1 gap-16 overflow-hidden sm:grid-cols-4">
         <div className="-ml-4 flex flex-row sm:col-span-2 sm:-ml-0">
           <PhotoCard
