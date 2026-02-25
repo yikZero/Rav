@@ -134,7 +134,7 @@ export default async function Page({
   };
 
   return (
-    <main data-page="blog-detail" className="mx-auto max-w-172 px-4 pt-24 pb-12 sm:px-6 sm:pt-36">
+    <main data-page="blog-detail" className="mx-auto max-w-180 px-4 pt-24 pb-12 sm:px-6 sm:pt-36">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -154,6 +154,11 @@ export default async function Page({
             {post.metadata.title}
           </h1>
           <div className="flex items-center gap-2 text-sm leading-tight">
+            {post.metadata.state === 'draft' && (
+              <span className="inline rounded-md bg-[#f59e0b]/20 px-2 py-0.5 text-xs font-medium text-[#fbbf24] uppercase">
+                Draft
+              </span>
+            )}
             <span className="inline rounded-md border border-strong/20 px-2 py-0.5 text-xs font-medium text-sub uppercase">
               {post.metadata.category}
             </span>
