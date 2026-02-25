@@ -30,6 +30,7 @@ export async function generateMetadata({
     title: {
       absolute: `${t('title')} - ${ravConfig.title}`,
     },
+    description: t('description'),
     alternates: {
       canonical:
         locale === defaultLocale
@@ -64,6 +65,10 @@ export default function HomePage({
       '@type': 'Person',
       name: ravConfig.author,
       url: ravConfig.siteUrl,
+      sameAs: [
+        'https://github.com/yikZero',
+        'https://x.com/yikZero',
+      ],
     },
   };
 

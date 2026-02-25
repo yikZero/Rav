@@ -14,9 +14,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return `${ravConfig.siteUrl}/${locale}${path}`;
   };
 
+  const generateAlternates = (path: string) => ({
+    languages: Object.fromEntries(
+      locales.map((l) => [l, generateLocalizedUrl(path, l)]),
+    ),
+  });
+
   const routes = [
     { path: '', changeFrequency: 'weekly' as const, priority: 1 },
     { path: '/blog', changeFrequency: 'weekly' as const, priority: 0.8 },
+    { path: '/stack', changeFrequency: 'monthly' as const, priority: 0.6 },
   ];
 
   return [
@@ -27,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date('2025-01-01'),
         changeFrequency: route.changeFrequency,
         priority: route.priority,
+        alternates: generateAlternates(route.path),
       })),
     ),
     // 博客文章 - 为每个语言单独获取
@@ -39,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ),
         changeFrequency: 'monthly' as const,
         priority: 0.8,
+        alternates: generateAlternates(`/blog/${post.slug}`),
       }));
     }),
   ];

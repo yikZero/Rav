@@ -10,7 +10,9 @@
     "about": "关于"
   },
   "Home": {
-    "title": "首页"
+    "title": "首页",
+    "description": "yikZero 的个人网站，分享产品设计、Web3 和前端开发领域的文章与项目",
+    "recentPosts": "最近文章"
   },
   "Hero": {
     "description": "设计之外，我喜欢徒步、骑行、写点代码、探索各种新鲜事物。欢迎联系。",
@@ -19,10 +21,11 @@
   },
   "Blog": {
     "title": "博客",
-    "description": "热衷于写作和分享知识",
+    "description": "关于产品设计、前端开发和 Web3 的技术文章与经验分享",
     "more": "更多文章"
   },
   "About": {
+    "title": "关于我",
     "introduction": "你好，我是 <highlight>yikZero</highlight>，也叫<highlight>张毅吉</highlight>，一位来自<highlight>杭州</highlight>的产品设计师，目前在 OneKey 就职，负责 Web3 加密货币领域的产品设计。",
     "hobby": "空闲时间，我喜欢徒步、骑行、写点代码，以及探索各种新鲜事物。",
     "experience": {
