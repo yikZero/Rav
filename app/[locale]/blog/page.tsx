@@ -22,7 +22,7 @@ export async function generateMetadata({
   const t = await getTranslations('Blog');
   return {
     title: t('title'),
-    description: t('description'),
+    description: t('metaDescription'),
     alternates: {
       canonical: `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog`,
       languages: {

@@ -12,6 +12,7 @@
   "Home": {
     "title": "Home",
     "description": "yikZero's personal website, sharing articles and projects on product design, Web3, and frontend development",
+    "metaDescription": "yikZero's personal website focused on product design and Web3. Featuring articles on frontend development, design methodology, and engineering practices — documenting the full journey from design to code",
     "recentPosts": "Recent Posts"
   },
   "Hero": {
@@ -21,7 +22,8 @@
   },
   "Blog": {
     "title": "Blog",
-    "description": "Technical articles and insights on product design, frontend development, and Web3",
+    "description": "Passionate about writing and sharing knowledge",
+    "metaDescription": "yikZero's tech blog covering in-depth articles on product design, frontend development, Web3, and AI applications. Sharing practical experience and methodology from requirements analysis to engineering implementation",
     "more": "More Posts"
   },
   "About": {
@@ -48,7 +50,8 @@
   },
   "Stack": {
     "title": "Stack",
-    "description": "Tools & software I enjoy using daily"
+    "description": "Tools & software I enjoy using daily",
+    "metaDescription": "Curated recommendations of design, development, and productivity tools used daily by yikZero. Covering AI coding assistants, design software, dev environments, and productivity apps — each with use cases and personal reviews"
   },
   "TableOfContents": {
     "onThisPage": "On this page"

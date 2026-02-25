@@ -12,6 +12,7 @@
   "Home": {
     "title": "首页",
     "description": "yikZero 的个人网站，分享产品设计、Web3 和前端开发领域的文章与项目",
+    "metaDescription": "yikZero 的个人网站。专注于产品设计与 Web3 领域，分享前端开发、设计方法论、工程化实践等方面的文章与项目经验，记录从设计到开发的全过程思考",
     "recentPosts": "最近文章"
   },
   "Hero": {
@@ -21,7 +22,8 @@
   },
   "Blog": {
     "title": "博客",
-    "description": "关于产品设计、前端开发和 Web3 的技术文章与经验分享",
+    "description": "热衷于写作和分享知识",
+    "metaDescription": "yikZero 的技术博客，涵盖产品设计、前端开发、Web3 和 AI 应用等领域的深度文章。分享从需求分析到工程落地的实践经验与方法论",
     "more": "更多文章"
   },
   "About": {
@@ -48,7 +50,8 @@
   },
   "Stack": {
     "title": "装备",
-    "description": "我日常使用的工具与软件"
+    "description": "我日常使用的工具与软件",
+    "metaDescription": "yikZero 日常使用的设计、开发与效率工具推荐。涵盖 AI 编程助手、设计软件、开发环境和生产力工具，每款工具附带使用场景与体验评价"
   },
   "TableOfContents": {
     "onThisPage": "本页内容"

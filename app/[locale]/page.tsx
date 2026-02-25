@@ -30,7 +30,7 @@ export async function generateMetadata({
     title: {
       absolute: `${t('title')} - ${ravConfig.title}`,
     },
-    description: t('description'),
+    description: t('metaDescription'),
     alternates: {
       canonical:
         locale === defaultLocale
