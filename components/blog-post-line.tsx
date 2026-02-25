@@ -28,6 +28,7 @@ export default function BlogPostLine({ posts }: BlogPostLineProps) {
               title={post.metadata.title}
               category={post.metadata.category}
               date={post.metadata.updatedAt || post.metadata.publishedAt}
+              isDraft={post.metadata.state === 'draft'}
             />
           </div>
         ))}

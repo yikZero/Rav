@@ -60,11 +60,18 @@ export default function PostCard({
       </Link>
 
       <div className="relative z-1 flex flex-col gap-3 p-5">
-        {isFirst && (
-          <span className="text-xs font-medium text-brand-500 uppercase">
-            {metadata.category}
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {isFirst && (
+            <span className="text-xs font-medium text-brand-500 uppercase">
+              {metadata.category}
+            </span>
+          )}
+          {metadata.state === 'draft' && (
+            <span className="rounded-md bg-[#f59e0b]/20 px-1.5 py-0.5 text-xs font-medium text-[#fbbf24]">
+              Draft
+            </span>
+          )}
+        </div>
 
         <header className="flex flex-col gap-2">
           <h3 className="text-base font-medium text-strong transition duration-500 ease-in-out group-hover:text-brand-500">

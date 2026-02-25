@@ -223,7 +223,7 @@ body {
  * -------------------------------------------------------------------------- */
 
 .rypo {
-  @apply text-[0.9375rem] leading-6.5 text-sub;
+  @apply text-base leading-7 text-sub;
 }
 
 .rypo h1,
@@ -240,11 +240,11 @@ body {
 }
 
 .rypo h2 {
-  @apply mt-8 mb-2 pt-4 text-2xl leading-8 tracking-tight;
+  @apply mt-10 mb-3 pt-4 text-xl leading-8 tracking-tight;
 }
 
 .rypo h3 {
-  @apply mt-8 mb-2 text-xl leading-7 tracking-[-0.01rem];
+  @apply mt-8 mb-3 text-lg leading-7 tracking-[-0.01rem];
 }
 
 /**
@@ -253,7 +253,7 @@ body {
 
 .rypo p,
 .rypo summary {
-  @apply my-4;
+  @apply my-5;
 }
 
 .rypo summary {
@@ -261,7 +261,7 @@ body {
 }
 
 .rypo p {
-  @apply text-base leading-6.5 sm:text-[0.9375rem];
+  @apply text-base leading-7;
 }
 
 .rypo figure {
@@ -281,11 +281,11 @@ body {
 }
 
 .rypo blockquote {
-  @apply my-4 border-l-2 border-strong/20 pl-4 transition duration-500;
+  @apply my-5 border-l-2 border-strong/20 pl-4 transition duration-500;
 }
 
 .rypo blockquote > p {
-  @apply m-0 text-base text-sub transition-colors duration-500 sm:text-[0.9375rem];
+  @apply m-0 text-base leading-7 text-sub transition-colors duration-500;
 }
 
 .rypo a {
@@ -302,7 +302,7 @@ body {
 
 .rypo ul,
 .rypo ol {
-  @apply my-4 pl-5;
+  @apply my-5 pl-5;
 }
 
 .rypo ul {
@@ -403,12 +403,32 @@ body {
   display: none;
 }
 
+/**
+ * Language-specific typography
+ * Chinese text needs more line-height and slight letter-spacing for readability
+ * -------------------------------------------------------------------------- */
+
+.rypo [lang='zh-CN'] {
+  letter-spacing: 0.02em;
+  line-height: 1.8;
+}
+
+.rypo [lang='zh-CN'] h2,
+.rypo [lang='zh-CN'] h3 {
+  letter-spacing: 0;
+}
+
+.rypo [lang='en'] {
+  letter-spacing: -0.01em;
+  line-height: 1.6;
+}
+
 .site-footer {
   max-width: 60rem;
 }
 
 body:has([data-page='blog-detail']) .site-footer {
-  max-width: 43rem;
+  max-width: 45rem;
 }
 
 .medium-zoom-overlay,
