@@ -42,21 +42,24 @@ export default function StackPage({
   const stackUrl = `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/stack`;
   const stackJsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    '@id': `${stackUrl}#stack`,
+    '@type': 'CollectionPage',
+    '@id': stackUrl,
     name: t('title'),
     description: t('description'),
     url: stackUrl,
-    numberOfItems: stackItems.length,
-    itemListElement: stackItems.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      description:
-        item.description[locale as 'zh-CN' | 'en'] ??
-        item.description['zh-CN'],
-      ...(item.link && { url: item.link }),
-    })),
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: stackItems.length,
+      itemListElement: stackItems.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        description:
+          item.description[locale as 'zh-CN' | 'en'] ??
+          item.description['zh-CN'],
+        ...(item.link && { url: item.link }),
+      })),
+    },
   };
 
   return (
