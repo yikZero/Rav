@@ -105,12 +105,13 @@ export default async function LocaleLayout({
         className="relative min-h-dvh bg-background text-sm antialiased"
       >
         <NextIntlClientProvider>
-          <BodyScrollbars />
-          <Background />
-          <Header />
-          {children}
-          <BackgroundGradient />
-          <Footer />
+          <BodyScrollbars>
+            <Background />
+            <Header />
+            {children}
+            <BackgroundGradient />
+            <Footer />
+          </BodyScrollbars>
         </NextIntlClientProvider>
       </body>
       {process.env.NODE_ENV === 'production' && (

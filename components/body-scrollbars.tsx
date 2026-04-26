@@ -5,11 +5,16 @@ import {
   OverlayScrollbars,
 } from 'overlayscrollbars';
 import { useOverlayScrollbars } from 'overlayscrollbars-react';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 OverlayScrollbars.plugin(ClickScrollPlugin);
 
-export default function BodyScrollbars() {
+export default function BodyScrollbars({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const viewportRef = useRef<HTMLDivElement>(null);
   const [initialize, instance] = useOverlayScrollbars({
     options: {
       scrollbars: {
@@ -22,12 +27,19 @@ export default function BodyScrollbars() {
   });
 
   useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
     initialize({
       target: document.body,
+      elements: { viewport },
       cancel: { nativeScrollbarsOverlaid: false, body: false },
     });
     return () => instance()?.destroy();
   }, [initialize, instance]);
 
-  return null;
+  return (
+    <div ref={viewportRef} data-overlayscrollbars-viewport="">
+      {children}
+    </div>
+  );
 }
