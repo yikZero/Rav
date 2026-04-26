@@ -8,7 +8,6 @@ import { notFound } from 'next/navigation';
 
 import Background from '@/components/background';
 import BackgroundGradient from '@/components/background-gradient';
-import BodyScrollbars from '@/components/body-scrollbars';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 
@@ -95,23 +94,18 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} data-overlayscrollbars-initialize>
+    <html lang={locale}>
       <head>
         <link rel="preconnect" href="https://cdn.yikzero.com" />
         <link rel="dns-prefetch" href="https://cdn.yikzero.com" />
       </head>
-      <body
-        data-overlayscrollbars-initialize
-        className="relative min-h-dvh bg-background text-sm antialiased"
-      >
+      <body className="relative min-h-dvh bg-background text-sm antialiased">
         <NextIntlClientProvider>
-          <BodyScrollbars>
-            <Background />
-            <Header />
-            {children}
-            <BackgroundGradient />
-            <Footer />
-          </BodyScrollbars>
+          <Background />
+          <Header />
+          {children}
+          <BackgroundGradient />
+          <Footer />
         </NextIntlClientProvider>
       </body>
       {process.env.NODE_ENV === 'production' && (

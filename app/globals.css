@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import 'overlayscrollbars/overlayscrollbars.css';
 
 @theme {
   --font-*: initial;
@@ -33,19 +32,6 @@
 
 html {
   @apply overflow-y-scroll;
-}
-
-.os-theme-rav {
-  --os-size: 10px;
-  --os-padding-perpendicular: 2px;
-  --os-padding-axis: 2px;
-  --os-track-border-radius: 10px;
-  --os-handle-border-radius: 10px;
-  --os-handle-min-size: 33px;
-  --os-handle-interactive-area-offset: 4px;
-  --os-handle-bg: oklch(1 0 0 / 0.18);
-  --os-handle-bg-hover: oklch(1 0 0 / 0.28);
-  --os-handle-bg-active: oklch(1 0 0 / 0.38);
 }
 
 @keyframes bg-fade-in {
