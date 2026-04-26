@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
   experimental: {
     inlineCss: true,
     viewTransition: true,
+    appNewScrollHandler: true,
   },
   async redirects() {
     return [
