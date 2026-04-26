@@ -5,7 +5,7 @@ import {
   OverlayScrollbars,
 } from 'overlayscrollbars';
 import { useOverlayScrollbars } from 'overlayscrollbars-react';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 OverlayScrollbars.plugin(ClickScrollPlugin);
 
@@ -21,7 +21,7 @@ export default function BodyScrollbars() {
     },
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     initialize({
       target: document.body,
       cancel: { nativeScrollbarsOverlaid: false, body: false },
