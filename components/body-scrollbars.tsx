@@ -11,7 +11,6 @@ OverlayScrollbars.plugin(ClickScrollPlugin);
 
 export default function BodyScrollbars() {
   const [initialize, instance] = useOverlayScrollbars({
-    defer: true,
     options: {
       scrollbars: {
         theme: 'os-theme-rav',
