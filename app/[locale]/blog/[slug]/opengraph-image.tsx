@@ -115,7 +115,7 @@ function OGImage({
       </div>
       <div tw="w-full h-1/5 border-t border-white/15 bg-white/5 flex py-10 px-16 items-center justify-between text-2xl">
         <div tw="flex items-center">
-          <img alt="logo" src={logoBase64} tw="w-10 h-10" />
+          <img alt="logo" src={logoBase64} width={40} height={40} />
           <span tw="ml-3 text-white/85">
             {removeProtocol(ravConfig.siteUrl)}
           </span>
@@ -124,7 +124,9 @@ function OGImage({
           <img
             alt="Avatar"
             src="https://cdn.yikzero.com/roominess5/designwork/avatar.jpg!/fw/96"
-            tw="w-15 h-15 rounded-full"
+            width={60}
+            height={60}
+            tw="rounded-full"
           />
           <div tw="flex flex-col ml-4">
             <span tw="text-white text-2xl font-bold">{ravConfig.author}</span>
