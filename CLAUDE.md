@@ -163,52 +163,42 @@ Tech stack data is defined in `lib/stack.ts` as a typed array (`StackItem[]`) wi
 
 ## PR conventions
 
-Write PR titles and descriptions in Chinese.
+Write PR titles and descriptions in **English**.
 
 ### Title
 
 - Max 50 characters.
-- Start with a verb: 新增 (add) / 修复 (fix) / 调整 (adjust) / 更新 (update) / 重构 (refactor) / 删除 (remove).
+- Start with an imperative verb: `Add` / `Fix` / `Adjust` / `Update` / `Refactor` / `Remove`.
 - Examples:
-  - 新增博客「为什么我换回 macOS」
-  - 修复 RSS feed 缺失 image 字段
-  - 调整首页头图加载策略
+  - `Add blog post "Why I switched back to macOS"`
+  - `Fix missing image field in RSS feed`
+  - `Adjust hero image loading strategy on the home page`
 
 ### Description
 
-Use the three sections below, each as an H2, in this fixed order:
+Use the three H2 sections below, in this fixed order:
 
 ```markdown
-## 改动
+## Changes
 
-— 1-3 句话说背景 + 做了什么。关联 issue 末尾加 Fixes #N。
+1–3 sentences covering background + what was done. Append `Fixes #N` if it closes an issue.
 
-## 影响
+## Impact
 
-— 列以下四项，没受影响就写"无"：
+List all four items; write "none" for any that don't apply:
 
-- 用户面：访客看到的内容/布局/交互变化
-- SEO：URL / sitemap / RSS / metadata 变化
-- i18n：zh-CN 与 en 是否需要同步
-- 性能：bundle 体积 / Lighthouse / 首屏
+- User-facing: content / layout / interaction changes visitors will see.
+- SEO: URL / sitemap / RSS / metadata changes.
+- i18n: whether zh-CN and en content needs to stay in sync.
+- Performance: bundle size / Lighthouse / first paint.
 
-## 验证
+## Verification
 
-本地怎么验（"bun dev 看页面" / "bun run build 通过" / "纯文案，预览即可"）
+How to verify locally (e.g. "ran `bun dev` and checked the page" / "`bun run build` passes" / "copy-only change, preview is enough").
 ```
-
-Section meanings:
-
-- **改动 (Changes)**: 1–3 sentences covering context and what was done. Append `Fixes #N` at the end if it closes an issue.
-- **影响 (Impact)**: list the four items below; write "无" (none) for any that don't apply:
-  - User-facing: content / layout / interaction changes visible to visitors.
-  - SEO: URL / sitemap / RSS / metadata changes.
-  - i18n: whether zh-CN and en need to stay in sync.
-  - Performance: bundle size / Lighthouse / first paint.
-- **验证 (Verification)**: how to verify locally (e.g. "bun dev 看页面", "bun run build 通过", or "纯文案，预览即可" for copy-only changes).
 
 ### Special notes
 
-- **i18n bilingual sync**: when editing `content/posts/zh-CN/<slug>.mdx`, either update the matching `content/posts/en/<slug>.mdx` in the same PR, or note in the description that it will be auto-synced by `bun run translate` ("待 bun run translate 自动同步").
-- **Images go to Upyun**: upload new images to [cdn.yikzero.com](http://cdn.yikzero.com); do not commit them to the repo.
-- **`next.config.ts` / `i18n/routing.ts` changes**: add an extra line in the description listing risk points and rollback steps ("风险点 + 回滚步骤").
+- **i18n bilingual sync**: when editing `content/posts/zh-CN/<slug>.mdx`, either update the matching `content/posts/en/<slug>.mdx` in the same PR, or note in the description that it will be auto-synced by `bun run translate` later.
+- **Images go to Upyun**: upload new images to `cdn.yikzero.com`; do not commit them to the repo.
+- **`next.config.ts` / `i18n/routing.ts` changes**: add an extra line in the description listing risk points and rollback steps.
