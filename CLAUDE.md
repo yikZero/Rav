@@ -129,7 +129,7 @@ Configured in `next.config.ts`:
 
 ### Image Hosting
 
-- Static assets hosted on **Upyun** (又拍云 CDN), served via `cdn.yikzero.com`
+- Static assets hosted on **Upyun** CDN, served via `cdn.yikzero.com`
 - Custom image loader (`lib/image-loader.ts`) auto-appends Upyun processing params (`!/fw/{width}/format/webp`)
 - For images with manual processing params (e.g. `!/fh/572/format/webp`), the loader skips auto-processing
 - `next.config.ts` uses `loader: 'custom'` with `loaderFile: './lib/image-loader.ts'`
@@ -163,20 +163,20 @@ Tech stack data is defined in `lib/stack.ts` as a typed array (`StackItem[]`) wi
 
 ## PR conventions
 
-PR title 和 description 都用中文写。
+Write PR titles and descriptions in Chinese.
 
 ### Title
 
-- 不超过 50 字符
-- 动词开头：新增 / 修复 / 调整 / 更新 / 重构 / 删除
-- 例：
+- Max 50 characters.
+- Start with a verb: 新增 (add) / 修复 (fix) / 调整 (adjust) / 更新 (update) / 重构 (refactor) / 删除 (remove).
+- Examples:
   - 新增博客「为什么我换回 macOS」
   - 修复 RSS feed 缺失 image 字段
   - 调整首页头图加载策略
 
 ### Description
 
-按下面三段写，每段 H2 标题，顺序固定：
+Use the three sections below, each as an H2, in this fixed order:
 
 ```markdown
 ## 改动
@@ -197,8 +197,18 @@ PR title 和 description 都用中文写。
 本地怎么验（"bun dev 看页面" / "bun run build 通过" / "纯文案，预览即可"）
 ```
 
-### 特别注意
+Section meanings:
 
-- i18n 双语同步：改 `content/posts/zh-CN/<slug>.mdx` 时，对应的 `content/posts/en/<slug>.mdx` 要么同步改完，要么在 description 写"待 bun run translate 自动同步"
-- 图片走 Upyun：新图上 [cdn.yikzero.com](http://cdn.yikzero.com)，不要塞进仓库
-- `next.config.ts` / `i18n/routing.ts` 改动：在 description 里额外列一行"风险点 + 回滚步骤"
+- **改动 (Changes)**: 1–3 sentences covering context and what was done. Append `Fixes #N` at the end if it closes an issue.
+- **影响 (Impact)**: list the four items below; write "无" (none) for any that don't apply:
+  - User-facing: content / layout / interaction changes visible to visitors.
+  - SEO: URL / sitemap / RSS / metadata changes.
+  - i18n: whether zh-CN and en need to stay in sync.
+  - Performance: bundle size / Lighthouse / first paint.
+- **验证 (Verification)**: how to verify locally (e.g. "bun dev 看页面", "bun run build 通过", or "纯文案，预览即可" for copy-only changes).
+
+### Special notes
+
+- **i18n bilingual sync**: when editing `content/posts/zh-CN/<slug>.mdx`, either update the matching `content/posts/en/<slug>.mdx` in the same PR, or note in the description that it will be auto-synced by `bun run translate` ("待 bun run translate 自动同步").
+- **Images go to Upyun**: upload new images to [cdn.yikzero.com](http://cdn.yikzero.com); do not commit them to the repo.
+- **`next.config.ts` / `i18n/routing.ts` changes**: add an extra line in the description listing risk points and rollback steps ("风险点 + 回滚步骤").
