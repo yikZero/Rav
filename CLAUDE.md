@@ -160,3 +160,45 @@ Configured in `next.config.ts`:
 ### Stack Data
 
 Tech stack data is defined in `lib/stack.ts` as a typed array (`StackItem[]`) with bilingual descriptions. Categories: AI, Design, Development, Productivity.
+
+## PR conventions
+
+PR title 和 description 都用中文写。
+
+### Title
+
+- 不超过 50 字符
+- 动词开头：新增 / 修复 / 调整 / 更新 / 重构 / 删除
+- 例：
+  - 新增博客「为什么我换回 macOS」
+  - 修复 RSS feed 缺失 image 字段
+  - 调整首页头图加载策略
+
+### Description
+
+按下面三段写，每段 H2 标题，顺序固定：
+
+```markdown
+## 改动
+
+— 1-3 句话说背景 + 做了什么。关联 issue 末尾加 Fixes #N。
+
+## 影响
+
+— 列以下四项，没受影响就写"无"：
+
+- 用户面：访客看到的内容/布局/交互变化
+- SEO：URL / sitemap / RSS / metadata 变化
+- i18n：zh-CN 与 en 是否需要同步
+- 性能：bundle 体积 / Lighthouse / 首屏
+
+## 验证
+
+本地怎么验（"bun dev 看页面" / "bun run build 通过" / "纯文案，预览即可"）
+```
+
+### 特别注意
+
+- i18n 双语同步：改 `content/posts/zh-CN/<slug>.mdx` 时，对应的 `content/posts/en/<slug>.mdx` 要么同步改完，要么在 description 写"待 bun run translate 自动同步"
+- 图片走 Upyun：新图上 [cdn.yikzero.com](http://cdn.yikzero.com)，不要塞进仓库
+- `next.config.ts` / `i18n/routing.ts` 改动：在 description 里额外列一行"风险点 + 回滚步骤"
