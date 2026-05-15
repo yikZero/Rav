@@ -70,9 +70,6 @@ export default async function Page({
   }
 
   const Content = await loadLocalizedMDX('posts', locale, slug);
-  if (!Content) {
-    notFound();
-  }
 
   const postUrl = `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog/${slug}`;
   const blogUrl = `${ravConfig.siteUrl}${locale === defaultLocale ? '' : `/${locale}`}/blog`;
@@ -134,7 +131,10 @@ export default async function Page({
   };
 
   return (
-    <main data-page="blog-detail" className="mx-auto max-w-180 px-4 pt-24 pb-12 sm:px-6 sm:pt-36">
+    <main
+      data-page="blog-detail"
+      className="mx-auto max-w-180 px-4 pt-24 pb-12 sm:px-6 sm:pt-36"
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -187,7 +187,6 @@ export default async function Page({
 export async function generateStaticParams() {
   const { locales } = routing;
 
-  // Generate slug params for all locales
   const allParams = locales.flatMap((locale) => {
     const posts = getBlogPosts({ language: locale });
     return posts.map((post) => ({

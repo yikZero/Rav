@@ -410,6 +410,9 @@ body {
 
 .rypo [lang='zh-CN'] {
   letter-spacing: 0.02em;
+}
+
+.rypo [lang='zh-CN'] p {
   line-height: 1.8;
 }
 
@@ -420,7 +423,10 @@ body {
 
 .rypo [lang='en'] {
   letter-spacing: -0.01em;
-  line-height: 1.6;
+}
+
+.rypo [lang='en'] p {
+  line-height: 1.65;
 }
 
 .site-footer {

@@ -29,7 +29,10 @@ function parseFrontmatterFallback(frontMatterBlock: string): PostMetadata {
     if (colonIndex === -1) continue;
 
     const key = line.slice(0, colonIndex).trim();
-    const value = line.slice(colonIndex + 1).trim().replace(/^['"](.*)['"]$/, '$1');
+    const value = line
+      .slice(colonIndex + 1)
+      .trim()
+      .replace(/^['"](.*)['"]$/, '$1');
 
     if (key && value) {
       metadata[key] = value;
@@ -61,7 +64,7 @@ function parseFrontmatter(fileContent: string) {
   return { metadata, content };
 }
 
-const MDX_EXTENSIONS = ['.md', '.mdx'];
+const MDX_EXTENSIONS = ['.mdx'];
 
 function getMDXFiles(dir: string): string[] {
   return fs
@@ -69,7 +72,10 @@ function getMDXFiles(dir: string): string[] {
     .filter((file) => MDX_EXTENSIONS.includes(path.extname(file)));
 }
 
-function readMDXFile(filePath: string): { metadata: PostMetadata; content: string } {
+function readMDXFile(filePath: string): {
+  metadata: PostMetadata;
+  content: string;
+} {
   const rawContent = fs.readFileSync(filePath, 'utf-8');
   return parseFrontmatter(rawContent);
 }
@@ -90,7 +96,9 @@ function getMDXData(dir: string): Post[] {
       posts.push({ metadata, slug, content });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      console.warn(`Warning: Skipping file ${file} due to parsing error: ${message}`);
+      console.warn(
+        `Warning: Skipping file ${file} due to parsing error: ${message}`,
+      );
     }
   }
 
@@ -119,7 +127,10 @@ export const getBlogPosts = cache(function getBlogPosts({
     : posts;
 
   const sortedPosts = filteredPosts.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+    return (
+      new Date(b.metadata.publishedAt).getTime() -
+      new Date(a.metadata.publishedAt).getTime()
+    );
   });
 
   return limit ? sortedPosts.slice(0, limit) : sortedPosts;
