@@ -1,5 +1,5 @@
 ---
-title: IFTTT Automated Push Notifications
+title: Automated Push Notifications with IFTTT
 publishedAt: 2021-10-14
 description: Using IFTTT to Push School Notifications to WeChat, Email, and More
 image: https://cdn.yikzero.com/markdown/images/post-background.jpg
@@ -7,17 +7,17 @@ category: Develop
 state: published
 ---
 
-## Foreword
+## Preface
 
-I previously published an article about subscribing to the school's official website RSS feed. With the RSS subscription address, we can push the RSS feed to our "RSS Client" to read updated articles from the website. When I wrote that article, I could only set up official school website notification updates pushed to my "RssBot" on [Telegram](https://telegram.org/). I couldn't figure out how to push directly to WeChat, so now I am writing an article that achieves pushing to WeChat.
+I previously published an article about RSS subscriptions for the school’s official website. With an RSS subscription URL, we can push RSS updates to our “RSS client” to read newly updated articles on the website. When I wrote that article, I only knew how to set up update notifications for the school’s official website on my own “RssBot” on [Telegram](https://telegram.org/). I couldn’t push them directly to WeChat, so now I’m writing an article that can achieve pushing to WeChat.
 
 ![IFTTT 效果展示](https://cdn.yikzero.com/markdown/images/202311081017596.jpeg)
 
-## Obtaining the RSS Subscription Address
+## Getting the RSS Subscription URL
 
-💡 First, we must clarify that websites do not necessarily offer RSS feeds; only some sites provide RSS. Websites without RSS feeds can only rely on self-creation of the subscription source or by finding pre-made RSS feeds created by others. Here I recommend a subscription source sharing website: **[RssHub](https://docs.rsshub.app/)** Author: **[DIYgod](https://github.com/DIYgod)**
+💡 First, we need to be clear that not every website provides RSS subscriptions. Only some websites provide RSS. For websites without RSS subscriptions, you can only create the feed yourself or find an RSS feed created by others. Here I recommend a feed-sharing website: **[RssHub](https://docs.rsshub.app/)** Author: **[DIYgod](https://github.com/DIYgod)**
 
-**I will use my school's subscription for the demonstration:**
+**I will use our school’s subscription as a demonstration:**
 
 ```html
 1. 在RssHub中中找到我们学校的订阅地址： #路径：路由-大学通知-浙江工业大学
@@ -27,48 +27,48 @@ https://rsshub.app/zjut/1
 #如果需要每周会议的RSS订阅地址，那么将1改成2，即：https://rsshub.app/zjut/2
 ```
 
-The first step is complete. The RSS feed address we obtained is: https://rsshub.app/zjut/1
+The first step is complete. The RSS feed URL we obtained is: https://rsshub.app/zjut/1
 
-## Pushing School Notification Updates to Email
+## Push School Notification Updates to Email
 
-- Open the IFTTT website and register an account. **(One-click login available with Google account)**
-- Click Create in the upper right corner to create a project
+- Open the IFTTT website and register an account. **(You can log in with a Google account in one click)**
+- Click Create in the upper right corner to create a project.
 
-> IFTTT is the abbreviation for “if this then that.” Simply put, it means if this happens, then that happens. If this operation is completed, that operation will be completed automatically. For example: a teacup is placed under the water dispenser; the dispenser detects the teacup—this is "this." The water flows down by itself, filling the teacup—this is "that." If a teacup is detected, the water dispenser releases water.
+> IFTTT is the abbreviation of “if this then that.” Simply put, it means if this happens, then that happens. If this operation is completed, it will automatically complete that operation. For example: a teacup is placed under a water dispenser, and the water dispenser detects the teacup — this is this. The water flows down by itself and fills the teacup. This is that. If a teacup is detected, the water dispenser releases water.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081023660.png)
 
-- Today, we want to achieve the following: **If the ZJUT official website detects an updated notification, then the title and content of this new notification will be sent to us via email.**
-- Click this, and find RSS Feed
+- What we want to achieve today is: **If a notification update is detected on ZJUT’s official website, then send us the title and content of this new notification by email.**
+- Click this and find RSS Feed.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081027922.png)
 
-- Select New feed item, enter **https://rsshub.app/zjut/1** in the Feed URL, and click Create trigger. Complete the "this" operation.
+- Select New feed item, enter **https://rsshub.app/zjut/1** in Feed URL, and click Create trigger. This completes the this operation.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081029853.png)
 
-- Similarly, search for email in "that," and first bind your email according to the prompts. Official website notifications will be sent to this email address in the future.
-- No modification is needed here, just Create action, and then Finish
+- Similarly, search for email in that, then bind your own email according to the prompts. Future official website notifications will be sent to this email.
+- No need to modify anything here. Just click Create action, then Finish.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081029804.png)
 
-💡 This achieves the push of official website updates to your email. Due to website factors, there may be a delay of ten minutes or more. Please be understanding.
+💡 This implements pushing official website notification updates to your email. Due to website-related reasons, there may be a delay of more than ten minutes, so please understand.
 
 ---
 
-## Pushing to WeChat
+## Push to WeChat
 
-Pushing to WeChat is slightly more difficult. If you want to configure it yourself, you can continue reading. If you prefer not to configure it yourself, you can scan the QR code below to follow the official account and receive school official website update notifications. College website notifications will be added in the future.
+Pushing to WeChat is slightly more difficult. If you want to configure it yourself, you can continue reading. If you don’t want to configure it yourself, you can scan the QR code below to follow the official account and receive update notifications from the school’s official website. Notifications from college websites will be added later.
 
 ![](https://cdn.yikzero.com/markdown/images/20231108112204.png)
 
-Pushing RSS updates to WeChat uses [WxPusher](http://wxpusher.zjiecode.com/docs/#/) and [IFTTT](https://ifttt.com/). This functionality is achieved using Webhooks.
+Pushing RSS updates to WeChat uses [WxPusher](http://wxpusher.zjiecode.com/docs/#/) and [IFTTT](https://ifttt.com/). The function is implemented together with Webhook.
 
-> WxPusher (WeChat Push Service) is a real-time information push platform that uses the official WeChat account as a channel. You can push information to WeChat by calling the API, achieving real-time information notification without installing extra software. You can use WxPusher for server alarm notifications, course registration notifications, ticket purchasing notifications, information update alerts, etc.
+> WxPusher (WeChat push service) is a real-time information push platform that uses a WeChat official account as the channel. You can push information to WeChat by calling the API, without installing any additional software, enabling real-time information notifications. You can use WxPusher for server alarm notifications, course enrollment notifications, ticket-snatching notifications, information update reminders, and more.
 
-**1.** Click the address, scan the QR code with WeChat to follow and log in to the [WxPusher backend](http://wxpusher.zjiecode.com/admin)
+**1.** Click the address, scan with WeChat to follow, and log in to the [WxPusher backend](http://wxpusher.zjiecode.com/admin)
 
-**2.** First, create an application. Remember to save the APP_TOKEN
+**2.** First create an application, and remember to save the APP_TOKEN.
 
 ![WxPusher 创建应用](https://cdn.yikzero.com/markdown/images/202311081031936.png)
 
@@ -76,24 +76,24 @@ Pushing RSS updates to WeChat uses [WxPusher](http://wxpusher.zjiecode.com/docs/
 
 ```html
 APP_TOKEN：AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne
-#The APP_TOKEN obtained by everyone is different. Please do not copy mine.
+#每个人获取到的APP_TOKEN都不一样，请勿复制我的
 ```
 
-**3.** Create a Topic
+**3.** Create a topic.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081124096.png)
 
-Remember the Topic ID you just created
+Remember the topic ID you just created.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081125242.png)
 
-**4.** Click Follow. A QR code will appear. Scan the QR code with WeChat to follow the topic
+**4.** Click Follow. A QR code will appear. Scan the QR code with WeChat to follow the topic.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081126488.png)
 
-**5.** Use the GET interface to test if the functionality works normally
+**5.** Test whether the function works properly through the GET interface.
 
-- The `GET` interface is a simplified version of the `POST` interface, primarily for convenience in certain calling scenarios, supporting only the sending of plain text (`contentType=1`). Example:
+- The `GET` interface is a simplified version of the `POST` interface. It is mainly for convenient calls in certain situations and only supports sending text (`contentType=1`). Example:
 
 ```html
 http://wxpusher.zjiecode.com/api/send/message/?appToken=AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne&content=Zero测试&topicId=608&url=https://example.com
@@ -102,28 +102,28 @@ urlEncode 编码。
 ```
 
 ```html
-appToken：AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne topicId：608 #i.e., Topic ID
+appToken：AT_iFym3l0dClijYPJk16AMjcjfPcazj8Ne topicId：608 #即主题ID
 ```
 
-Modify the address above according to your `appToken` and `topicId`. Fill in the push content after `Content=`. If `url` is not required, you can choose to delete `&url=https://example.com`
+Modify the address above according to your `appToken` and `topicId`. Fill in the push content after `Content=`, and if `url` is not needed, you can choose to delete `&url=https://example.com`.
 
-After modification, paste the address into the browser address bar
+After modification, paste the address into the browser address bar.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081127922.png)
 
-If it fails, there will be a prompt indicating what went wrong. Just modify it according to the prompt. At this point, if everything goes smoothly, your WeChat should receive the message you just sent.
+If it fails, there will also be a prompt indicating where the error is. Just modify it according to the prompt. At this point, if nothing goes wrong, your WeChat should receive the message you just sent.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081128088.jpg)
 
-Up to this point, the `WxPusher` configuration is complete.
+At this point, the `WxPusher` section is configured.
 
 ---
 
-**6.** Create a new IFTTT project. The "this" part still selects RSS. Please refer to the IFTTT Push to Email section for details.
+**6.** Create a new IFTTT project. For the this part, still choose RSS. For details, please refer to the section on pushing from IFTTT to email.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081129746.png)
 
-Select Webhooks for the "that" part and configure it as shown in the image.
+For the that part, select Webhooks and configure it as shown in the image.
 
 ![](https://cdn.yikzero.com/markdown/images/202311081129811.png)
 
@@ -134,7 +134,7 @@ http://wxpusher.zjiecode.com/api/send/message #URL POST #Method application/json
 
 Modify the Body section according to your actual situation and parameters. For complete parameters, click to view: [Complete POST Usage](http://wxpusher.zjiecode.com/docs/#/?id=http%e8%b0%83%e7%94%a8#/?id=http%e8%b0%83%e7%94%a8#/?id=http%e8%b0%83%e7%94%a8)
 
-I configured it this way:
+This is how I configured it:
 
 ```json
 {
@@ -146,6 +146,6 @@ I configured it this way:
 }
 ```
 
-Two parameters are used here, `{{EntryTitle}}` and `{{EntryUrl}}`. Through these two parameters, IFTTT can obtain the title and link of the new notification from the RSS feed, ultimately achieving the push of school official website notification updates to WeChat.
+Two parameters are used here: `{{EntryTitle}}` and `{{EntryUrl}}`. Through these two parameters, IFTTT can obtain the title and link of the new notification from RSS, ultimately enabling push notifications of school official website updates to WeChat.
 
-Using IFTTT as a medium, we can not only push RSS updates to WeChat but also push notifications to software like DingTalk and a series of other applications that provide Webhook functionality.
+Through IFTTT as the medium, we can not only push RSS updates to WeChat, but also push notifications to DingTalk and a series of other software that provides Webhook functionality.

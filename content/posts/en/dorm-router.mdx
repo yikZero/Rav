@@ -1,10 +1,10 @@
 ---
-title: 'Dorm WiFi Sharing: Bypassing Campus Network Restrictions'
+title: 'Sharing Dorm WiFi: Bypassing Campus Network Restrictions'
 publishedAt: 2020-04-21
 description: This article explains how to flash third-party firmware (such as
-  Padavan firmware), configure L2TP, bypass the school's "one account, one
-  device" network restriction (taking Pinfeng Campus Mobile Broadband as an
-  example), and achieve shared WiFi in the dorm room.
+  Padavan firmware) and configure L2TP to bypass the school’s
+  one-account-per-person network restriction (using China Mobile broadband at
+  the Pingfeng campus as an example), enabling shared WiFi in the dormitory.
 image: https://cdn.yikzero.com/markdown/images/post-background.jpg
 category: Develop
 state: published
@@ -12,58 +12,58 @@ state: published
 
 ## Preface
 
-Dormitory broadband usually requires account login, making it impossible to share WiFi directly using a router. This article will introduce how to configure a router (using **Padavan firmware** as an example) to break through the campus network's "one person, one account" restriction.
+Dormitory broadband generally requires account login, which makes it impossible to directly use a router to share WiFi. This article will introduce how to configure a router (using **Padavan firmware** as an example) to bypass the campus network’s “one account per person” restriction.
 
-> **Note**: This tutorial is based on tests conducted with **China Mobile Broadband** (Pingfeng Campus). For other carriers, please refer to the methodology and configure independently.
+> **Note**: This tutorial is tested based on **China Mobile broadband** (Pingfeng Campus). For other carriers, please refer to the general approach and configure it yourself.
 
 ## Screenshots
 
-![路由器实物照片](https://cdn.yikzero.com/markdown/images/1565839237.png)
+![Physical photo of the router](https://cdn.yikzero.com/markdown/images/1565839237.png)
 
 ## Preparation
 
-- Router (Recommended flashable models like **Newifi 3**, **K2P**, etc.)
-- **Immortal Breed**
+- Router (recommended flashable models such as **Newifi 3**, **K2P**, etc.)
+- **Breed bootloader**
 - **Padavan firmware**
 - School broadband account and password
-- Network cable
+- Ethernet cable
 
-> **Cost Estimate**: Approximately ¥150
+> **Cost estimate**: About ￥150
 
-**Purchase Recommendations**:
-Can be purchased on platforms like Taobao.
-* If you are technically proficient, you can purchase a **brand new, sealed** device and flash it yourself.
-* If you are unfamiliar with flashing, it is usually less hassle to purchase a device that already has **Immortal Breed** and **Padavan firmware** installed.
+**Purchase advice**:
+You can purchase them on platforms such as Taobao.
+* If you are good at hands-on work, you can buy a **brand-new unopened** device and flash it yourself.
+* If you are not familiar with flashing firmware, please buy a device that already has **Breed bootloader** and **Padavan firmware** flashed; it is usually more hassle-free.
 
-> **Tip**: This article does not include flashing tutorials; please search for relevant information independently.
+> **Tip**: This article does not include a firmware flashing tutorial. Please search for relevant materials yourself.
 
 ## Initial Configuration and Router Usage
 
-> **Important**: If you find that you suddenly cannot connect to the internet after using the device normally for a period, your device may have been blocked.
-> **Solution**: Enter the router backend → **External Network (WAN)** → Scroll down to find **MAC Address** → Click the `+` sign to modify your MAC address.
+> **Important**: If, after normal use for a period of time, you suddenly find that you cannot connect to the Internet, your device may have been blacklisted.
+> **Solution**: Enter the router admin panel → **External Network (WAN)** → scroll down to **MAC Address** → click the `+` icon to change your MAC address.
 
-### 1. Unbinding Devices (Important)
+### 1. Unbind the Device (Important)
 
-First, connect to the official school WiFi `Wlan-edu`. After connecting, ignore the pop-up authentication window.
+First, connect to the school’s official WiFi `Wlan-edu`. After connecting, ignore the authentication window that pops up.
 
-In the browser address bar, enter `192.168.210.100` to enter the **User Self-Service System**.
+Enter `192.168.210.100` in the browser address bar to access the **User Self-Service System**.
 
-![登录系统界面](https://cdn.yikzero.com/markdown/images/3877436746.jpg)
+![Login system interface](https://cdn.yikzero.com/markdown/images/3877436746.jpg)
 
 ```plain
 账号：学号
 密码：身份证后八位 (或你修改后的密码)
 ```
 
-After logging in, find and click **Unbind all MAC addresses**. Once complete, disconnect from the `Wlan-edu` WiFi.
+After logging in, find and click **Unbind All MAC Addresses**. After completing this, disconnect from the `Wlan-edu` WiFi.
 
-![解绑所有MAC地址](https://cdn.yikzero.com/markdown/images/127070192.jpg)
+![Unbind all MAC addresses](https://cdn.yikzero.com/markdown/images/127070192.jpg)
 
-### 2. Connecting the Router
+### 2. Connect the Router
 
 1.  Power on the router.
-2.  Use a network cable to connect the wall network port (usually the prominent port dedicated to China Mobile Broadband) and the router's **WAN port** (usually the blue port).
-3.  After the router boots up, connect to its WiFi (the default SSID is usually `PDCN` or `PDCN 5G`).
+2.  Use an Ethernet cable to connect the network port **on the wall** (usually the protruding port dedicated to China Mobile broadband) to the router’s **WAN port** (usually the blue port).
+3.  After the router starts up, connect to its WiFi (the default SSID is usually `PDCN` or `PDCN 5G`).
 
 ```plain
 默认Wifi名称：PDCN 或 PDCN 5G
@@ -72,11 +72,11 @@ After logging in, find and click **Unbind all MAC addresses**. Once complete, di
 
 ## Configuration Method
 
-### 1. Logging into the Firmware Backend
+### 1. Log in to the Firmware Admin Panel
 
-After connecting to the router's WiFi, open a browser and enter: `192.168.123.1` in the address bar (the default backend address for **Padavan firmware**).
+After connecting to the router WiFi, open a browser and enter `192.168.123.1` in the address bar (the default admin address of **Padavan firmware**).
 
-![登录弹窗](https://cdn.yikzero.com/markdown/images/3199039527.jpg)
+![Login popup](https://cdn.yikzero.com/markdown/images/3199039527.jpg)
 
 Enter the default account and password:
 
@@ -87,37 +87,37 @@ Enter the default account and password:
 
 **If you cannot log in**
 
-> 1. Please try changing your browser (Chrome is recommended).
-> 2. Please check if you are correctly connected to the router's WiFi.
+> 1. Please try switching browsers (Chrome is recommended).
+> 2. Please check whether you have correctly connected to the router WiFi.
 
 ### 2. VPN Configuration
 
-After logging into the backend, find and click **External Network (WAN)** in the left menu.
+After logging in to the admin panel, find and click **External Network (WAN)** in the left menu.
 
 On the **External Network (WAN)** settings page, configure as follows:
 
 1.  **WAN Connection Type**: Select `L2TP`
-2.  **VPN Server**: `192.168.113.1` (Pingfeng Campus; for other campuses, please inquire independently)
-3.  **User Name**: `hzxhaXXXXXXX` (Pingfeng Campus defaults to `hzxha` + last eight digits of phone number)
-4.  **Password**: `XXXXXX` (Pingfeng Campus defaults to last six digits of phone number)
+2.  **VPN Server**: `192.168.113.1` (Pingfeng Campus; please look it up yourself for other campuses)
+3.  **Username**: `hzxhaXXXXXXX` (Pingfeng Campus defaults to `hzxha` + the last eight digits of your phone number)
+4.  **Password**: `XXXXXX` (Pingfeng Campus defaults to the last six digits of your phone number)
 
-![VPN配置界面](https://cdn.yikzero.com/markdown/images/4129165676.jpg)
+![VPN configuration interface](https://cdn.yikzero.com/markdown/images/4129165676.jpg)
 
-To prevent detection by the carrier (may not be effective), you can make the following setting:
+To prevent detection by the carrier (not necessarily effective), you can configure the following:
 
-* Find the **Route forwarding without decreasing TTL** option and change it to **For all packets**.
+* Find the **Do not decrement TTL for routed packets** option and change it to **For all packets**.
 
-![修改为针对所有包](https://cdn.yikzero.com/markdown/images/3452305555.jpg)
+![Change to for all packets](https://cdn.yikzero.com/markdown/images/3452305555.jpg)
 
-Click **Apply** at the bottom of the page to save the configuration.
+Click **Apply settings on this page** at the bottom of the page to save the configuration.
 
-### 3. Logging into the Campus Network
+### 3. Log in to the Campus Network
 
-After saving the settings, wait a moment. Open any webpage; theoretically, it should automatically jump to the **Campus Network login page**.
+After saving the settings, wait a moment. Open any webpage, and theoretically it will automatically redirect to the **campus network login page**.
 
-> **Tip**: If it does not redirect automatically, please manually enter `192.168.210.111` in your browser.
+> **Tip**: If it does not redirect automatically, manually enter `192.168.210.111` in your browser.
 
-![跳转到这个页面](https://cdn.yikzero.com/markdown/images/3204033419.jpg)
+![Redirect to this page](https://cdn.yikzero.com/markdown/images/3204033419.jpg)
 
 Enter your account and password:
 
@@ -126,25 +126,25 @@ Enter your account and password:
 密码：身份证后八位 (或你修改后的密码)
 ```
 
-![登录成功页面](https://cdn.yikzero.com/markdown/images/956320776.jpg)
+![Login successful page](https://cdn.yikzero.com/markdown/images/956320776.jpg)
 
-After successful login, you can share the network through the router.
+After logging in successfully, you can share the network through the router.
 
 ## Information Summary
 
 **1. User Self-Service System (for unbinding)**
 * Address: `192.168.210.100`
 * Account: Student ID
-* Password: Last eight digits of ID card
+* Password: Last eight digits of your ID card number
 
-**2. Campus Network Login Page (for connecting)**
+**2. Campus Network Login Page (for Internet access)**
 * Address: `192.168.210.111`
 * Account: Student ID
-* Password: Last eight digits of ID card
+* Password: Last eight digits of your ID card number
 
-**3. Router Backend (for configuration)**
+**3. Router Admin Panel (for configuration)**
 * Address: `192.168.123.1`
 * Account: admin
 * Password: admin
 
-This article may contain errors; feedback is welcome.
+There may be errors in the article; corrections are welcome.

@@ -1,7 +1,9 @@
 ---
-title: Notes on Installing the Plex Server on R4S
+title: 'Installing Plex Server on R4S: Notes'
 publishedAt: 2023-03-18
-description: Complete guide to installing Plex media server on an R4S router, solving architecture compatibility, remote access, and port forwarding issues
+description: A Complete Record of Installing Plex Media Server on an R4S
+  Software Router, Solving Issues Such as Architecture Compatibility, Remote
+  Access, and Port Forwarding
 image: https://cdn.yikzero.com/markdown/images/post-background.jpg
 category: Develop
 state: published
@@ -10,25 +12,25 @@ state: published
 ## Environment Configuration
 
 - Model: FriendlyElec NanoPi R4S
-- Firmware Version: OpenWrt R22.3.13 (2022-06-22)
+- Firmware version: OpenWrt R22.3.13 (2022-06-22)
 - Architecture: ARMv8 Processor x 6
 - Environment: Google Direct
 
-## Prerequisites
+## Preparations
 
-1. Self-provision a network capable of accessing Google
-1. Install an OpenWrt system with Docker enabled
-1. Expand memory card capacity for Docker
+1. Prepare a network that can access Google on your own
+1. Install an OpenWrt system with docker
+1. Expand the storage card capacity for docker
 
-## Pitfall Log
+## Pitfall Notes
 
-### Architecture Issues
+### Architecture Issue
 
-Most existing tutorials for setting up Plex via Docker are based on X86 architecture. If you set up using the [plexinc/pms-docker](https://hub.docker.com/r/plexinc/pms-docker/) Docker image, you will get an error in the Docker container logs: `stderr: exec /init: exec format error`
+Most existing tutorials for setting up Plex with docker are based on the X86 architecture. If you set it up using the docker image from [plexinc/pms-docker](https://hub.docker.com/r/plexinc/pms-docker/), an error will appear in the docker container logs: `stderr: exec /init: exec format error`
 
-This is because the Docker container you installed does not match your system architecture.
+This is because the docker container you installed does not match your system architecture.
 
-Therefore, find the ARM architecture PLEX image at [linuxserver/plex](https://hub.docker.com/r/linuxserver/plex) and start the installation:
+So I found the ARM-architecture PLEX from [linuxserver/plex](https://hub.docker.com/r/linuxserver/plex) and started the installation:
 
 ```shell
 docker run \
@@ -54,37 +56,37 @@ docker run \
 lscr.io/linuxserver/plex:latest
 ```
 
-Detailed operational tutorials can also be found at [linuxserver/plex](https://hub.docker.com/r/linuxserver/plex). Adjust settings according to your specific requirements.
+The specific tutorial can also be found at [linuxserver/plex](https://hub.docker.com/r/linuxserver/plex). Just adjust it according to your own situation.
 
-## PLEX Missing Initial Setup Page
+## PLEX Has No Initial Setup Page
 
-This means that when first accessing the Plex application interface, you might encounter a "Server not found" issue because remote access has not been enabled. You can use the following two methods to solve this:
+This means that when entering the Plex application interface for the first time, you may encounter a “server not found” issue because remote access has not been enabled. In this case, you can use the following two methods to solve it:
 
-**I. SSH Port Forwarding**
+**1. SSH Port Forwarding**
 
-You need to open the PowerShell tool on your local computer, and then run the command above to forward the remote server's Plex port (default 32400) to a port on your local computer (e.g., 8888). After successful port forwarding, you can access `localhost:8888/web` in your local computer's browser to open the Plex application interface.
+You need to open the PowerShell tool on your local computer, then run the command above to forward the Plex port of the remote server (default is 32400) to a port on your local computer (for example, 8888). After the port forwarding succeeds, you can access `localhost:8888/web` in your local computer’s browser to open the Plex application interface.
 
-**II. Direct Connection**
+**2. Direct Connection**
 
-If the remote server already allows remote access, you can try accessing the Plex application interface directly in your browser using the remote server's IP address and Plex port (e.g., http://13.124.4.66:32400/web).
+If remote access has already been allowed on the remote server, you can try directly accessing the remote server’s IP address and Plex port in the browser (for example, http://13.124.4.66:32400/web) to open the Plex application interface.
 
 ### Solution
 
 On macOS, you can use the iTerm application to set up SSH port forwarding. The specific steps are as follows:
 
-**I. Connect to the Remote Server**
+**1. Connect to the Remote Server**
 
 Enter the following command to connect to the remote server, where username is the username on the remote server, and remote_server_ip is the IP address of the remote server:
 
 `ssh -L 8888:localhost:32400 username@remote_server_ip`
 
-This will forward Plex's 32400 port on the remote server to port 8888 on the local computer.
+This will forward Plex’s 32400 port on the remote server to port 8888 on the local computer.
 
-**II. Enter the Remote Server Password and Authenticate**
+**2. Enter the Password on the Remote Server and Verify**
 
-Now, you can open the browser on your local computer and enter`http://localhost:8888/web` to access the Plex interface on the remote server.
+Now, you can open the browser on your local computer and enter `http://localhost:8888/web` to access the Plex interface on the remote server.
 
-### Error Again
+### Another Error
 
 ```shell
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -102,18 +104,18 @@ Host key for 192.168.31.1 has changed and you have requested strict checking.
 Host key verification failed.
 ```
 
-This error message indicates that the key of the previously connected remote server has changed. This might be due to a system update on the server or an administrator changing the server's key. To protect information security, the SSH client checks and verifies the remote server's key, and if the key changes, this error message appears.
+This error message indicates that the key of the remote server previously connected to has changed. This may be because the server underwent a system update or the administrator changed the server’s key. To protect information security, the SSH client checks and verifies the remote server’s key. If the key has changed, this error message will appear.
 
-Update the remote server key data on your local computer to resolve the issue. The steps are as follows:
+Update the remote server key data on the local computer to resolve the issue. The steps are as follows:
 
 1. **Delete the old key:**
-   Execute `ssh-keygen -R <remote_server_ip>` to delete the old key data on your local computer.
+   Run `ssh-keygen -R <remote_server_ip>` to delete the old key data on the local computer.
 
 2. **Connect to the remote server:**
    Connect using `ssh username@remote_server_ip`.
 
-   - The system will prompt “Are you sure you want to continue connecting (yes/no)?” Enter yes and press Enter.
-   - Enter the remote server password to authenticate.
-   - After connecting, rerun the command to set up SSH port forwarding.
+   - The system will prompt “Are you sure you want to continue connecting (yes/no)?”. Enter yes and press Enter.
+   - Enter the remote server password to verify.
+   - After connecting, run the command again to set up SSH port forwarding.
 
-Once completed, you can access the PLEX server.
+After completion, you can access the PLEX server.

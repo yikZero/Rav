@@ -1,72 +1,72 @@
 ---
-title: 'Say Goodbye to Selection Stress: Use AI to Create Personalized Watchlists'
+title: Building a Personalized Watchlist with AI
 publishedAt: 2024-11-23
-description: This article explains how to leverage AI's powerful data analysis
-  capabilities to integrate multiple movie and TV rankings and generate a
-  summarized weekly list of popular viewing recommendations.
+description: This article explains how to leverage AI’s powerful data analysis
+  capabilities to integrate multiple film and TV rankings and generate a weekly
+  list of popular titles to watch.
 image: https://cdn.yikzero.com/markdown/images/202411281032532.jpg
 category: Develop
 state: published
 ---
 
-## Foreword
+## Preface
 
-My partner (Xiao Chen) and I really enjoy watching movies and TV series, but we often struggle to decide what to watch—we might have a bit of choice paralysis. Recently, I found something interesting in the MisakaF Emby group: this group tracks the most popular film and television works on their platform daily and weekly. This sparked an idea: I could find several similar rankings and have an AI aggregate and organize them. This way, every week I could generate a trending list that combines existing rankings with my personal preferences.
+Both Xiao Chen and I really enjoy watching movies and TV series, but we often don’t know what to watch—maybe we have a bit of choice paralysis. Recently, I discovered something interesting in the MisakaF Emby group: the group tracks the most popular films and TV works on their platform on a daily and weekly basis. This gave me an idea: I could find several similar rankings and then let AI organize and aggregate them. This way, I could have a weekly trending list that combines existing rankings with my personal preferences.
 
-![个人热榜效果](https://cdn.yikzero.com/markdown/images/202411261805598.png!/fw/1920/format/webp)
+![Personal trending list result](https://cdn.yikzero.com/markdown/images/202411261805598.png!/fw/1920/format/webp)
 
 ## Basic Idea
 
-The core workflow of the project can be summarized into three steps:
+The core workflow of the project can be summarized in three steps:
 
-1. Collect trending data
-2. Perform data analysis and processing using AI
-3. Push the processed results to the specified channels
+1. Collect trending ranking data
+2. Analyze and process the data with AI
+3. Push the processed results to a specified channel
 
 ## Solution Iteration
 
-Initially, I designed an integrated solution based on multiple specialized services:
+Initially, I designed an integrated solution based on multiple professional services:
 
-1. First, obtain the information feed from the Telegram channel via [RSSHub](https://rsshub.app/).
+1. First, obtain the information feed of Telegram channels through [RSSHub](https://rsshub.app/).
 
-2. Next, use automation tools like [IFTTT](https://ifttt.com/), [Zapier](https://zapier.com/), or [n8n](https://n8n.io/) to synchronize and organize the RSS data for storage in a document database like Notion or Feishu.
+2. Then use automation tools such as [IFTTT](https://ifttt.com/), [Zapier](https://zapier.com/), or [n8n](https://n8n.io/) to synchronize and organize RSS data into document databases such as Notion or Feishu for storage.
 
-3. Then, [Dify](https://dify.ai/) would regularly filter data from the past week based on defined requirements.
+3. Next, [Dify](https://dify.ai/) would regularly filter data from the past week from the database based on predefined requirements.
 
-4. Dify would send the filtered data along with predefined prompts to the AI for processing.
+4. Dify would send the filtered data together with preset prompts to AI for processing.
 
-5. Finally, the processed results returned by the AI would be sent to the specified group via a [Telegram Bot](https://core.telegram.org/bots/api).
+5. Finally, the processed results returned by AI would be sent to a specified group via [Telegram Bot](https://core.telegram.org/bots/api).
 
-Although this solution was functionally complete and achieved full workflow automation, it suffered from obvious over-engineering; it was too complicated, and ultimately, I abandoned it halfway through the implementation.
+Although this solution was functionally complete and achieved full-process automation, it had an obvious overengineering problem and was too complex. In the end, I gave up halfway through implementation.
 
 ## Final Solution
 
-Considering the project scale and actual needs, I ultimately adopted a lighter and more direct tech stack:
+Considering the project scale and actual needs, I ultimately adopted a more lightweight and direct tech stack:
 
 - Core implementation: Node.js
-- Automation scheduling: GitHub Actions
+- Automated scheduling: GitHub Actions
 
 ### Data Input/Organization
 
-During the data source screening process, I primarily considered data authenticity and sample representativeness.
+During the process of selecting data sources, I mainly considered data authenticity and sample representativeness.
 
-Based on the above criteria, three data sources were finally selected:
+Based on the above criteria, I finally selected three data sources:
 
 - Two highly active Telegram channels, both providing weekly viewing data:
-  - [MisakaF-Emby](https://t.me/s/misakaf_emby): Over 22K subscribers, average reads per post 2,000+
-  - [Odyssey+](https://t.me/s/odysseyplus?q=%23TopOnOdyssey): Over 23K subscribers, average reads per post 3,000+
-- A third-party film and TV platform:
-  - [Ai Yi Fan (爱壹帆)](https://www.aiyifan.tv/rank/all): Its ranking data is updated promptly and has high market representativeness
+  - [MisakaF-Emby](https://t.me/s/misakaf_emby): over 22K followers, with an average of 2,000+ views per post
+  - [Odyssey+](https://t.me/s/odysseyplus?q=%23TopOnOdyssey): over 23K followers, with an average of 3,000+ views per post
+- One third-party film and TV platform:
+  - [iYF](https://www.aiyifan.tv/rank/all): its ranking data is updated promptly and has relatively high market representativeness
 
-Ai Yi Fan data is relatively easy to obtain; you just need to inspect the network requests and call their API.
+The data from iYF is relatively easy to obtain; simply inspect the network requests and call its API.
 
-Data related to Telegram channels requires using [RSSHub](https://rsshub.app/) as an intermediary. It also supports the `searchQuery` parameter for filtering channel content; specific parameters can be viewed in the [documentation](https://docs.rsshub.app/routes/social-media#channel).
+For Telegram channel-related data, it needs to be relayed through [RSSHub](https://rsshub.app/). It also supports the `searchQuery` parameter to filter channel content. For specific parameters, refer to the [documentation](https://docs.rsshub.app/routes/social-media#channel).
 
-I encountered an issue during actual calls: the official RSSHub service is very slow when returning Telegram channel data and frequently times out.
+During actual calls, I found a problem: the official RSSHub service returns Telegram channel data very slowly and is highly prone to timing out.
 
-Here's a clever trick: try searching Google for [Welcome to RSSHub](https://www.google.com/search?q=Welcome+to+RSSHub). Google indexes many RSSHub services set up by other users, allowing you to discreetly pick a faster one to replace the original service.
+Here’s a little trick: try searching Google for [Welcome to RSSHub](https://www.google.com/search?q=Welcome+to+RSSHub). Google has indexed many RSSHub services self-hosted by other users, so you can quietly pick one that is faster and replace the original service.
 
-Once we have the raw data, we can filter out the information for the current week based on the publication time and process it.
+Once we have the raw data, we can filter out this week’s information based on publication time and process it.
 
 The final organized data will look something like this:
 
@@ -91,25 +91,25 @@ TV Shows：
 - 宿敌-3535
 ```
 
-Everyone can find and consolidate data sources they approve of.
+You can find some data sources you trust and organize them together yourself.
 
 ### AI Application
 
-I am using the [AI SDK](https://sdk.vercel.ai/) provided by Vercel, which makes calling large models from different platforms very convenient, and it supports Node.js.
+I use the [AI SDK](https://sdk.vercel.ai/) provided by Vercel. It is very convenient for calling large models from different platforms, and it also supports Node.js nicely.
 
-For the large model, I am using Anthropic's latest [Claude Sonnet 3.5](https://www.anthropic.com/claude/sonnet). The $5 credit granted upon registration still hasn't been used up.
+As for the large model, I’m using Anthropic’s latest [Claude Sonnet 3.5](https://www.anthropic.com/claude/sonnet). The $5 credit I received when I first registered still hasn’t been used up.
 
-Regarding prompt engineering, here are a few tips that might help you write a better prompt:
+For prompt writing, here are a few lessons learned that may help you write a better prompt:
 
-- Prompts should be written in English, but you can instruct the final result to be output in your desired language
-- You need to explicitly list specific rules: what can be done and what cannot be done
-- Give the large model enough space to think, encouraging it to output the process first before presenting the final result. This has an academic name called Chain of thought (CoT prompting)
-- Provide the large model with concrete examples of the output results
+- Prompts should be written in English; the final result can be required to output in the language you need
+- Specific rules should be listed directly: what can be done and what cannot be done
+- Give the large model enough room to think, and encourage it to output the process first before the final result. There is an academic term for this called Chain of Thought/CoT prompting
+- Provide concrete examples of the desired output
 - Use XML tags to structure your prompt
 
-For more specific details, you can also refer to the [Prompt engineering](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) documentation written by Claude.
+For more specific details, you can also refer to Claude’s [Prompt engineering](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview) documentation.
 
-Below is the prompt I used to generate the viewing list, where the variables `rssRankings` and `hotSearchRanking` are the data compiled earlier, which needs to be combined and provided to Claude:
+Below is the prompt I used to have it output a viewing list. The `rssRankings` and `hotSearchRanking` variables are the data organized earlier, which need to be concatenated together and provided to Claude:
 
 ```markdown
 You are a professional film and TV analyst specialized in entertainment rankings. Your task is to analyze weekly entertainment data and generate a ranking list of popular TV series and movies.
@@ -181,13 +181,13 @@ After your scoring process, present the final ranking list in the specified form
 Remember to carefully consider all aspects of the data to ensure the list is calculated in line with the specified requirements.
 ```
 
-In the prompt, you can decide the weight of each ranking list according to your personal preferences.
+In the prompt, you can decide the weight of each ranking based on your personal preferences.
 
-You can also try asking the AI to filter out film and television works you don't like.
+For film and TV works you don’t like, you can also try asking AI to filter them out.
 
 <details>
 
-<summary>Claude 3.5 Sonnet Output Result</summary>
+<summary>Claude 3.5 Sonnet output result</summary>
 
 ```plain
 <scoring_process>
@@ -277,30 +277,30 @@ Note: For movies, none appeared in multiple data sources, so we'll need to rely 
 
 </details>
 
-We can see that the process, from scoring to final content output, is very stable. Claude's ability to follow instructions is quite strong!
+We can see that from the scoring process to the final content output, everything is very stable. Claude’s ability to follow instructions is quite strong!
 
-We only need to extract the content within `<final_ranking>` to get the main body of the viewing list. The output is very standard and stable.
+We only need to extract the content inside `<final_ranking>` to get the main body of the viewing list. The output result is very standardized and stable.
 
-If you find adjusting prompts troublesome, you can also choose the [Prompt Generator](https://console.anthropic.com/dashboard) produced by Anthropic, which can generate quite professional prompts.
+If you find adjusting prompts troublesome, you can also choose Anthropic’s [Prompt Generator](https://console.anthropic.com/dashboard), which can generate fairly professional prompts.
 
 ### Result Push
 
-There are various push channels: Feishu bots, Telegram bots, Bark notifications, and so on. Choose whatever you prefer. Implementation is not complicated.
+There are many possible push channels: Feishu bots, Telegram bots, Bark push notifications, and so on. Choose whichever you like. The implementation is not complicated either.
 
-Once the output data is available, we can add cover images, bolding, tags, etc., to the viewing list according to the specific syntax format of the platform. I also added a quick-launch button for the movie/TV software, allowing for one-click startup :)
+Once we have the output data, we can add a header image, bold text, tags, and so on to the viewing list according to the specific syntax format of the platform. I also added a quick-jump button to open the film and TV app with one tap :)
 
 ### Scheduled Execution
 
-Since everything is developed using Node.js, the lightest and most convenient option is GitHub Actions. You just need to set up a Cron schedule based on when the trending list updates.
+Because everything is developed with Node.js, the lightest and most convenient option is GitHub Actions. Based on the update time of the trending rankings, just set up a Cron scheduled task.
 
-Since the MisakaF weekly trending list updates at 7 PM on Friday, I set the scheduled build for 7:30 PM on Friday, which automatically pushes the message upon completion. Time to start a wonderful weekend.
+Since MisakaF’s weekly trending list updates at 7 p.m. on Fridays, I set the scheduled build to run at 7:30 p.m. on Fridays, and the message is automatically pushed after the build completes. A wonderful weekend begins.
 
-![Github Action 运行记录](https://cdn.yikzero.com/markdown/images/202411272319711.png)
+![GitHub Action run records](https://cdn.yikzero.com/markdown/images/202411272319711.png)
 
-## Final Thoughts
+## Final Words
 
-This is the simplest version of the implementation. However, high popularity doesn't necessarily mean it's good, nor does it mean the work suits your preferences. If I could integrate Douban scores, Rotten Tomatoes scores, or other dimensions, it should become much more personalized.
+The simplest version of the implementation is like this. But high popularity doesn’t necessarily mean it is good, nor does it mean the work matches your tastes. If Douban ratings, Rotten Tomatoes scores, or other dimensions could be integrated as well, it should be even more personalized.
 
-Regardless, **Happy viewing, everyone! Cheers🍻**
+In any case, **happy watching, everyone. Cheers🍻**
 
 ![](https://cdn.yikzero.com/markdown/images/202411272325006.jpg)

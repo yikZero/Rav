@@ -1,31 +1,33 @@
 ---
-title: Aria2 Download Completion Automatic Email Notification
+title: Sending Email Notifications When Aria2 Downloads Complete
 publishedAt: 2020-02-09
-description: Configure automatic email notifications for Aria2 downloads using sendmail and custom scripts, including file path and system info
+description: Configure automatic email notifications after Aria2 downloads
+  complete, sending notifications that include the file path and system
+  information via sendmail and a custom script.
 image: https://cdn.yikzero.com/markdown/images/post-background.jpg
 category: Develop
 state: published
 ---
 
-## Foreword
+## Preface
 
-Since I have no coding foundation and have never studied programming knowledge, the descriptions in various aspects may not be entirely accurate. I thought of this script while downloading a movie. Society is moving towards intelligence, so I wanted to tinker around and set up an email download notification.
+Since I don’t really have any coding background and have never studied anything related to code, some of my descriptions may not be very accurate. I thought of this script while downloading movies. Nowadays, everything in society is becoming intelligent, so I also wanted to tinker around and make an email download notification.
 
 ## Screenshot
 
-![Email 截图](https://cdn.yikzero.com/markdown/images/202311050924340.png)
+![Email Screenshot](https://cdn.yikzero.com/markdown/images/202311050924340.png)
 
-## Email System Setup
+## Setting Up the Email System
 
-I encountered many issues during installation and debugging, but I searched for solutions. Following this blogger's [operation record](https://www.cnblogs.com/kevingrace/p/6143977.html), usually, it can be configured successfully with the help of BT Panel (Baota). Just test it a few more times yourself.
+I ran into quite a few problems during installation and debugging, but after searching around and following this blogger’s [operation record](https://www.cnblogs.com/kevingrace/p/6143977.html), together with Baota, it can generally be configured successfully. Just test it a few more times yourself.
 
-## Script Finding and Modification
+## Finding and Modifying the Script
 
-I first found a modified notification script posted by a user on the [Right.com Wireless Forum](https://www.right.com.cn/forum/thread-163098-1-1.html).
+I first found a notification script modified by the original poster on the [Enshan Wireless Forum](https://www.right.com.cn/forum/thread-163098-1-1.html).
 
-In the script provided by that author, you just needed to fill in the email details, but I had some issues with the `sendmail` command at the time. So, I followed the documentation from the first part. Since some script elements were already written to the server, I changed many things in the original script.
+In the script provided by that author, things like the email address just need to be filled in. However, at the time, I had some issues with the `sendmail` command, so I followed the records in the first section. Some of the script-related things had already been written into my server, so I changed a lot of the original script.
 
-When debugging with the author's script, the `aria2.log` kept showing the `no such file or directory` error, but I couldn't figure out why. Then I decided to write the entire script using `pipes`... It seems a bit clumsy... but I didn't know any other way.
+When I was debugging with the author’s script, the `aria2.log` kept showing the problem `no such file or directory`, but I couldn’t find the cause. Then I thought I would write the entire script using `pipes`... It seems a bit clumsy... but I didn’t know any other method.
 
 ```shell
 echo "
@@ -43,35 +45,35 @@ From Zero.
 Have a nice day." | mail -s 'Aria2通知' example@qq.com
 ```
 
-This is the content of my script. It's very simple, right? But it actually took me a long time to create something functional. `Aria2通知` (Aria2 Notification) is the email subject. The specific meaning of the parameters should be found in the article link mentioned in the first part.
+This is the content of my script. It’s very simple, right... But it actually took me a long time to make something usable. `Aria2通知` is the email subject. The specific meanings of the parameters should all be found in the article link in the first section.
 
 ## Final Debugging
 
 Specific steps:
 
 1. Upload the `email.sh` script to the server
-2. Modify the `on-download-complete=` parameter in `aria2.conf`. Fill in the script's `absolute path` after the `=`.
+2. Modify the `on-download-complete=` parameter in `aria2.conf`; after `=`, fill in the script’s `absolute path`
 
-To achieve both:
+In order to achieve both:
 
 - Email notification
 - Automatic upload
 
-I call `email.sh` inside the `autoupload.sh` script.
+I call `email.sh` from the `autoupload.sh` script
 
-Specific syntax:
+Specific writing:
 
 ```shell
 . /root/.aria2/email.sh
 ```
 
-I use the [Aria2 One-Click Installation and Management Script](https://github.com/P3TERX/aria2.sh) for my `Aria2`.
+My `Aria2` uses the [Aria2 One-Click Installation Management Script](https://github.com/P3TERX/aria2.sh)
 
 ## Conclusion
 
-I'm not entirely satisfied with this script myself. Although it fulfills the basic function, these are the **issues**:
+I’m not very satisfied with this script myself. Although it can implement the basic functions, it has the following **problems**
 
-1. One download sends two emails: one email when the torrent finishes downloading, and one when the file finishes downloading.
-2. I don't understand the syntax. I tried `basename`, `##/`, and similar methods, but I spent a long time trying and failed to get the file name successfully.
+1. One download will send two emails: one email when the torrent download completes, and one email when the file download completes.
+2. I don’t understand the syntax. I tried things like `basename` and `##/`, but after trying for quite a while, I still couldn’t successfully get the filename.
 
-**This is the first time I've written an article. I don't know how to do formatting, and it's quite verbose. But it was fun.**
+**This is my first time writing an article. I don’t know anything about formatting, and it’s also quite wordy. But it was pretty fun.**
