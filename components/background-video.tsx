@@ -39,7 +39,7 @@ export default function BackgroundVideo(): React.ReactElement {
     >
       {shouldLoad && (
         <source
-          src="https://cdn.yikzero.com/rav/background.mp4"
+          src="https://cdn.yikzero.com/img/2026/06/2f72e172485c7a31f60a5294be87124d-rav-background-640-crf35.mp4"
           type="video/mp4"
         />
       )}
