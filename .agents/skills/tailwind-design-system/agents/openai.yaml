@@ -1,0 +1,4 @@
+interface:
+  display_name: Tailwind Design System
+  short_description: Build and audit Tailwind CSS design systems, tokens, variants, and component patterns.
+  default_prompt: Use Tailwind Design System to review the target Tailwind code and improve its token or component structure.

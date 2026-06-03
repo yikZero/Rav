@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "design": {
+      "source": "yikZero/skills",
+      "sourceType": "github",
+      "skillPath": "skills/design/SKILL.md",
+      "computedHash": "4e33ab6e0696ecae01b0613dc19c18bba7de0f99e668d23b027dad42fed32982"
+    },
+    "tailwind-design-system": {
+      "source": "yikZero/skills",
+      "sourceType": "github",
+      "skillPath": "skills/tailwind-design-system/SKILL.md",
+      "computedHash": "abd9490261eb1712f61630142237b43597bdbf44da0f0fb31284ef1cad1cf85a"
+    }
+  }
+}
