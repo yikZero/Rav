@@ -50,10 +50,20 @@ export const stackItems: StackItem[] = [
   },
   // AI
   {
-    name: 'Claude Max',
+    name: 'Codex',
     description: {
-      'zh-CN': '主力编码模型，省心省力，编码体验最佳',
-      en: 'My primary coding model—effortless, reliable, and the best coding experience',
+      'zh-CN': '现在的主力编码 Agent，负责仓库里的实际改动、验证和交付',
+      en: 'My primary coding agent now; handles real repo changes, verification, and delivery',
+    },
+    icon: 'https://cdn.yikzero.com/rav/stack/codex.png',
+    link: 'https://openai.com/codex/',
+    category: 'AI',
+  },
+  {
+    name: 'Claude Pro',
+    description: {
+      'zh-CN': '退回 Pro 后，主要用于辅助推理、改写和交叉检查',
+      en: 'Moved back to Pro; now used for auxiliary reasoning, rewriting, and cross-checks',
     },
     icon: 'https://cdn.yikzero.com/rav/stack/claude-code.png',
     link: 'https://claude.ai/',
@@ -62,8 +72,8 @@ export const stackItems: StackItem[] = [
   {
     name: 'Gemini Pro',
     description: {
-      'zh-CN': '主要用于文案撰写、长文本处理及日常学习',
-      en: 'My go-to for creative writing, long-context processing, and daily learning',
+      'zh-CN': '基本不用了，偶尔用于长上下文资料核对',
+      en: 'Barely used now; occasionally kept for long-context reference checks',
     },
     icon: 'https://cdn.yikzero.com/rav/stack/gemini.png',
     link: 'https://gemini.google.com',
@@ -77,16 +87,6 @@ export const stackItems: StackItem[] = [
     },
     icon: 'https://cdn.yikzero.com/rav/stack/conductor.png',
     link: 'https://www.conductor.build/',
-    category: 'AI',
-  },
-  {
-    name: 'OpenCode',
-    description: {
-      'zh-CN': '多 Provider 协作，同时调用多种 Agents 及 Subagents',
-      en: 'Multi-provider collaboration with multiple Agents and Subagents working in parallel',
-    },
-    icon: 'https://cdn.yikzero.com/rav/stack/opencode.png',
-    link: 'https://opencode.ai/',
     category: 'AI',
   },
   {
@@ -111,23 +111,23 @@ export const stackItems: StackItem[] = [
     category: 'Development',
   },
   {
-    name: 'Kaku',
+    name: 'Ghostty',
     description: {
-      'zh-CN': '开箱即用的终端，为 AI 编程而生，快速轻量',
-      en: 'An out-of-the-box terminal built for AI coding—fast and lightweight',
+      'zh-CN': '主力终端，轻快稳定，用来跑本地服务与日常命令',
+      en: 'My primary terminal: fast, stable, and used for local services and daily commands',
     },
-    icon: 'https://cdn.yikzero.com/rav/stack/kaku.png',
-    link: 'https://github.com/tw93/Kaku',
+    icon: 'https://cdn.yikzero.com/rav/stack/ghostty.png',
+    link: 'https://ghostty.org/',
     category: 'Development',
   },
   {
-    name: 'VS Code',
+    name: 'Zed',
     description: {
-      'zh-CN': '偶尔手动编码时配合大模型使用，但使用频率已逐渐降低',
-      en: 'Occasionally paired with LLMs for manual coding, though usage has gradually decreased',
+      'zh-CN': '替代 VS Code 的主力编辑器，手写代码和快速改动更顺手',
+      en: 'My VS Code replacement and primary editor for manual coding and quick edits',
     },
-    icon: 'https://cdn.yikzero.com/rav/stack/vscode.png',
-    link: 'https://code.visualstudio.com',
+    icon: 'https://cdn.yikzero.com/rav/stack/zed.png',
+    link: 'https://zed.dev',
     category: 'Development',
   },
   // Productivity
