@@ -38,16 +38,6 @@ export const stackItems: StackItem[] = [
     link: 'https://www.figma.com',
     category: 'Design',
   },
-  {
-    name: 'Stitch',
-    description: {
-      'zh-CN': '用于快速生成草稿，激发设计灵感',
-      en: 'Great for generating quick drafts and sparking inspiration',
-    },
-    icon: 'https://cdn.yikzero.com/rav/stack/stitch.png',
-    link: 'https://stitch.withgoogle.com/',
-    category: 'Design',
-  },
   // AI
   {
     name: 'Codex',
@@ -129,6 +119,26 @@ export const stackItems: StackItem[] = [
     },
     icon: 'https://cdn.yikzero.com/rav/stack/raycast.png',
     link: 'https://www.raycast.com',
+    category: 'Productivity',
+  },
+  {
+    name: 'PopClip',
+    description: {
+      'zh-CN': '选中文本后的快捷动作面板，翻译、搜索和格式处理都很顺手',
+      en: 'A quick action palette for selected text, handy for translation, search, and formatting',
+    },
+    icon: 'https://cdn.yikzero.com/img/2026/06/918c6cb311ed025fbd52f5ada105abd4-popclip.png',
+    link: 'https://www.popclip.app/',
+    category: 'Productivity',
+  },
+  {
+    name: 'Slack',
+    description: {
+      'zh-CN': '工作沟通与协作入口，团队消息、通知和上下文都在这里处理',
+      en: 'The hub for work communication and collaboration, handling team messages, notifications, and context',
+    },
+    icon: 'https://cdn.yikzero.com/img/2026/06/41cfdfe5d1720dff026bf67e5b1ab914-slack.png',
+    link: 'https://slack.com',
     category: 'Productivity',
   },
   {
