@@ -52,8 +52,8 @@ export const stackItems: StackItem[] = [
   {
     name: 'Codex',
     description: {
-      'zh-CN': '现在的主力编码 Agent，负责仓库里的实际改动、验证和交付',
-      en: 'My primary coding agent now; handles real repo changes, verification, and delivery',
+      'zh-CN': '已开 GPT Pro，作为主力编码 Agent 负责实际改动、验证和交付',
+      en: 'Running on GPT Pro as my primary coding agent for real changes, verification, and delivery',
     },
     icon: 'https://cdn.yikzero.com/img/2026/06/67c3b45fd9729b4b5423eebbee78f537-codex-app.png',
     link: 'https://openai.com/codex/',
@@ -62,21 +62,11 @@ export const stackItems: StackItem[] = [
   {
     name: 'Claude Pro',
     description: {
-      'zh-CN': '退回 Pro 后，主要用于辅助推理、改写和交叉检查',
-      en: 'Moved back to Pro; now used for auxiliary reasoning, rewriting, and cross-checks',
+      'zh-CN': '最近版本效果不佳，基本用于审查 Codex 写的代码',
+      en: 'Recent versions have been weaker; mostly used to review code written by Codex',
     },
     icon: 'https://cdn.yikzero.com/rav/stack/claude-code.png',
     link: 'https://claude.ai/',
-    category: 'AI',
-  },
-  {
-    name: 'Gemini Pro',
-    description: {
-      'zh-CN': '基本不用了，偶尔用于长上下文资料核对',
-      en: 'Barely used now; occasionally kept for long-context reference checks',
-    },
-    icon: 'https://cdn.yikzero.com/rav/stack/gemini.png',
-    link: 'https://gemini.google.com',
     category: 'AI',
   },
   {
